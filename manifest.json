@@ -1,0 +1,40 @@
+{
+    "version": "1.2",
+    "name": "AWS Console Title Bar",
+    "description": "Add Additional information to the AWS title bar.",
+    "browser_action": {
+        "default_title": "AWS Console Banner Information",
+        "browser_style": true,
+        "default_popup": "popup/choose_page.html",
+        "default_icon": {
+          "16": "icons/Logo-16.png",
+          "32": "icons/Logo-32.png"
+        }
+    },
+    "homepage_url": "https://github.com/just-ak/AWS-Console-Tittle-Bar",
+    "manifest_version": 2,
+    "icons" : {
+        "48": "icons/Logo-48.png",
+        "128": "icons/Logo-128.png"
+      },
+    "content_scripts": [
+        {
+            "css": [
+                "style.css"
+            ],
+            "js": [
+                "banner.js"
+            ],
+            "matches": [
+                "https://console.aws.amazon.com/*",
+                "https://*.console.aws.amazon.com/*"
+            ],
+            "all_frames": true
+        }
+    ],
+    "options_ui": {
+        "page": "options.html",
+        "browser_style": true
+    },
+    "permissions": ["storage"]
+  }

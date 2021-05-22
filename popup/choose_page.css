@@ -1,0 +1,19 @@
+html, body {
+    width: 320px;
+    border: 1px solid rgb(70, 70, 70);
+    overflow: hidden;
+  }
+  
+  .page-choice {
+    width: 100%;
+    padding: 4px;
+    font-size: 1.5em;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+ 
+  }
+  
+  .page-choice:hover {
+    background-color: #d9bafe;
+  }

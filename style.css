@@ -1,0 +1,20 @@
+.awsconsolelables {
+    font-family: Amazon Ember, Helvetica Neue, Roboto, Arial, sans-serif;
+    font-size: 14px;
+    padding: 5px;
+    font-weight: bolder;
+    text-align: center;
+    line-height: 1.7;
+    font-weight: 400 !important;
+    background: none;
+}
+.awsconsolelables .name {
+    color: rgb(213, 219, 219)
+};
+
+.awsconsolelables .clock {
+    position: relative;
+    color: #17D4FE;
+    font-size: 3px;
+    font-family: Orbitron;
+}
