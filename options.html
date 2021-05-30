@@ -7,18 +7,30 @@
 
 <body>
 <h1>AWS Console Tittle Bar</h1>
-<p>JSON Example</br/>
+<p>
+  Add you account number json,with colour modifications if required.
+  https / http entries will add items to the drop down menu.
+</p>
+<p>JSON Example<br/>
 
 <b id="managed-jsoninfo">
-&nbsp;&nbsp;{</br>
-&nbsp;&nbsp;&nbsp;"1234567890":</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id":"Your Description"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,"color":"green"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,"background":"yellow"</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;,"links":["akfdev.com","two"]</br>
-&nbsp;&nbsp;}</b></p>
+  {,"012345678912":<br/>
+  &nbsp;&nbsp;&nbsp;{<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;"id":"Organization",<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;"background":"green",<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;"color":"red",<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;"headerBackground":"yellow",<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;"headerColor":"orange"<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+  ,"012345678913":{"id":"Autit "}<br/>
+  ,"012345678914":{"id":"Developerment"}<br/>
+  ,"012345678915":{"id":"Production"}<br/>
+  ,"012345678916":{"id":"Logging"}<br/>
+  ,"https":["your-organisation.awsapps.com/start","another.awsapps.com/start"]<br/>
+  ,"http":["example.com"]<br/>
+  }<br/>
+&nbsp;}</b></p>
+  
 
 <label>Title Bar JSON Details</label><br/>
 <textarea id="jsoninfo" name="jsoninfo" rows="20" cols="50"></textarea><br/>

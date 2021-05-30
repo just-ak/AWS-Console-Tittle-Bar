@@ -13,6 +13,24 @@ html, body {
     overflow: hidden;
  
   }
+  .page-choice-http {
+    width: 100%;
+    padding: 4px;
+    font-size: 1.5em;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+ 
+  }
+  .page-choice-https {
+    width: 100%;
+    padding: 4px;
+    font-size: 1.5em;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+ 
+  }
   
   .page-choice:hover {
     background-color: #d9bafe;

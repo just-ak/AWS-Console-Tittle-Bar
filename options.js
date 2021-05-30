@@ -18,7 +18,7 @@ function save_options() {
 function restore_options() {
     chrome.storage.local.get({
         // default value
-        jsoninfo: "{\"0123456789\".\"Example\"}"
+        jsoninfo: "{\"0123456789\":\"Example\"}"
     }, function (options) {
         document.getElementById('jsoninfo').value = options.jsoninfo;
     });

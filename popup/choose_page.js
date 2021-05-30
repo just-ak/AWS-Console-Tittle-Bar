@@ -1,15 +1,28 @@
+function onUpdated(tab) {
+  console.log(`Updated tab: ${tab.id}`);
+}
+
+function onError(error) {
+  console.log(`Error: ${error}`);
+}
+
 document.addEventListener("click", function (e) {
-  if (!e.target.classList.contains("page-choice")) {
-    return;
+  if (e.target.classList.contains("page-choice-https")) {
+    var chosenPage = "https://" + e.target.textContent;
+    var updating = browser.tabs.update({url: chosenPage});
+    updating.then(onUpdated, onError);  
   }
-
-  var chosenPage = "https://" + e.target.textContent;
-  browser.tabs.create({
-    url: chosenPage
-  });
-
+  if (e.target.classList.contains("page-choice-http")) {
+    var chosenPage = "http://" + e.target.textContent;
+    var updating = browser.tabs.update({url: chosenPage});
+    updating.then(onUpdated, onError);  
+  }
 });
-getAccountName();
+
+document.addEventListener("DOMContentLoaded", function(){
+  getAccountName();
+});
+
 
 async function getAccountName() {
   let promise = new Promise(function (resolve, reject) {
@@ -21,12 +34,21 @@ async function getAccountName() {
   let accountDetails = await promise
   innerText = ""
 
-  if (accountDetails['links']) {
-    console.log("ONE:" + accountDetails['links'].length);
-    for (i in accountDetails['links']) {
+  if (accountDetails['https']) {
+    console.log("ONE:" + accountDetails['https'].length);
+    for (i in accountDetails['https']) {
       elaccname= document.createElement("div");
-      elaccname.classList.add("page-choice");
-      elaccname.innerText = accountDetails['links'][i];
+      elaccname.classList.add("page-choice-https");
+      elaccname.innerText = accountDetails['https'][i];
+      document.getElementById("accurl").appendChild(elaccname)
+    }
+  }
+  if (accountDetails['http']) {
+    console.log("ONE:" + accountDetails['http'].length);
+    for (i in accountDetails['http']) {
+      elaccname= document.createElement("div");
+      elaccname.classList.add("page-choice-http");
+      elaccname.innerText = accountDetails['http'][i];
       document.getElementById("accurl").appendChild(elaccname)
     }
   }
