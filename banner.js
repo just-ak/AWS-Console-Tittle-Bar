@@ -26,7 +26,7 @@ getAccountName(accountId).then(accountDetails => {
     elaccname.id = "awsconsolelables_name"
     elaccname.classList.add("name");
     el.appendChild(elaccname)
-  }+ accountId)
+  }
   if (accountDetails[accountId])  {
     if (accountDetails[accountId].id) {
   

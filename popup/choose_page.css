@@ -1,12 +1,13 @@
 html, body {
     width: 320px;
-    border: 1px solid rgb(70, 70, 70);
+    padding: 0px;
+    margin: 0px;
+    border: 0px solid rgb(70, 70, 70);
     overflow: hidden;
   }
   
   .page-choice {
     width: 100%;
-    padding: 4px;
     font-size: 1.5em;
     text-align: center;
     cursor: pointer;
@@ -15,7 +16,6 @@ html, body {
   }
   .page-choice-http {
     width: 100%;
-    padding: 4px;
     font-size: 1.5em;
     text-align: center;
     cursor: pointer;
@@ -24,14 +24,30 @@ html, body {
   }
   .page-choice-https {
     width: 100%;
-    padding: 4px;
     font-size: 1.5em;
     text-align: center;
     cursor: pointer;
     overflow: hidden;
  
   }
-  
+  .page-choice-urls {
+    width: 100%;
+    font-size: 1.5em;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+ 
+  }
+  .page-choice-urls:hover {
+       background-color: #57c264;
+}
   .page-choice:hover {
-    background-color: #d9bafe;
+    background-color: #57c264;
+  }
+
+  .awsso-footer {
+    width: 100%;
+    padding-right: 4px;
+    font-size: .5em;
+    text-align: right;
   }

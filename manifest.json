@@ -1,5 +1,5 @@
 {
-    "version": "1.5",
+    "version": "1.6",
     "name": "AWS Console Title Bar",
     "description": "Add Additional information to the AWS title bar.",
     "browser_action": {
