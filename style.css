@@ -7,9 +7,11 @@
     line-height: 1.7;
     font-weight: 400 !important;
     background: none;
+    float: right;
 }
 .awsconsolelables .name {
-    color: rgb(213, 219, 219)
+    color: rgb(213, 219, 219);
+    padding: 4px;
 };
 
 .awsconsolelables .clock {
