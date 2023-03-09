@@ -20,9 +20,12 @@ jobs:
       - name: Echo secret
         run: echo ${{ vars.CONFLUENCE_CLOUD_ID }}
 
+      - name: remove first line 
+        run:  cat ./README.md | tail -n +2 > ./CUT_README.md
+
       - uses: cupcakearmy/confluence-markdown-sync@v1
         with:
-          from: './README.md'
+          from: './CUT_README.md'
           to: '23396353' # The confluence page id where to write the output
           cloud: ${{ vars.CONFLUENCE_CLOUD_ID }}
           user: ${{ vars.CONFLUENCE_CLOUD_EMAIL }}
