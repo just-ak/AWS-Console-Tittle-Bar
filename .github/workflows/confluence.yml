@@ -18,12 +18,12 @@ jobs:
               ${{ runner.os }}-pip-
 
       - name: Echo secret
-        run: echo ${{ variables.CONFLUENCE_CLOUD_ID }}
+        run: echo ${{ env.CONFLUENCE_CLOUD_ID }}
 
       - uses: cupcakearmy/confluence-markdown-sync@v1
         with:
           from: './README.md'
           to: '23396353' # The confluence page id where to write the output
           cloud: ${{ secrets.CONFLUENCE_CLOUD_ID }}
-          user: ${{ variables.CONFLUENCE_CLOUD_EMAIL }}
-          token: ${{ variables.CONFLUENCE_CLOUD_TOKEN }}
+          user: ${{ env.CONFLUENCE_CLOUD_EMAIL }}
+          token: ${{ env.CONFLUENCE_CLOUD_TOKEN }}
