@@ -5,8 +5,15 @@ jobs:
   dev:
     runs-on: ubuntu-latest
     environment: dev
+
     steps:
       - uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+
+      - name: Echo secret
+        run: echo ${{ secrets.CONFLUENCE_CLOUD_ID }}
 
       - uses: cupcakearmy/confluence-markdown-sync@v1
         with:
