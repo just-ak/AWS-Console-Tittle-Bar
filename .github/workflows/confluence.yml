@@ -11,6 +11,11 @@ jobs:
 
       - name: Cache dependencies
         uses: actions/cache@v2
+        with:
+            path: ~/.cache/pip
+            key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+            restore-keys: |
+              ${{ runner.os }}-pip-
 
       - name: Echo secret
         run: echo ${{ secrets.CONFLUENCE_CLOUD_ID }}
