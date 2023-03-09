@@ -24,6 +24,6 @@ jobs:
         with:
           from: './README.md'
           to: '23396353' # The confluence page id where to write the output
-          cloud: ${{ secrets.CONFLUENCE_CLOUD_ID }}
+          cloud: ${{ env.CONFLUENCE_CLOUD_ID }}
           user: ${{ env.CONFLUENCE_CLOUD_EMAIL }}
-          token: ${{ env.CONFLUENCE_CLOUD_TOKEN }}
+          token: ${{ secrets.CONFLUENCE_CLOUD_TOKEN }}
