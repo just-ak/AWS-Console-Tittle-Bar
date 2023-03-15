@@ -1,0 +1,30 @@
+{
+  "author": "Andrew Kentigern-Fox <andrew@akfdev.com>",
+  "description": "Browser Extension for AWS Account Names",
+  "devDependencies": {
+    "@types/chrome": "^0.0.224",
+    "@types/firefox-webext-browser": "^111.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "html-loader": "^4.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.5",
+    "webpack": "^5.76.2",
+    "webpack-cli": "^5.0.1"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "name": "aws-console-tittle-bar",
+  "private": false,
+  "repository": "git@github.com:just-ak/AWS-Console-Tittle-Bar.git",
+  "scripts": {
+    "build": "webpack --mode production",
+    "prepublishOnly": "yarn build",
+    "start": "npm run watch",
+    "watch": "webpack --mode development --watch",
+    "archive": "yarn build && mkdir -p archive && zip -r ./archive/archive.zip  icons popup *.js *.json *.html *.css",
+    "buildZ": "tsc",
+    "watchZ": "tsc --watch"
+  },
+  "version": "1.0.0"
+}
