@@ -77,7 +77,6 @@ async function getAccountName(accountId) {
     return await new Promise((resolve, reject) =>
         chrome.storage.local.get('jsonInfo', response => {
             const accountDetails: AccountDetails = JSON.parse(response.jsonInfo);
-
             if (accountDetails && accountDetails.hasOwnProperty(accountId)) {
                 resolve(accountDetails[accountId]);
             } else {
