@@ -27,23 +27,7 @@ function save_options() {
     }
   );
 }
-function save_accounts() {
-  const jsonTextArea = document.getElementById(jsonAccElementID) as HTMLTextAreaElement;
-  const jsoninfo = jsonTextArea.value;
-  chrome.storage.local.set(
-    {
-      jsonaccounts: jsoninfo,
-    },
-    function () {
-      // Update status to let user know options were saved.
-      var status = document.getElementById("status");
-      status.textContent = "Options Accounts saved.";
-      setTimeout(function () {
-        status.textContent = "";
-      }, 750);
-    }
-  );
-}
+
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 function restore_options() {
@@ -57,22 +41,25 @@ function restore_options() {
       jsonTextArea.value = options.jsoninfo;
     }
   );
-  chrome.storage.local.get(
-    {
-      // default value
-      jsonaccounts: "{}",
-    },
-    function (options) {
-      showAccounts(options);
-    }
+  getAccounCurtList().then((data) => {
+    showAccounts(data);
+  });
+  console.log('What');
+}
+async function getAccounCurtList() {
+  return await new Promise((resolve) =>
+    chrome.storage.local.get("jsonaccounts", (response) => {
+      console.log(`getAccountList: ${JSON.stringify(response)}`);
+      console.log('WhaDDDDDt');
+      resolve(JSON.parse(response.jsonaccounts));
+    })
   );
 }
 
 // Retrieve JSON data from chrome.storage.local
-const showAccounts = (data) => {
+const showAccounts = (jsonData) => {
+  console.log(`EEEEEEEE  ${JSON.stringify(jsonData)}`);
   // Access the JSON data
-  var jsonData = data.jsonaccounts;
-  console.log(JSON.stringify(jsonData));
   // Get the container element to hold the form
   var container = document.getElementById("accountColors");
 
@@ -114,7 +101,7 @@ const showAccounts = (data) => {
           console.log(items[`${accountId}`]);
           items[accountId].color = selectedColor;
           // Save the modified JSON data back to chrome.storage.local
-          chrome.storage.local.set({ jsonaccounts: items });
+          chrome.storage.local.set({ jsonaccounts: JSON.stringify(items) });
           }
         });
 
@@ -134,7 +121,7 @@ async function getAccountListOptions() {
   return await new Promise((resolve, reject) =>
     chrome.storage.local.get("jsonaccounts", (response) => {
       if (response) {
-        resolve(response);
+         resolve(JSON.parse(response.jsonaccounts));
       } else {
         resolve({});
       }
