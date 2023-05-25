@@ -10,8 +10,8 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 10px;
+  line-height: 1;
   overflow: auto;
   padding: 10px;
   margin: 10px 0;
@@ -22,8 +22,8 @@
 pre code {
   display: block;
   color: #333;
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 8px;
+  line-height: 0.9;
   overflow: auto;
   padding: 0;
   margin: 0;
@@ -40,42 +40,24 @@ pre code {
   
 <p id="managed-jsoninfo" >
   <pre><code>
-    {
-      "012345678912": {
-          "id": "Organization",
-          "background": "green",
-          "color": "red",
-          "headerBackground": "yellow",
-          "headerColor": "orange"
-      },
-      "012345678913": {
-          "id": "Autit "
-      },
-      "012345678914": {
-          "id": "Developerment"
-      },
-      "012345678915": {
-          "id": "Production"
-      },
-      "012345678916": {
-          "id": "Logging"
-      },
-      "https": [
-          "your-organisation.awsapps.com/start",
-          "another.awsapps.com/start"
-      ],
-      "http": [
-          "example.com"
-      ]
-  }
+{
+  "000000000000":{"id":"Main ","color":"red"},
+  "000000000001":{"id":"Audit","color":"green"},
+  "000000000002":{"id":"Dev One"},
+  "000000000003":{"id":"Example"},
+  "urls":[
+      {"url":"https://example.com","title":"Example.con"}
+      ,{"url":"https://example.awsapps.com/start","title":"AWS Console: Example"}
+  ]
+}
 </code></pre></p>
 
 
 <label>Title Bar JSON Details</label><br/>
 <textarea id="jsoninfo" name="jsoninfo" rows="20" cols="50"></textarea><br/>
-<div id="status"></div>
+<div id="status">Unsaved</div>
 <button id="save">Save</button>
-<script src="options.ts"></script>
+<script src="options.js"></script>
 </body>
 
 </html>

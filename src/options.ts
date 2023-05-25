@@ -1,10 +1,10 @@
 // Saves options to chrome.storage
-const jsonElementID = 'jsonElementID';
+const jsonElementID = 'jsoninfo';
 function save_options() {
     const jsonTextArea = document.getElementById(jsonElementID) as HTMLTextAreaElement;
-    const jsonInfo = jsonTextArea.value;
+    const jsoninfo = jsonTextArea.value;
     chrome.storage.local.set({
-        jsonInfo: jsonInfo
+        jsoninfo: jsoninfo
     }, function () {
         // Update status to let user know options were saved.
         var status = document.getElementById('status');
@@ -19,10 +19,10 @@ function save_options() {
 function restore_options() {
     chrome.storage.local.get({
         // default value
-        jsonInfo: "{\"0123456789\":\"Example\"}"
+        jsoninfo: "{\"000000000000\":{\"id\":\"Main\",\"color\":\"red\"},\"urls\":[{\"url\":\"https://example.com\",\"title\":\"Example.con\"}]}"
     }, function (options) {
       const jsonTextArea = document.getElementById(jsonElementID) as HTMLTextAreaElement;
-      jsonTextArea.value = options.jsonInfo;
+      jsonTextArea.value = options.jsoninfo;
     });
 }
 document.addEventListener('DOMContentLoaded', restore_options);

@@ -2,6 +2,7 @@
   "author": "Andrew Kentigern-Fox <andrew@akfdev.com>",
   "description": "Browser Extension for AWS Account Names",
   "devDependencies": {
+    "@babel/polyfill": "^7.12.1",
     "@types/chrome": "^0.0.224",
     "@types/firefox-webext-browser": "^111.0.0",
     "copy-webpack-plugin": "^11.0.0",
@@ -22,9 +23,12 @@
     "prepublishOnly": "yarn build",
     "start": "npm run watch",
     "watch": "webpack --mode development --watch",
-    "archive": "yarn build && mkdir -p archive && zip -r ./archive/archive.zip  icons popup *.js *.json *.html *.css",
+    "archive": "rm -rf ./dist && yarn build && tsc && mkdir -p archive && cd dist && zip -r ../archive/archive.zip  icons popup *.js *.json *.html *.css" ,
     "buildZ": "tsc",
     "watchZ": "tsc --watch"
   },
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "dependencies": {
+    "@types/es6-promise": "^3.3.0"
+  }
 }

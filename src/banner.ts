@@ -25,6 +25,8 @@ if (accountId) {
             let elementAWSConsoleTables: HTMLElement;
             if (document.getElementById('awsconsolelables')) {
                 elementAWSConsoleTables = document.getElementById('awsconsolelables');
+            } else if (document.getElementById('nav-usernameMenu')) {
+              elementAWSConsoleTables = document.getElementById('nav-usernameMenu');
             } else {
                 elementAWSConsoleTables = document.createElement('div')  as HTMLDivElement;
                 elementAWSConsoleTables.id = 'awsconsolelables';
@@ -75,8 +77,8 @@ if (accountId) {
 
 async function getAccountName(accountId) {
     return await new Promise((resolve, reject) =>
-        chrome.storage.local.get('jsonInfo', response => {
-            const accountDetails: AccountDetails = JSON.parse(response.jsonInfo);
+        chrome.storage.local.get('jsoninfo', response => {
+            const accountDetails: AccountDetails = JSON.parse(response.jsoninfo);
             if (accountDetails && accountDetails.hasOwnProperty(accountId)) {
                 resolve(accountDetails[accountId]);
             } else {
