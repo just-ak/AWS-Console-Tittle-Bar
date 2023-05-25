@@ -69,7 +69,7 @@ module.exports = {
       patterns: [
         { from: 'src/manifest.json', to: 'manifest.json' },
         { from: 'src/options.html', to: 'options.html' },
-        { from: 'src/style.css', to: 'style.css' },
+        { from: 'src/awsconsolestyle.css', to: 'awsconsolestyle.css' },
         { from: 'src/icons', to: 'icons' },
         { from: 'src/popup/*.html', to:'popup/[name][ext]' },
         { from: 'src/popup/*.css', to:'popup/[name][ext]' },

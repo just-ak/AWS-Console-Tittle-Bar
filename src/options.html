@@ -28,23 +28,27 @@ pre code {
   padding: 0;
   margin: 0;
 }
+#accountColors input {
+  padding: 0px;
+}
 
+#accountColors label {
+    width: 300px;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 2;
+    }
 </style>
 <body>
-<h1>AWS Console Tittle Bar</h1>
+<!-- <h1>AWS Console Tittle Bar</h1>-->
 <p>
   Add you account number json,with colour modifications if required.
   https / http entries will add items to the drop down menu.
 </p>
-<p>JSON Example<br/>
-  
+<p id="accountColors">Accounts</p>
 <p id="managed-jsoninfo" >
   <pre><code>
 {
-  "000000000000":{"id":"Main ","color":"red"},
-  "000000000001":{"id":"Audit","color":"green"},
-  "000000000002":{"id":"Dev One"},
-  "000000000003":{"id":"Example"},
   "urls":[
       {"url":"https://example.com","title":"Example.con"}
       ,{"url":"https://example.awsapps.com/start","title":"AWS Console: Example"}
@@ -52,12 +56,10 @@ pre code {
 }
 </code></pre></p>
 
-
-<label>Title Bar JSON Details</label><br/>
-<textarea id="jsoninfo" name="jsoninfo" rows="20" cols="50"></textarea><br/>
-<div id="status">Unsaved</div>
+<label>Title Bar JSON URL Links</label><br/>
+<textarea id="jsoninfo" name="jsoninfo" rows="5" cols="50"></textarea><br/>
+<div id="status"></div>
 <button id="save">Save</button>
 <script src="options.js"></script>
 </body>
-
 </html>
