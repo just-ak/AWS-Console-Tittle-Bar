@@ -1,6 +1,8 @@
 // Saves options to chrome.storage
+const jsonElementID = 'jsoninfo';
 function save_options() {
-    var jsoninfo = document.getElementById('jsoninfo').value;
+    const jsonTextArea = document.getElementById(jsonElementID) as HTMLTextAreaElement;
+    const jsoninfo = jsonTextArea.value;
     chrome.storage.local.set({
         jsoninfo: jsoninfo
     }, function () {
@@ -12,15 +14,15 @@ function save_options() {
         }, 750);
     });
 }
-
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 function restore_options() {
     chrome.storage.local.get({
         // default value
-        jsoninfo: "{\"0123456789\":\"Example\"}"
+        jsoninfo: "{\"000000000000\":{\"id\":\"Main\",\"color\":\"red\"},\"urls\":[{\"url\":\"https://example.com\",\"title\":\"Example.con\"}]}"
     }, function (options) {
-        document.getElementById('jsoninfo').value = options.jsoninfo;
+      const jsonTextArea = document.getElementById(jsonElementID) as HTMLTextAreaElement;
+      jsonTextArea.value = options.jsoninfo;
     });
 }
 document.addEventListener('DOMContentLoaded', restore_options);

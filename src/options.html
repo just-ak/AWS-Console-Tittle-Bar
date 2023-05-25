@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+<style>
+  pre {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 10px;
+  line-height: 1;
+  overflow: auto;
+  padding: 10px;
+  margin: 10px 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+pre code {
+  display: block;
+  color: #333;
+  font-size: 8px;
+  line-height: 0.9;
+  overflow: auto;
+  padding: 0;
+  margin: 0;
+}
+
+</style>
+<body>
+<h1>AWS Console Tittle Bar</h1>
+<p>
+  Add you account number json,with colour modifications if required.
+  https / http entries will add items to the drop down menu.
+</p>
+<p>JSON Example<br/>
+  
+<p id="managed-jsoninfo" >
+  <pre><code>
+{
+  "000000000000":{"id":"Main ","color":"red"},
+  "000000000001":{"id":"Audit","color":"green"},
+  "000000000002":{"id":"Dev One"},
+  "000000000003":{"id":"Example"},
+  "urls":[
+      {"url":"https://example.com","title":"Example.con"}
+      ,{"url":"https://example.awsapps.com/start","title":"AWS Console: Example"}
+  ]
+}
+</code></pre></p>
+
+
+<label>Title Bar JSON Details</label><br/>
+<textarea id="jsoninfo" name="jsoninfo" rows="20" cols="50"></textarea><br/>
+<div id="status">Unsaved</div>
+<button id="save">Save</button>
+<script src="options.js"></script>
+</body>
+
+</html>
