@@ -25,7 +25,7 @@ isElementLoaded('[data-testid="account-detail-menu"]').then((selector) => {
   if (accountId) {
     getAccountName(accountId)
       .then((accountDetails: AccountDetails) => {
-        console.log("accountId");
+        //console.log("accountId");
         let elementAWSConsoleTables: HTMLElement;
         if (document.getElementById("awsconsolelables")) {
           elementAWSConsoleTables = document.getElementById("awsconsolelables");
@@ -81,7 +81,8 @@ isElementLoaded('[data-testid="account-detail-menu"]').then((selector) => {
 async function getAccountName(accountId) {
   return await new Promise((resolve, reject) =>
     chrome.storage.local.get("jsonaccounts", (response) => {
-      const accountDetails: AccountDetails = response.jsonaccounts;
+      //console.log(`accountDetails: ${JSON.stringify(response)}`)
+      const accountDetails: AccountDetails = JSON.parse(response.jsonaccounts);
       if (accountDetails && accountDetails.hasOwnProperty(accountId)) {
         resolve(accountDetails[accountId]);
       } else {
@@ -94,8 +95,9 @@ async function getAccountName(accountId) {
 async function getAccountList() {
   return await new Promise((resolve, reject) =>
     chrome.storage.local.get("jsonaccounts", (response) => {
+      //console.log(`getAccountList: ${JSON.stringify(response)}`);
       if (response) {
-        resolve(response);
+        resolve(JSON.parse(response.jsonaccounts));
       } else {
         resolve({});
       }
@@ -135,7 +137,7 @@ if (window.location.href.includes("awsapps.com/start")) {
 }
 
 const extractAccountData = () => {
-  console.log("Yeah on the right page");
+  //console.log("Yeah on the right page");
   isElementLoaded(".portal-instance-section").then((selector) => {
     let jsonData = {}; 
     try {
@@ -165,18 +167,36 @@ const extractAccountData = () => {
         };
       }
     }
-
+    //console.log(jsonData);
     // Convert the updated JSON data to a string
     //const updatedJsonData = JSON.stringify(jsonData, null, 4);
     //console.log(updatedJsonData);
-    chrome.storage.local.set(
-      {
-        jsonaccounts: jsonData,
-      },
-      function () {
-        // Update status to let user know options were saved.
-        console.log("Updated");
-      }
-    );
+    saveAccountList(jsonData)
+    getAccountList();
+    // chrome.storage.local.set(
+    //   {
+    //     jsonaccounts: jsonData,
+    //   },
+    //   function () {
+    //     // Update status to let user know options were saved.
+    //     console.log(`Updated: ${JSON.stringify(jsonData)}`);
+
+       
+    //     console.log('Did it Update');
+    //   }
+    // );
   });
 };
+
+async function saveAccountList(data) {
+  return await new Promise((resolve, reject) =>
+  chrome.storage.local.set(
+    {
+      jsonaccounts: JSON.stringify(data),
+    },
+    function () {
+      // Update status to let user know options were saved.
+      //console.log(`Updated #1: ${JSON.stringify(data)}`);
+    }
+  ));
+}
