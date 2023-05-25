@@ -23,12 +23,13 @@
     "prepublishOnly": "yarn build",
     "start": "npm run watch",
     "watch": "webpack --mode development --watch",
-    "archive": "rm -rf ./dist && yarn build && tsc && mkdir -p archive && cd dist && zip -r ../archive/archive.zip  icons popup *.js *.json *.html *.css" ,
+    "archive": "rm -rf ./dist && yarn build && tsc && mkdir -p archive && cd dist && zip -r ../archive/archive.zip  icons popup *.js *.json *.html *.css",
     "buildZ": "tsc",
     "watchZ": "tsc --watch"
   },
   "version": "1.0.0",
   "dependencies": {
+    "@semantic-release/git": "^10.0.1",
     "@types/es6-promise": "^3.3.0"
   }
 }
