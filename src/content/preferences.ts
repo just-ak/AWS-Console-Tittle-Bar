@@ -38,6 +38,7 @@ function restore_options() {
       jsonTextArea.value = options.jsoninfo;
     }
   );
+
   pr_getAllAccounts().then((data) => {
     showAccounts(data);
   });

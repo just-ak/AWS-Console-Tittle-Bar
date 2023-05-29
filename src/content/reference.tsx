@@ -70,7 +70,7 @@ async function getAdditionalLinks() {
         const accountDetails = JSON.parse(response.jsoninfo);
         resolve(accountDetails);
       } catch (e) {
-        reject(e);
+        reject(false);
       }
     });
   });

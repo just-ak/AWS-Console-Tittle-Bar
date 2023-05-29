@@ -35,11 +35,11 @@
     "prepublishOnly": "yarn build",
     "start": "npm run watch",
     "watch": "webpack --mode development --watch",
-    "archive": "rm -rf ./dist && yarn build && tsc && rm -rf ./dist/index.html && rm -rf ./dist/content/content_pages.js && rm -rf ./dist/content/plugin_page.js && rm -rf ./dist/content/preferences.js  && mv  ./dist/content/content_pages*.* ./dist/  && mkdir -p archive && cd dist && zip -r ../archive/archive.zip  icons popup *.js *.json *.html *.css && cd .. && npx addons-linter archive/archive.zip  ",
+    "archive": "rm -rf ./dist && rm -rf ./archive && yarn build && tsc && rm -rf ./dist/index.html && rm -rf ./dist/content_pages.js && rm -rf ./dist/content/plugin_page.js && rm -rf ./dist/content/preferences.js  && mkdir -p archive && cd dist && zip -r ../archive/archive.zip . && cd .. && npx addons-linter archive/archive.zip  ",
     "buildZ": "tsc",
     "watchZ": "tsc --watch"
   },
-  "version": "4.2.0",
+  "version": "4.2.1",
   "dependencies": {
     "@semantic-release/git": "^10.0.1",
     "@types/es6-promise": "^3.3.0",
