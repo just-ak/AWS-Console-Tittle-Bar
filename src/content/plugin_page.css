@@ -1,0 +1,122 @@
+html,
+body {
+  width: 320px;
+  padding: 0px;
+  margin: 0px;
+  border: 0px solid rgb(70, 70, 70);
+  overflow: visible;
+  min-height: 350px;
+}
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+h1 {
+  font-size: 1em;
+  width: 100%;
+  text-align: center;
+}
+
+#accurl {
+  margin-bottom: 5px;
+}
+#awsso-footer {
+  float: right;
+  font-size: 1em;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+#add-url-container {
+  font-size: 1em;
+  text-align: center;
+  line-height: 1.2em;
+}
+
+
+
+.svg-image {
+  height: 1.2em;
+  margin: 0px 0px 0px 4px;
+}
+#accountColors {
+  margin-top: 10px;
+  visibility: hidden;
+  text-align: center;
+}
+#accountColors {
+  visibility: visible;
+  text-align: center;
+}
+#awsso-footer:hover {
+  background-color: #dfbb6f;
+}
+#awsso-footer {
+  cursor: pointer;
+}
+
+.remove-url {
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  background-color: red;
+}
+#accborder {
+  margin: 0px 20px 2px 20px;
+  border-bottom: 1px solid gray;
+  text-align: center;
+}
+
+#add-url-container input {
+  width:70%;
+  margin: 2px;
+}
+
+#accountColors input[type='color' i] {
+  appearance: auto;
+  width: 50px;
+  height: 1.2em;
+  cursor: default;
+  box-sizing: unset;
+  background-color: buttonface;
+  color: buttontext;
+  border-width: 0px;
+  border-style: none;
+  border-color: transparent;
+  border-image: none;
+  padding: 0px;
+}
+.page-choice {
+  width: 100%;
+  font-size: 1em;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+.page-choice-http {
+  width: 100%;
+  font-size: 1em;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+.page-choice-https {
+  width: 100%;
+  font-size: 1em;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+.page-choice-urls {
+  width: 100%;
+  font-size: 1em;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+.page-choice-urls:hover {
+  background-color: #57c264;
+}
+.page-choice:hover {
+  background-color: #57c264;
+}

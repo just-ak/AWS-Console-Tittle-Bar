@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="plugin_page.css" />
+  </head>
+<body>
+<p>
+  Add you account number json,with colour modifications if required.
+  https / http entries will add items to the drop down menu.
+</p>
+<p id="accountColors">Accounts</p>
+<p id="managed-jsoninfo" >
+  <pre><code>
+{
+  "urls":[
+      {"url":"https://example.com","title":"Example.con"}
+      ,{"url":"https://example.awsapps.com/start","title":"AWS Console: Example"}
+  ]
+}
+</code></pre></p>
+
+<label>URL Links</label><br/>
+<button id="save">Import</button>
+<textarea id="jsoninfo" name="jsoninfo" rows="5" cols="50"></textarea><br/>
+<div id="status"></div>
+</body>
+</html>
