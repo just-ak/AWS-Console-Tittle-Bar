@@ -1,9 +1,9 @@
 {
-    "version": "4.2.1",
+    "version": "4.2.2",
     "name": "AWS Console Title Bar",
     "description": "Add Additional information to the AWS title bar.",
     "action": {
-        "default_title": "AWS Console Banner Information 4.2.1",
+        "default_title": "AWS Console Banner Information 4.2.2",
         "default_popup": "content/plugin_page.html",
         "default_icon": {
           "16": "icons/Logo-16.png",
