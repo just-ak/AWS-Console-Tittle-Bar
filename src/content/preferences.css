@@ -4,7 +4,7 @@ body {
   padding: 0px;
   margin: 0px;
   border: 0px solid rgb(70, 70, 70);
-  overflow: hidden;
+  overflow: visible;
   min-height: 300px;
 }
 

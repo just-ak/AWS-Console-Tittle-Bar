@@ -26,17 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const accurl = document.getElementById('accurl');
 
   accurl.addEventListener('click', function (e) {
-    if ((e.target as HTMLElement).classList.contains('page-choice-https')) {
-      const chosenPage = 'https://' + (e.target as HTMLElement).textContent;
-      const updating = chrome.tabs.create({ url: chosenPage });
-      updating.then(onUpdated, onError);
-    }
-
-    if ((e.target as HTMLElement).classList.contains('page-choice-http')) {
-      const chosenPage = 'http://' + (e.target as HTMLElement).textContent;
-      const updating = chrome.tabs.create({ url: chosenPage });
-      updating.then(onUpdated, onError);
-    }
     if ((e.target as HTMLElement).classList.contains('page-choice-urls')) {
       const chosenPage = (e.target as HTMLElement).dataset.url;
       const updating = chrome.tabs.create({ url: chosenPage });
@@ -104,13 +93,14 @@ const updatePopupUrls = () => {
       }
     }
   });
-  
 };
 
 const cogIcon = document.getElementById('awsso-footer');
 const accountColorsDiv = document.getElementById('accountColors');
 const urlAddDiv = document.getElementById('add-url-container');
+const hiddenBox = document.getElementById('hiddenBox');
 
+hiddenBox.style.height = '0px';
 accountColorsDiv.style.visibility = 'hidden';
 urlAddDiv.style.visibility = 'hidden';
 
@@ -118,10 +108,13 @@ cogIcon.addEventListener('click', function () {
   if (accountColorsDiv.style.visibility === 'hidden') {
     accountColorsDiv.style.visibility = 'unset';
     urlAddDiv.style.visibility = 'unset';
+    urlAddDiv.style.height = '150px';
     toggleVisibility(true);
   } else {
     accountColorsDiv.style.visibility = 'hidden';
     urlAddDiv.style.visibility = 'hidden';
+    urlAddDiv.style.height = '0px';
+    hiddenBox.style.height = '0px';
     toggleVisibility(false);
   }
 });
@@ -140,7 +133,6 @@ function toggleVisibility(visibility: boolean) {
   }
 }
 
-
 const showSingleAccount = (accountId) => {
   const container = document.getElementById('accountColors');
   pp_getAllAccounts().then((jsonData) => {
@@ -155,6 +147,17 @@ const showSingleAccount = (accountId) => {
     colorInput.style.backgroundColor = account.color;
     colorInput.dataset.coloris = '';
     colorInput.value = account.color;
+
+    colorInput.addEventListener('focus', function () {
+      // Check if the hidden box is currently hidden
+      // if (hiddenBox.style.height === '0px') {
+      hiddenBox.style.height = '150px';
+    });
+    // colorInput.addEventListener('blur', function () {
+    //     hiddenBox.style.height = '0px';
+
+    // });
+
     colorInput.addEventListener('change', function (event) {
       const selectedColor = (event.target as HTMLInputElement).value;
       const accountId = (event.target as HTMLInputElement).parentNode.querySelector('label').textContent.split(':')[1].trim();

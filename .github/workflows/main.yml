@@ -33,12 +33,12 @@ jobs:
         run: yarn archive
 
       # https://github.com/marketplace/actions/browser-platform-publisher
-      - name: Submit Extension
-        uses: PlasmoHQ/bpp@v3
-        with:
-          keys: ${{ secrets.BPP_KEYS }}
-          chrome-file: "chrome/myext_chromium_${{ env.EXT_VERSION }}.zip"
-          edge-file: "edge/myext_edge_${{ env.EXT_VERSION }}.zip"
-          edge-notes: "This is a test submission"
-          version-file: "src/manifest.json"
-          verbose: true
+      # - name: Submit Extension
+      #   uses: PlasmoHQ/bpp@v3
+      #   with:
+      #     keys: ${{ secrets.BPP_KEYS }}
+      #     chrome-file: "chrome/myext_chromium_${{ env.EXT_VERSION }}.zip"
+      #     edge-file: "edge/myext_edge_${{ env.EXT_VERSION }}.zip"
+      #     edge-notes: "This is a test submission"
+      #     version-file: "src/manifest.json"
+      #     verbose: true

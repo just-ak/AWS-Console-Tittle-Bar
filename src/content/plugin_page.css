@@ -4,8 +4,8 @@ body {
   padding: 0px;
   margin: 0px;
   border: 0px solid rgb(70, 70, 70);
-  overflow: visible;
-  min-height: 350px;
+  overflow: hidden;
+  min-height: 100px;
 }
 html {
   font-family: Arial, Helvetica, sans-serif;
@@ -16,6 +16,10 @@ h1 {
   text-align: center;
 }
 
+#hiddenBox {
+  height: 0px;
+}
+
 #accurl {
   margin-bottom: 5px;
 }
@@ -23,14 +27,27 @@ h1 {
   float: right;
   font-size: 1em;
   position: absolute;
-  bottom: 0px;
-  right: 0px;
+  top: 0px;
+  left: 0px;
+}
+
+#awsso-footer:hover {
+  background-color: #dfbb6f;
+}
+#awsso-footer {
+  cursor: pointer;
 }
 
 #add-url-container {
   font-size: 1em;
   text-align: center;
   line-height: 1.2em;
+  height: 0px;
+}
+
+#add-url-container input {
+  width:70%;
+  margin: 2px;
 }
 
 
@@ -48,12 +65,7 @@ h1 {
   visibility: visible;
   text-align: center;
 }
-#awsso-footer:hover {
-  background-color: #dfbb6f;
-}
-#awsso-footer {
-  cursor: pointer;
-}
+
 
 .remove-url {
   cursor: pointer;
@@ -67,10 +79,6 @@ h1 {
   text-align: center;
 }
 
-#add-url-container input {
-  width:70%;
-  margin: 2px;
-}
 
 #accountColors input[type='color' i] {
   appearance: auto;
