@@ -96,35 +96,26 @@ const updatePopupUrls = () => {
 };
 
 const cogIcon = document.getElementById('awsso-footer');
-const accountColorsDiv = document.getElementById('accountColors');
-const urlAddDiv = document.getElementById('add-url-container');
 const hiddenBox = document.getElementById('hiddenBox');
+const settingsBlock = document.getElementById('settingsBlock');
 
 hiddenBox.style.height = '0px';
-accountColorsDiv.style.visibility = 'hidden';
-urlAddDiv.style.visibility = 'hidden';
+settingsBlock.style.display = 'none';
 
 cogIcon.addEventListener('click', function () {
-  if (accountColorsDiv.style.visibility === 'hidden') {
-    accountColorsDiv.style.visibility = 'unset';
-    urlAddDiv.style.visibility = 'unset';
-    urlAddDiv.style.height = '150px';
+  if (settingsBlock.style.display === 'none') {
+    settingsBlock.style.display = 'block';
     toggleVisibility(true);
   } else {
-    accountColorsDiv.style.visibility = 'hidden';
-    urlAddDiv.style.visibility = 'hidden';
-    urlAddDiv.style.height = '0px';
-    hiddenBox.style.height = '0px';
+    settingsBlock.style.display = 'none';
     toggleVisibility(false);
   }
 });
 
 function toggleVisibility(visibility: boolean) {
   const removeUrls = document.getElementsByClassName('remove-url');
-  // Iterate through each remove-url element
   for (let i = 0; i < removeUrls.length; i++) {
     const removeUrl = removeUrls[i];
-    // Toggle the visibility by changing the style.display property
     if (visibility) {
       (removeUrl as HTMLElement).style.visibility = 'visible';
     } else {
@@ -133,38 +124,50 @@ function toggleVisibility(visibility: boolean) {
   }
 }
 
+const showWarningRegions = (accountId) => {
+  const container = document.getElementById('regionWarning');
+  pp_getAllAccounts().then((jsonData) => {
+    const account = jsonData[accountId];
+    const regions = account.regions;
+    container.innerHTML = '';
+    for (const region of regions) {
+      const regionItem = document.querySelector(`[data-testid="${region}"]`) as HTMLDivElement;
+
+      regionItem.style.color = '#fff';
+      regionItem.style.padding = '10px';
+      regionItem.style.display = 'inline-block';
+      regionItem.style.borderRadius = '5px';
+      regionItem.style.animation = 'blinkingBackground 2s infinite';
+    }
+  });
+};
+
 const showSingleAccount = (accountId) => {
   const container = document.getElementById('accountColors');
   pp_getAllAccounts().then((jsonData) => {
-    const form = document.createElement('form');
     const account = jsonData[accountId];
-    const accountDiv = document.createElement('div');
-    const nameLabel = document.createElement('label');
-    nameLabel.textContent = account.id + ': ' + accountId;
-    accountDiv.appendChild(nameLabel);
-    const colorInput = document.createElement('input');
-    colorInput.style.color = account.color;
-    colorInput.style.backgroundColor = account.color;
-    colorInput.dataset.coloris = '';
-    colorInput.value = account.color;
 
-    colorInput.addEventListener('focus', function () {
-      // Check if the hidden box is currently hidden
-      // if (hiddenBox.style.height === '0px') {
-      hiddenBox.style.height = '150px';
-    });
-    // colorInput.addEventListener('blur', function () {
-    //     hiddenBox.style.height = '0px';
+    const textColor = document.getElementById('textColor') as HTMLFormElement;
+    const backgroundColor = document.getElementById('backgroundColor') as HTMLFormElement;
 
-    // });
+    textColor.style.color = account.color;
+    textColor.style.backgroundColor = account.color;
+    textColor.value = account.color;
 
-    colorInput.addEventListener('change', function (event) {
+    if (account.backgroundColor) {
+      backgroundColor.style.color = account.backgroundColor;
+      backgroundColor.style.backgroundColor = account.backgroundColor;
+      backgroundColor.value = account.backgroundColor;
+    }
+    textColor.addEventListener('change', function (event) {
       const selectedColor = (event.target as HTMLInputElement).value;
-      const accountId = (event.target as HTMLInputElement).parentNode.querySelector('label').textContent.split(':')[1].trim();
+      const textColor = document.getElementById('textColor') as HTMLFormElement;
+      const awsBannerAccountName = document.getElementById('awsBannerAccountName');
       pp_getAllAccounts().then((data) => {
         data[accountId].color = selectedColor;
-        colorInput.style.color = selectedColor;
-        colorInput.style.backgroundColor = selectedColor;
+        awsBannerAccountName.style.color = selectedColor;
+        backgroundColor.style.color = selectedColor;
+        textColor.style.color = selectedColor;
         pp_saveAllAccounts(data).finally((update) => {
           chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.tabs.sendMessage(tabs[0].id, `updateColour:${selectedColor}`, (response) => {
@@ -175,8 +178,22 @@ const showSingleAccount = (accountId) => {
       });
     });
 
-    accountDiv.appendChild(colorInput);
-    form.appendChild(accountDiv);
-    container.appendChild(form);
+    backgroundColor.addEventListener('change', function (event) {
+      const selectedColor = (event.target as HTMLInputElement).value;
+      const awsBanner = document.getElementById('awsBanner');
+      pp_getAllAccounts().then((data) => {
+        data[accountId].color = selectedColor;
+        backgroundColor.style.backgroundColor = selectedColor;
+        textColor.style.backgroundColor = selectedColor;
+        awsBanner.style.backgroundColor = selectedColor;
+        pp_saveAllAccounts(data).finally((update) => {
+          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, `updateBackgroundColor:${selectedColor}`, (response) => {
+              return true;
+            });
+          });
+        });
+      });
+    });
   });
 };

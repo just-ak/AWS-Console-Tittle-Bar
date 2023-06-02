@@ -10,23 +10,99 @@
   <body>
     <h1>AWS Console Title Bar</h1>
     <div id="accborder">
-      <div id="accurl"></div>
+      <div id="accurl">
+        <div class="page-choice-urls"> AAAAAA</div>
+      </div>
+      <div class="settings"><img src="../icons/tab.png"  alt="Tab"  /></div>
     </div>
-    <div id="accountColors"></div>
-    <div id="hiddenBox">&nbsp;</div>
-    <div id="add-url-container">
-      <p>Add URL and Title</p>
-      <form id="url-form">
-        <label for="url-input">URL: </label>
-        <input type="text" id="url-input" required>
-        <br>
-        <label for="title-input">Title: </label>
-        <input type="text" id="title-input" required>
-        <br>
-        <button type="submit">Add</button>
-      </form>
+    <div id="settingsBlock">
+      <div id="awsBanner">
+        <span>Services</span>&nbsp;&nbsp;&nbsp; <span>Ireland</span>&nbsp;&nbsp;&nbsp; <span>dmin/a@aaa.com</span>&nbsp;&nbsp;&nbsp;
+        <span id="awsBannerAccountName">Prod</span>
+      </div>
+      <div id="accountColors">
+        <form id="colorForm">
+          <div>
+            <div class="colorLabel"><label for="backgroundColor">Banner Background</label></div>
+            <input type="text" id="backgroundColor" name="background" data-coloris />
+          </div>
+          <div>
+            <div class="colorLabel"><label for="textColor">Account NameText</label></div>
+            <input type="text" id="textColor" name="text" data-coloris />
+          </div>
+        </form>
+      </div>
+      <div id="hiddenBox">&nbsp;</div>
+      <div id="add-url-container">
+        <p>Add URL and Title</p>
+        <form id="url-form">
+          <label for="url-input">URL: </label>
+          <input type="text" id="url-input" required />
+          <br />
+          <label for="title-input">Title: </label>
+          <input type="text" id="title-input" required />
+          <br />
+          <button type="submit">Add</button>
+        </form>
+      </div>
+      <div id="regionHighlight">
+        <h2><span>box</span>Color Regions<span>banner</span></h2>
+        <span data-region="N. Virginia">N. Virginia</span>
+        <span data-region="Ohio">Ohio</span>
+        <span data-region="N. California">N. California</span>
+        <span data-region="Oregon">Oregon</span>
+        <span data-region="Cape Town">Cape Town</span>
+        <span data-region="Hong Kong">Hong Kong</span>
+        <span data-region="Mumbai">Mumbai</span>
+        <span data-region="Osaka-Local">Osaka-Local</span>
+        <span data-region="Seoul">Seoul</span>
+        <span data-region="Singapore">Singapore</span>
+        <span data-region="Sydney">Sydney</span>
+        <span data-region="Tokyo">Tokyo</span>
+        <span data-region="Central">Central</span>
+        <span data-region="Beijing">Beijing</span>
+        <span data-region="Ningxia">Ningxia</span>
+        <span data-region="Frankfurt">Frankfurt</span>
+        <span data-region="Ireland">Ireland</span>
+        <span data-region="London">London</span>
+        <span data-region="Milan">Milan</span>
+        <span data-region="Paris">Paris</span>
+        <span data-region="Stockholm">Stockholm</span>
+        <span data-region="Bahrain">Bahrain</span>
+        <span data-region="Sao Paulo">Sao Paulo</span>
+        <span data-region="US-East">US-East</span>
+        <span data-region="US-West">US-West</span>
+      </div>
+
+      <div id="regionWarnings">
+        <h2>Warning Regions<span>Invert</span></h2>
+        <span data-region="Bahrain">Bahrain</span>
+        <span data-region="Beijing">Beijing</span>
+        <span data-region="Cape Town">Cape Town</span>
+        <span data-region="Central">Central</span>
+        <span data-region="Frankfurt">Frankfurt</span>
+        <span data-region="Hong Kong">Hong Kong</span>
+        <span data-region="Ireland">Ireland</span>
+        <span data-region="London">London</span>
+        <span data-region="Milan">Milan</span>
+        <span data-region="Mumbai">Mumbai</span>
+        <span data-region="N. California">N. California</span>
+        <span data-region="N. Virginia">N. Virginia</span>
+        <span data-region="Ningxia">Ningxia</span>
+        <span data-region="Ohio">Ohio</span>
+        <span data-region="Oregon">Oregon</span>
+        <span data-region="Osaka-Local">Osaka-Local</span>
+        <span data-region="Paris">Paris</span>
+        <span data-region="Sao Paulo">Sao Paulo</span>
+        <span data-region="Seoul">Seoul</span>
+        <span data-region="Singapore">Singapore</span>
+        <span data-region="Stockholm">Stockholm</span>
+        <span data-region="Sydney">Sydney</span>
+        <span data-region="Tokyo">Tokyo</span>
+        <span data-region="US-East">US-East</span>
+        <span data-region="US-West">US-West</span>
+      </div>
     </div>
-    
     <div id="awsso-footer"><img src="../icons/cog.svg" class="svg-image" alt="SVG Image" /></div>
   </body>
 </html>

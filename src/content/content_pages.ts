@@ -46,6 +46,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 //                                                                                                                           |  $$$$$$/
 //                                                                                                                            \______/
 
+
+cp_isElementLoaded('[data-testid="more-menu__awsc-nav-regions-menu-button"]').then((selector) => {
+  const baseElement = document.querySelector('[data-testid="more-menu__awsc-nav-regions-menu-button"]') as HTMLDivElement;
+
+  baseElement.style.color = "#fff";
+  baseElement.style.padding = "10px";
+  baseElement.style.display = "inline-block";
+  baseElement.style.borderRadius = "5px";
+  baseElement.style.animation = "blinkingBackground 2s infinite";
+
+});
+
+
 cp_isElementLoaded('[data-testid="account-detail-menu"]').then((selector) => {
   const baseElement = document.querySelector('[data-testid="account-detail-menu"]');
   let accountId;

@@ -1,4 +1,8 @@
-html,
+html {
+  width: 320px;
+  box-sizing: border-box;
+}
+
 body {
   width: 320px;
   padding: 0px;
@@ -6,6 +10,7 @@ body {
   border: 0px solid rgb(70, 70, 70);
   overflow: hidden;
   min-height: 100px;
+ 
 }
 html {
   font-family: Arial, Helvetica, sans-serif;
@@ -18,10 +23,66 @@ h1 {
 
 #hiddenBox {
   height: 0px;
+  box-sizing: inherit;
+}
+#regionWarning, #regionHighlights {
+  box-sizing: inherit;
+}
+
+#regionWarning {
+box-sizing: inherit;
+}
+#regionWarning h2 ,
+#regionHighlights h2 {
+  font-size: .9em;
+  font-weight: bold;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 0px 5px;
+  text-align: center;
+}
+.settings .button,
+#regionWarning span ,
+#regionHighlights span {
+  display: inline-block;
+  padding: 2px 4px;
+  border: 1px solid #9c9b9b;
+  color: #000000;
+  border-radius: 30px;
+  font-weight: bold;
+  margin: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: .6em;
+
+}
+
+#awsBanner {
+  background-color: #232f3e;
+  color: rgb(255, 255, 255);
+  font-size: .8em;
+  font-weight: bold;
+  width:100%;
+  text-align: center;
+  box-sizing: inherit;
 }
 
 #accurl {
   margin-bottom: 5px;
+  box-sizing: inherit;
+}
+
+#accborder img {
+  text-align: right;
+  background-color: rgb(215, 215, 215);
+  text-align: right;
+  position:absolute;
+  margin-top:-10px;
+  right: 0px;
+  background-color: #57c264;
+  height: 1.2em;
+  margin: 0px 0px 0px 4px;
+  
 }
 #awsso-footer {
   float: right;
@@ -29,6 +90,7 @@ h1 {
   position: absolute;
   top: 0px;
   left: 0px;
+  box-sizing: inherit;
 }
 
 #awsso-footer:hover {
@@ -39,18 +101,17 @@ h1 {
 }
 
 #add-url-container {
-  font-size: 1em;
+  font-size: 0.8em;
+  font-weight: bold;;
   text-align: center;
   line-height: 1.2em;
-  height: 0px;
 }
 
 #add-url-container input {
   width:70%;
   margin: 2px;
+  font-size: 0.8em;
 }
-
-
 
 .svg-image {
   height: 1.2em;
@@ -58,14 +119,42 @@ h1 {
 }
 #accountColors {
   margin-top: 10px;
-  visibility: hidden;
   text-align: center;
+  font-size: 0.8em;
+  text-align: left;
 }
 #accountColors {
-  visibility: visible;
   text-align: center;
 }
 
+#settingsBlock {
+  width:310px;
+  width:100%;
+  margin: 8px 2px 2px 8px;
+}
+#accountColors .colorLabel {
+  display: inline-block;
+  width: 140px;
+  margin: 0px;
+  padding: 0px;
+
+  text-align: left;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+#accountColors input {
+  appearance: auto;
+  width: 8em;
+  height: 1.2em;
+  cursor: default;
+  box-sizing: unset;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(84, 84, 84);
+  border-image: none;
+  padding: 0px;
+  background-color: transparent;
+}
 
 .remove-url {
   cursor: pointer;
@@ -80,20 +169,6 @@ h1 {
 }
 
 
-#accountColors input[type='color' i] {
-  appearance: auto;
-  width: 50px;
-  height: 1.2em;
-  cursor: default;
-  box-sizing: unset;
-  background-color: buttonface;
-  color: buttontext;
-  border-width: 0px;
-  border-style: none;
-  border-color: transparent;
-  border-image: none;
-  padding: 0px;
-}
 .page-choice {
   width: 100%;
   font-size: 1em;
@@ -101,20 +176,7 @@ h1 {
   cursor: pointer;
   overflow: hidden;
 }
-.page-choice-http {
-  width: 100%;
-  font-size: 1em;
-  text-align: center;
-  cursor: pointer;
-  overflow: hidden;
-}
-.page-choice-https {
-  width: 100%;
-  font-size: 1em;
-  text-align: center;
-  cursor: pointer;
-  overflow: hidden;
-}
+
 .page-choice-urls {
   width: 100%;
   font-size: 1em;
@@ -125,6 +187,12 @@ h1 {
 .page-choice-urls:hover {
   background-color: #57c264;
 }
-.page-choice:hover {
-  background-color: #57c264;
+
+
+@keyframes blinkingBackground{
+  0%		{ background-color: #10c018;}
+  25%		{ background-color: #1056c0;}
+  50%		{ background-color: #ef0a1a;}
+  75%		{ background-color: #254878;}
+  100%	        { background-color: #04a1d5;}
 }
