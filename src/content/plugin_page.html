@@ -45,62 +45,74 @@
           <button type="submit">Add</button>
         </form>
       </div>
-      <div id="regionHighlight">
-        <h2><span>box</span>Color Regions<span>banner</span></h2>
-        <span data-region="N. Virginia">N. Virginia</span>
-        <span data-region="Ohio">Ohio</span>
-        <span data-region="N. California">N. California</span>
-        <span data-region="Oregon">Oregon</span>
-        <span data-region="Cape Town">Cape Town</span>
-        <span data-region="Hong Kong">Hong Kong</span>
-        <span data-region="Mumbai">Mumbai</span>
-        <span data-region="Osaka-Local">Osaka-Local</span>
-        <span data-region="Seoul">Seoul</span>
-        <span data-region="Singapore">Singapore</span>
-        <span data-region="Sydney">Sydney</span>
-        <span data-region="Tokyo">Tokyo</span>
-        <span data-region="Central">Central</span>
-        <span data-region="Beijing">Beijing</span>
-        <span data-region="Ningxia">Ningxia</span>
-        <span data-region="Frankfurt">Frankfurt</span>
-        <span data-region="Ireland">Ireland</span>
-        <span data-region="London">London</span>
-        <span data-region="Milan">Milan</span>
-        <span data-region="Paris">Paris</span>
-        <span data-region="Stockholm">Stockholm</span>
-        <span data-region="Bahrain">Bahrain</span>
-        <span data-region="Sao Paulo">Sao Paulo</span>
-        <span data-region="US-East">US-East</span>
-        <span data-region="US-West">US-West</span>
-      </div>
+      <div id="regionHighlights">
+        <h2>Color by Region</h2><br/>
+        <div class="floatOptions"><span>Full banner</span><span>region box</span><span>All Accounts</span></div>
+  <!--      <input class="regionalHighlight" data-coloris  data-region="N. Virginia"></input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Ohio">Ohio</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="N. California">N. California</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Oregon">Oregon</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Cape Town">Cape Town</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Hong Kong">Hong Kong</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Mumbai">Mumbai</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Osaka-Local">Osaka-Local</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Seoul">Seoul</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Singapore">Singapore</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Sydney">Sydney</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Tokyo">Tokyo</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Central">Central</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Beijing">Beijing</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Ningxia">Ningxia</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Frankfurt">Frankfurt</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Ireland">Ireland</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="London">London</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Milan">Milan</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Paris">Paris</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Stockholm">Stockholm</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Bahrain">Bahrain</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="Sao Paulo">Sao Paulo</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="US-East">US-East</input>
+        <ipnut class="regionalHighlight"  data-coloris  data-region="US-West">US-West</input>-->
+          <div class="pill-wrapper">
+            <input type="text" class="pill-input regionalHighlight" data-coloris data-region="US-West" value="" readonly>
+            <span class="pill-label">US-West</span>
+          </div>
+
+          <div class="example full">
+            <p>Full size thumbnail</p>
+            <div class="clr-field" style="color: rgb(255, 204, 0);"><button type="button" aria-labelledby="clr-open-label"></button><input type="text" data-coloris class="coloris instance3" value="#ffcc00"></div>
+          </div>
+
+        </div>
 
       <div id="regionWarnings">
-        <h2>Warning Regions<span>Invert</span></h2>
-        <span data-region="Bahrain">Bahrain</span>
-        <span data-region="Beijing">Beijing</span>
-        <span data-region="Cape Town">Cape Town</span>
-        <span data-region="Central">Central</span>
-        <span data-region="Frankfurt">Frankfurt</span>
-        <span data-region="Hong Kong">Hong Kong</span>
-        <span data-region="Ireland">Ireland</span>
-        <span data-region="London">London</span>
-        <span data-region="Milan">Milan</span>
-        <span data-region="Mumbai">Mumbai</span>
-        <span data-region="N. California">N. California</span>
-        <span data-region="N. Virginia">N. Virginia</span>
-        <span data-region="Ningxia">Ningxia</span>
-        <span data-region="Ohio">Ohio</span>
-        <span data-region="Oregon">Oregon</span>
-        <span data-region="Osaka-Local">Osaka-Local</span>
-        <span data-region="Paris">Paris</span>
-        <span data-region="Sao Paulo">Sao Paulo</span>
-        <span data-region="Seoul">Seoul</span>
-        <span data-region="Singapore">Singapore</span>
-        <span data-region="Stockholm">Stockholm</span>
-        <span data-region="Sydney">Sydney</span>
-        <span data-region="Tokyo">Tokyo</span>
-        <span data-region="US-East">US-East</span>
-        <span data-region="US-West">US-West</span>
+        <h2>Flashing Warning</h2><br/>
+        <div class="floatOptions"><span>Invert Selection</span><span>All Accounts</span></div>
+        <span data-regionwarning="Bahrain">Bahrain</span>
+        <span data-regionwarning="Beijing">Beijing</span>
+        <span data-regionwarning="Cape Town">Cape Town</span>
+        <span data-regionwarning="Central">Central</span>
+        <span data-regionwarning="Frankfurt">Frankfurt</span>
+        <span data-regionwarning="Hong Kong">Hong Kong</span>
+        <span data-regionwarning="Ireland">Ireland</span>
+        <span data-regionwarning="London">London</span>
+        <span data-regionwarning="Milan">Milan</span>
+        <span data-regionwarning="Mumbai">Mumbai</span>
+        <span data-regionwarning="N. California">N. California</span>
+        <span data-regionwarning="N. Virginia">N. Virginia</span>
+        <span data-regionwarning="Ningxia">Ningxia</span>
+        <span data-regionwarning="Ohio">Ohio</span>
+        <span data-regionwarning="Oregon">Oregon</span>
+        <span data-regionwarning="Osaka-Local">Osaka-Local</span>
+        <span data-regionwarning="Paris">Paris</span>
+        <span data-regionwarning="Sao Paulo">Sao Paulo</span>
+        <span data-regionwarning="Seoul">Seoul</span>
+        <span data-regionwarning="Singapore">Singapore</span>
+        <span data-regionwarning="Stockholm">Stockholm</span>
+        <span data-regionwarning="Sydney">Sydney</span>
+        <span data-regionwarning="Tokyo">Tokyo</span>
+        <span data-regionwarning="US-East">US-East</span>
+        <span data-regionwarning="US-West">US-West</span>
       </div>
     </div>
     <div id="awsso-footer"><img src="../icons/cog.svg" class="svg-image" alt="SVG Image" /></div>

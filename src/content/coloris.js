@@ -1,4 +1,4 @@
- /*!
+/*!
  * Copyright (c) 2021 Momo Bassit.
  * Licensed under the MIT License (MIT)
  * https://github.com/mdbassit/Coloris
@@ -7,8 +7,23 @@
 (function (window, document, Math) {
   var ctx = document.createElement('canvas').getContext('2d');
   var currentColor = { r: 0, g: 0, b: 0, h: 0, s: 0, v: 0, a: 1 };
-  var container, picker, colorArea, colorAreaDims, colorMarker, colorPreview, colorValue, clearButton, closeButton,
-  hueSlider, hueMarker, alphaSlider, alphaMarker, currentEl, currentFormat, oldColor, keyboardNav;
+  var container,
+    picker,
+    colorArea,
+    colorAreaDims,
+    colorMarker,
+    colorPreview,
+    colorValue,
+    clearButton,
+    closeButton,
+    hueSlider,
+    hueMarker,
+    alphaSlider,
+    alphaMarker,
+    currentEl,
+    currentFormat,
+    oldColor,
+    keyboardNav;
 
   // Default settings
   var settings = {
@@ -33,7 +48,9 @@
     clearLabel: 'Clear',
     closeButton: false,
     closeLabel: 'Close',
-    onChange: function onChange() {return undefined;},
+    onChange: function onChange() {
+      return undefined;
+    },
     a11y: {
       open: 'Open color picker',
       close: 'Close color picker',
@@ -44,9 +61,9 @@
       input: 'Color value field',
       format: 'Color format',
       swatch: 'Color swatch',
-      instruction: 'Saturation and brightness selector. Use up, down, left and right arrow keys to select.' } };
-
-
+      instruction: 'Saturation and brightness selector. Use up, down, left and right arrow keys to select.',
+    },
+  };
 
   // Virtual instances cache
   var instances = {};
@@ -95,7 +112,7 @@
           }
 
           // Set the theme and color scheme
-          picker.className = "clr-picker clr-" + settings.theme + " clr-" + settings.themeMode;
+          picker.className = 'clr-picker clr-' + settings.theme + ' clr-' + settings.themeMode;
 
           // Update the color picker's position if inline mode is in use
           if (settings.inline) {
@@ -104,7 +121,9 @@
           break;
         case 'rtl':
           settings.rtl = !!options.rtl;
-          document.querySelectorAll('.clr-field').forEach(function (field) {return field.classList.toggle('clr-rtl', settings.rtl);});
+          document.querySelectorAll('.clr-field').forEach(function (field) {
+            return field.classList.toggle('clr-rtl', settings.rtl);
+          });
           break;
         case 'margin':
           options.margin *= 1;
@@ -123,15 +142,27 @@
           }
           break;
         case 'swatches':
-          if (Array.isArray(options.swatches)) {(function () {
+          if (Array.isArray(options.swatches)) {
+            (function () {
               var swatches = [];
 
               options.swatches.forEach(function (swatch, i) {
-                swatches.push("<button type=\"button\" id=\"clr-swatch-" + i + "\" aria-labelledby=\"clr-swatch-label clr-swatch-" + i + "\" style=\"color: " + swatch + ";\">" + swatch + "</button>");
+                swatches.push(
+                  '<button type="button" id="clr-swatch-' +
+                    i +
+                    '" aria-labelledby="clr-swatch-label clr-swatch-' +
+                    i +
+                    '" style="color: ' +
+                    swatch +
+                    ';">' +
+                    swatch +
+                    '</button>'
+                );
               });
 
-              getEl('clr-swatches').innerHTML = swatches.length ? "<div>" + swatches.join('') + "</div>" : '';
-              settings.swatches = options.swatches.slice();})();
+              getEl('clr-swatches').innerHTML = swatches.length ? '<div>' + swatches.join('') + '</div>' : '';
+              settings.swatches = options.swatches.slice();
+            })();
           }
           break;
         case 'swatchesOnly':
@@ -214,8 +245,8 @@
           }
           break;
         default:
-          settings[key] = options[key];}
-
+          settings[key] = options[key];
+      }
     }
   }
 
@@ -254,9 +285,8 @@
   function attachVirtualInstance(element) {
     if (hasInstance) {
       // These options can only be set globally, not per instance
-      var unsupportedOptions = ['el', 'wrap', 'rtl', 'inline', 'defaultColor', 'a11y'];var _loop = function _loop(
-
-      selector) {
+      var unsupportedOptions = ['el', 'wrap', 'rtl', 'inline', 'defaultColor', 'a11y'];
+      var _loop = function _loop(selector) {
         var options = instances[selector];
 
         // If the element matches an instance's CSS selector
@@ -265,7 +295,9 @@
           defaultInstance = {};
 
           // Delete unsupported options
-          unsupportedOptions.forEach(function (option) {return delete options[option];});
+          unsupportedOptions.forEach(function (option) {
+            return delete options[option];
+          });
 
           // Back up the default options so we can restore them later
           for (var option in options) {
@@ -274,8 +306,12 @@
 
           // Set the instance's options
           configure(options);
-          return "break";
-        }};for (var selector in instances) {var _ret = _loop(selector);if (_ret === "break") break;
+          return 'break';
+        }
+      };
+      for (var selector in instances) {
+        var _ret = _loop(selector);
+        if (_ret === 'break') break;
       }
     }
   }
@@ -405,8 +441,8 @@
 
       picker.classList.toggle('clr-left', reposition.left);
       picker.classList.toggle('clr-top', reposition.top);
-      picker.style.left = left + "px";
-      picker.style.top = top + "px";
+      picker.style.left = left + 'px';
+      picker.style.top = top + 'px';
       offset.x += picker.offsetLeft;
       offset.y += picker.offsetTop;
     }
@@ -415,8 +451,8 @@
       width: colorArea.offsetWidth,
       height: colorArea.offsetHeight,
       x: colorArea.offsetLeft + offset.x,
-      y: colorArea.offsetTop + offset.y };
-
+      y: colorArea.offsetTop + offset.y,
+    };
   }
 
   /**
@@ -435,7 +471,7 @@
           classes += ' clr-rtl';
         }
 
-        wrapper.innerHTML = "<button type=\"button\" aria-labelledby=\"clr-open-label\"></button>";
+        wrapper.innerHTML = '<button type="button" aria-labelledby="clr-open-label"></button>';
         parentNode.insertBefore(wrapper, field);
         wrapper.setAttribute('class', classes);
         wrapper.style.color = field.value;
@@ -466,7 +502,8 @@
       }
 
       // Trigger a "change" event if needed
-      setTimeout(function () {// Add this to the end of the event loop
+      setTimeout(function () {
+        // Add this to the end of the event loop
         if (oldColor !== prevEl.value) {
           prevEl.dispatchEvent(new Event('change', { bubbles: true }));
         }
@@ -505,14 +542,14 @@
 
     // Update the UI
     hueSlider.value = hsva.h;
-    picker.style.color = "hsl(" + hsva.h + ", 100%, 50%)";
-    hueMarker.style.left = hsva.h / 360 * 100 + "%";
+    picker.style.color = 'hsl(' + hsva.h + ', 100%, 50%)';
+    hueMarker.style.left = (hsva.h / 360) * 100 + '%';
 
-    colorMarker.style.left = colorAreaDims.width * hsva.s / 100 + "px";
-    colorMarker.style.top = colorAreaDims.height - colorAreaDims.height * hsva.v / 100 + "px";
+    colorMarker.style.left = (colorAreaDims.width * hsva.s) / 100 + 'px';
+    colorMarker.style.top = colorAreaDims.height - (colorAreaDims.height * hsva.v) / 100 + 'px';
 
     alphaSlider.value = hsva.a * 100;
-    alphaMarker.style.left = hsva.a * 100 + "%";
+    alphaMarker.style.left = hsva.a * 100 + '%';
   }
 
   /**
@@ -557,9 +594,10 @@
   function setColorAtPosition(x, y) {
     var hsva = {
       h: hueSlider.value * 1,
-      s: x / colorAreaDims.width * 100,
-      v: 100 - y / colorAreaDims.height * 100,
-      a: alphaSlider.value / 100 };
+      s: (x / colorAreaDims.width) * 100,
+      v: 100 - (y / colorAreaDims.height) * 100,
+      a: alphaSlider.value / 100,
+    };
 
     var rgba = HSVAtoRGBA(hsva);
 
@@ -592,8 +630,8 @@
   function getPointerPosition(event) {
     return {
       pageX: event.changedTouches ? event.changedTouches[0].pageX : event.pageX,
-      pageY: event.changedTouches ? event.changedTouches[0].pageY : event.pageY };
-
+      pageY: event.changedTouches ? event.changedTouches[0].pageY : event.pageY,
+    };
   }
 
   /**
@@ -639,8 +677,8 @@
     y = y < 0 ? 0 : y > colorAreaDims.height ? colorAreaDims.height : y;
 
     // Set the position
-    colorMarker.style.left = x + "px";
-    colorMarker.style.top = y + "px";
+    colorMarker.style.left = x + 'px';
+    colorMarker.style.top = y + 'px';
 
     // Update the color
     setColorAtPosition(x, y);
@@ -654,7 +692,13 @@
    * @param {Object} rgba Red, green, blue and alpha values.
    * @param {Object} [hsva] Hue, saturation, value and alpha values.
    */
-  function updateColor(rgba, hsva) {if (rgba === void 0) {rgba = {};}if (hsva === void 0) {hsva = {};}
+  function updateColor(rgba, hsva) {
+    if (rgba === void 0) {
+      rgba = {};
+    }
+    if (hsva === void 0) {
+      hsva = {};
+    }
     var format = settings.format;
 
     for (var key in rgba) {
@@ -696,11 +740,11 @@
         break;
       case 'hsl':
         colorValue.value = HSLAToStr(HSVAtoHSLA(currentColor));
-        break;}
-
+        break;
+    }
 
     // Select the current format in the format switcher
-    document.querySelector(".clr-format [value=\"" + format + "\"]").checked = true;
+    document.querySelector('.clr-format [value="' + format + '"]').checked = true;
   }
 
   /**
@@ -711,8 +755,8 @@
     var x = colorMarker.style.left.replace('px', '') * 1;
     var y = colorMarker.style.top.replace('px', '') * 1;
 
-    picker.style.color = "hsl(" + hue + ", 100%, 50%)";
-    hueMarker.style.left = hue / 360 * 100 + "%";
+    picker.style.color = 'hsl(' + hue + ', 100%, 50%)';
+    hueMarker.style.left = (hue / 360) * 100 + '%';
 
     setColorAtPosition(x, y);
   }
@@ -723,7 +767,7 @@
   function setAlpha() {
     var alpha = alphaSlider.value / 100;
 
-    alphaMarker.style.left = alpha * 100 + "%";
+    alphaMarker.style.left = alpha * 100 + '%';
     updateColor({ a: alpha });
     pickColor();
   }
@@ -738,7 +782,7 @@
     var value = hsva.v / 100;
     var chroma = saturation * value;
     var hueBy60 = hsva.h / 60;
-    var x = chroma * (1 - Math.abs(hueBy60 % 2 - 1));
+    var x = chroma * (1 - Math.abs((hueBy60 % 2) - 1));
     var m = value - chroma;
 
     chroma = chroma + m;
@@ -753,8 +797,8 @@
       r: Math.round(red * 255),
       g: Math.round(green * 255),
       b: Math.round(blue * 255),
-      a: hsva.a };
-
+      a: hsva.a,
+    };
   }
 
   /**
@@ -768,15 +812,15 @@
     var saturation;
 
     if (lightness > 0 && lightness < 1) {
-      saturation = Math.round((value - lightness) / Math.min(lightness, 1 - lightness) * 100);
+      saturation = Math.round(((value - lightness) / Math.min(lightness, 1 - lightness)) * 100);
     }
 
     return {
       h: hsva.h,
       s: saturation || 0,
       l: Math.round(lightness * 100),
-      a: hsva.a };
-
+      a: hsva.a,
+    };
   }
 
   /**
@@ -796,10 +840,18 @@
     var saturation = 0;
 
     if (chroma) {
-      if (xmax === red) {hue = (green - blue) / chroma;}
-      if (xmax === green) {hue = 2 + (blue - red) / chroma;}
-      if (xmax === blue) {hue = 4 + (red - green) / chroma;}
-      if (xmax) {saturation = chroma / xmax;}
+      if (xmax === red) {
+        hue = (green - blue) / chroma;
+      }
+      if (xmax === green) {
+        hue = 2 + (blue - red) / chroma;
+      }
+      if (xmax === blue) {
+        hue = 4 + (red - green) / chroma;
+      }
+      if (xmax) {
+        saturation = chroma / xmax;
+      }
     }
 
     hue = Math.floor(hue * 60);
@@ -808,8 +860,8 @@
       h: hue < 0 ? hue + 360 : hue,
       s: Math.round(saturation * 100),
       v: Math.round(value * 100),
-      a: rgba.a };
-
+      a: rgba.a,
+    };
   }
 
   /**
@@ -833,20 +885,24 @@
         r: match[3] * 1,
         g: match[4] * 1,
         b: match[5] * 1,
-        a: match[6] * 1 };
-
+        a: match[6] * 1,
+      };
 
       // Workaround to mitigate a Chromium bug where the alpha value is rounded incorrectly
       rgba.a = +rgba.a.toFixed(2);
-
     } else {
-      match = ctx.fillStyle.replace('#', '').match(/.{2}/g).map(function (h) {return parseInt(h, 16);});
+      match = ctx.fillStyle
+        .replace('#', '')
+        .match(/.{2}/g)
+        .map(function (h) {
+          return parseInt(h, 16);
+        });
       rgba = {
         r: match[0],
         g: match[1],
         b: match[2],
-        a: 1 };
-
+        a: 1,
+      };
     }
 
     return rgba;
@@ -876,7 +932,7 @@
     }
 
     if (settings.alpha && (rgba.a < 1 || settings.forceAlpha)) {
-      var alpha = rgba.a * 255 | 0;
+      var alpha = (rgba.a * 255) | 0;
       A = alpha.toString(16);
 
       if (alpha < 16) {
@@ -893,10 +949,10 @@
    * @return {string} CSS color string.
    */
   function RGBAToStr(rgba) {
-    if (!settings.alpha || rgba.a === 1 && !settings.forceAlpha) {
-      return "rgb(" + rgba.r + ", " + rgba.g + ", " + rgba.b + ")";
+    if (!settings.alpha || (rgba.a === 1 && !settings.forceAlpha)) {
+      return 'rgb(' + rgba.r + ', ' + rgba.g + ', ' + rgba.b + ')';
     } else {
-      return "rgba(" + rgba.r + ", " + rgba.g + ", " + rgba.b + ", " + rgba.a + ")";
+      return 'rgba(' + rgba.r + ', ' + rgba.g + ', ' + rgba.b + ', ' + rgba.a + ')';
     }
   }
 
@@ -906,10 +962,10 @@
    * @return {string} CSS color string.
    */
   function HSLAToStr(hsla) {
-    if (!settings.alpha || hsla.a === 1 && !settings.forceAlpha) {
-      return "hsl(" + hsla.h + ", " + hsla.s + "%, " + hsla.l + "%)";
+    if (!settings.alpha || (hsla.a === 1 && !settings.forceAlpha)) {
+      return 'hsl(' + hsla.h + ', ' + hsla.s + '%, ' + hsla.l + '%)';
     } else {
-      return "hsla(" + hsla.h + ", " + hsla.s + "%, " + hsla.l + "%, " + hsla.a + ")";
+      return 'hsla(' + hsla.h + ', ' + hsla.s + '%, ' + hsla.l + '%, ' + hsla.a + ')';
     }
   }
 
@@ -923,38 +979,52 @@
     picker.setAttribute('id', 'clr-picker');
     picker.className = 'clr-picker';
     picker.innerHTML =
-    "<input id=\"clr-color-value\" name=\"clr-color-value\" class=\"clr-color\" type=\"text\" value=\"\" spellcheck=\"false\" aria-label=\"" + settings.a11y.input + "\">" + ("<div id=\"clr-color-area\" class=\"clr-gradient\" role=\"application\" aria-label=\"" +
-    settings.a11y.instruction + "\">") +
-    '<div id="clr-color-marker" class="clr-marker" tabindex="0"></div>' +
-    '</div>' +
-    '<div class="clr-hue">' + ("<input id=\"clr-hue-slider\" name=\"clr-hue-slider\" type=\"range\" min=\"0\" max=\"360\" step=\"1\" aria-label=\"" +
-    settings.a11y.hueSlider + "\">") +
-    '<div id="clr-hue-marker"></div>' +
-    '</div>' +
-    '<div class="clr-alpha">' + ("<input id=\"clr-alpha-slider\" name=\"clr-alpha-slider\" type=\"range\" min=\"0\" max=\"100\" step=\"1\" aria-label=\"" +
-    settings.a11y.alphaSlider + "\">") +
-    '<div id="clr-alpha-marker"></div>' +
-    '<span></span>' +
-    '</div>' +
-    '<div id="clr-format" class="clr-format">' +
-    '<fieldset class="clr-segmented">' + ("<legend>" +
-    settings.a11y.format + "</legend>") +
-    '<input id="clr-f1" type="radio" name="clr-format" value="hex">' +
-    '<label for="clr-f1">Hex</label>' +
-    '<input id="clr-f2" type="radio" name="clr-format" value="rgb">' +
-    '<label for="clr-f2">RGB</label>' +
-    '<input id="clr-f3" type="radio" name="clr-format" value="hsl">' +
-    '<label for="clr-f3">HSL</label>' +
-    '<span></span>' +
-    '</fieldset>' +
-    '</div>' +
-    '<div id="clr-swatches" class="clr-swatches"></div>' + ("<button type=\"button\" id=\"clr-clear\" class=\"clr-clear\" aria-label=\"" +
-    settings.a11y.clear + "\">" + settings.clearLabel + "</button>") +
-    '<div id="clr-color-preview" class="clr-preview">' + ("<button type=\"button\" id=\"clr-close\" class=\"clr-close\" aria-label=\"" +
-    settings.a11y.close + "\">" + settings.closeLabel + "</button>") +
-    '</div>' + ("<span id=\"clr-open-label\" hidden>" +
-    settings.a11y.open + "</span>") + ("<span id=\"clr-swatch-label\" hidden>" +
-    settings.a11y.swatch + "</span>");
+      '<input id="clr-color-value" name="clr-color-value" class="clr-color" type="text" value="" spellcheck="false" aria-label="' +
+      settings.a11y.input +
+      '">' +
+      ('<div id="clr-color-area" class="clr-gradient" role="application" aria-label="' + settings.a11y.instruction + '">') +
+      '<div id="clr-color-marker" class="clr-marker" tabindex="0"></div>' +
+      '</div>' +
+      '<div class="clr-hue">' +
+      ('<input id="clr-hue-slider" name="clr-hue-slider" type="range" min="0" max="360" step="1" aria-label="' +
+        settings.a11y.hueSlider +
+        '">') +
+      '<div id="clr-hue-marker"></div>' +
+      '</div>' +
+      '<div class="clr-alpha">' +
+      ('<input id="clr-alpha-slider" name="clr-alpha-slider" type="range" min="0" max="100" step="1" aria-label="' +
+        settings.a11y.alphaSlider +
+        '">') +
+      '<div id="clr-alpha-marker"></div>' +
+      '<span></span>' +
+      '</div>' +
+      '<div id="clr-format" class="clr-format">' +
+      '<fieldset class="clr-segmented">' +
+      ('<legend>' + settings.a11y.format + '</legend>') +
+      '<input id="clr-f1" type="radio" name="clr-format" value="hex">' +
+      '<label for="clr-f1">Hex</label>' +
+      '<input id="clr-f2" type="radio" name="clr-format" value="rgb">' +
+      '<label for="clr-f2">RGB</label>' +
+      '<input id="clr-f3" type="radio" name="clr-format" value="hsl">' +
+      '<label for="clr-f3">HSL</label>' +
+      '<span></span>' +
+      '</fieldset>' +
+      '</div>' +
+      '<div id="clr-swatches" class="clr-swatches"></div>' +
+      ('<button type="button" id="clr-clear" class="clr-clear" aria-label="' +
+        settings.a11y.clear +
+        '">' +
+        settings.clearLabel +
+        '</button>') +
+      '<div id="clr-color-preview" class="clr-preview">' +
+      ('<button type="button" id="clr-close" class="clr-close" aria-label="' +
+        settings.a11y.close +
+        '">' +
+        settings.closeLabel +
+        '</button>') +
+      '</div>' +
+      ('<span id="clr-open-label" hidden>' + settings.a11y.open + '</span>') +
+      ('<span id="clr-swatch-label" hidden>' + settings.a11y.swatch + '</span>');
 
     // Append the color picker to the DOM
     document.body.appendChild(picker);
@@ -1088,8 +1158,8 @@
         ArrowUp: [0, -1],
         ArrowDown: [0, 1],
         ArrowLeft: [-1, 0],
-        ArrowRight: [1, 0] };
-
+        ArrowRight: [1, 0],
+      };
 
       if (Object.keys(movements).includes(event.key)) {
         moveMarkerOnKeydown.apply(void 0, movements[event.key]);
@@ -1108,7 +1178,9 @@
    */
   function getFocusableElements() {
     var controls = Array.from(picker.querySelectorAll('input, button'));
-    var focusables = controls.filter(function (node) {return !!node.offsetWidth;});
+    var focusables = controls.filter(function (node) {
+      return !!node.offsetWidth;
+    });
 
     return focusables;
   }
@@ -1171,15 +1243,15 @@
   }
 
   // Expose the color picker to the global scope
-  window.Coloris = function () {
+  window.Coloris = (function () {
     var methods = {
       set: configure,
       wrap: wrapFields,
       close: closePicker,
       setInstance: setVirtualInstance,
       removeInstance: removeVirtualInstance,
-      updatePosition: updatePickerPosition };
-
+      updatePosition: updatePickerPosition,
+    };
 
     function Coloris(options) {
       DOMReady(function () {
@@ -1191,23 +1263,38 @@
           }
         }
       });
-    }var _loop2 = function _loop2(
-
-    key) {
-      Coloris[key] = function () {for (var _len = arguments.length, args = new Array(_len), _key2 = 0; _key2 < _len; _key2++) {args[_key2] = arguments[_key2];}
+    }
+    var _loop2 = function _loop2(key) {
+      Coloris[key] = function () {
+        for (var _len = arguments.length, args = new Array(_len), _key2 = 0; _key2 < _len; _key2++) {
+          args[_key2] = arguments[_key2];
+        }
         DOMReady(methods[key], args);
-      };};for (var key in methods) {_loop2(key);
+      };
+    };
+    for (var key in methods) {
+      _loop2(key);
     }
 
     return Coloris;
-  }();
+  })();
 
   // Init the color picker when the DOM is ready
   DOMReady(init);
-
 })(window, document, Math);
 
 Coloris({
   theme: 'polaroid',
   themeMode: 'dark',
+  alpha: false,
+  formatToggle: true,
+  swatches: ['#264653', '#2a9d8f', '#e9c46a'],
+});
+
+Coloris.setInstance('.instance3', {
+  theme: 'polaroid',
+  themeMode: 'dark',
+  alpha: false,
+  formatToggle: true,
+  wrap: false,
 });

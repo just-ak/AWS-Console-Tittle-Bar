@@ -1,16 +1,14 @@
 html {
-  width: 320px;
+  width: 520px;
   box-sizing: border-box;
 }
 
 body {
-  width: 320px;
+  width: 520px;
   padding: 0px;
   margin: 0px;
   border: 0px solid rgb(70, 70, 70);
-  overflow: hidden;
   min-height: 100px;
- 
 }
 html {
   font-family: Arial, Helvetica, sans-serif;
@@ -25,24 +23,39 @@ h1 {
   height: 0px;
   box-sizing: inherit;
 }
-#regionWarning, #regionHighlights {
+#regionWarnings, #regionHighlights {
   box-sizing: inherit;
+  cursor: pointer;
 }
 
-#regionWarning {
+#regionWarnings {
 box-sizing: inherit;
 }
-#regionWarning h2 ,
+#regionWarnings h2 ,
 #regionHighlights h2 {
   font-size: .9em;
   font-weight: bold;
   margin-left: 10px;
   margin-right: 10px;
   padding: 0px 5px;
-  text-align: center;
+  text-align: left;
+}
+#regionWarnings .floatOptions ,
+#regionHighlights .floatOptions {
+  
+  text-align: right;
+  right:0px;
+  position: absolute;
+  margin-top: -2em;
+}
+
+#regionWarnings .floatOptions span,
+#regionHighlights .floatOptions span{
+  
+border-color: #57c264;
 }
 .settings .button,
-#regionWarning span ,
+#regionWarnings span ,
 #regionHighlights span {
   display: inline-block;
   padding: 2px 4px;
@@ -56,6 +69,16 @@ box-sizing: inherit;
   font-size: .6em;
 
 }
+
+
+.full .clr-field button {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+
+
 
 #awsBanner {
   background-color: #232f3e;
@@ -128,8 +151,7 @@ box-sizing: inherit;
 }
 
 #settingsBlock {
-  width:310px;
-  width:100%;
+  width:95%;
   margin: 8px 2px 2px 8px;
 }
 #accountColors .colorLabel {
@@ -196,3 +218,6 @@ box-sizing: inherit;
   75%		{ background-color: #254878;}
   100%	        { background-color: #04a1d5;}
 }
+
+
+

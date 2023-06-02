@@ -124,6 +124,32 @@ function toggleVisibility(visibility: boolean) {
   }
 }
 
+
+const regionsContainer = document.getElementById('regionWarnings');
+
+regionsContainer.addEventListener('click', (event) => {
+  const target = event.target as HTMLSpanElement;
+  const regionwarning = target.dataset.regionwarning;
+  if (regionwarning) {
+    toggleAnimation(target);
+  }
+});
+
+
+function toggleAnimation(target: HTMLSpanElement): void {
+  if (target.style.animation) {
+    // Turn off animation
+    target.style.animation = '';
+  } else {
+    // Turn on animation
+    // target.style.color = '#fff';
+    // target.style.padding = '10px';
+    // target.style.display = 'inline-block';
+    // target.style.borderRadius = '5px';
+    target.style.animation = 'blinkingBackground 2s infinite';
+  }
+}
+
 const showWarningRegions = (accountId) => {
   const container = document.getElementById('regionWarning');
   pp_getAllAccounts().then((jsonData) => {

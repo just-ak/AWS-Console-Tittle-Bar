@@ -1,4 +1,4 @@
-const { AWSRegionManager, regionManager } = require('./reference');
+const { AWSRegionManager, regionManager } = require('./AWSRegionManager');
 
 interface AWSRegion {
   shortName: string;
