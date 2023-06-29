@@ -1288,7 +1288,11 @@ Coloris({
   themeMode: 'dark',
   alpha: false,
   formatToggle: true,
-  swatches: ['#264653', '#2a9d8f', '#e9c46a'],
+  swatches: ['#264653', '#2a9d8f', '#e9c46a','#f4a261', '#e76f51'],
+  clearButton: {
+    show: true,
+    label: 'Clear' 
+  },
 });
 
 Coloris.setInstance('.instance3', {
@@ -1297,4 +1301,8 @@ Coloris.setInstance('.instance3', {
   alpha: false,
   formatToggle: true,
   wrap: false,
+  clearButton: {
+    show: true,
+    label: 'Clear' 
+  },
 });

@@ -2,7 +2,6 @@ const path = require('path');
 //const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-//const RemovePlugin = require('remove-files-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -33,22 +32,22 @@ module.exports = {
         test: /\.html$/,
         use: 'html-loader',
       },
-      {
-        test: /\.(png|jpe?g|gif)$/i,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]',
-          outputPath: 'images',
-          publicPath: 'images',
-        },
-      },
+      // {
+      //   test: /\.(png|jpe?g|gif)$/i,
+      //   loader: 'file-loader',
+      //   options: {
+      //     name: '[name].[ext]',
+      //     outputPath: 'images',
+      //     publicPath: '../images',
+      //   },
+      // },
     ],
   },
   resolve: {
     alias: {
       browser: path.resolve(__dirname, 'src'),
     },
-    extensions: ['.tsx', '.tJs', '.js'],
+    extensions: ['.tsx', '.tJs', '.js', 'ts'],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -69,6 +68,7 @@ module.exports = {
         { from: 'src/manifest.json', to: 'manifest.json' },
         { from: 'src/content/content_pages.css', to: 'content/content_pages.css' },
         { from: 'src/icons', to: 'icons' },
+        // { from: 'src/images', to: 'images' },
       ],
     }),
   ],

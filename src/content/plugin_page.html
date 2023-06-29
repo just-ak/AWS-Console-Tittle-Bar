@@ -3,17 +3,23 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="plugin_page.css" />
+    <link rel="stylesheet" href="accountDescription.css" />
     <link rel="stylesheet" href="coloris.css" />
+    <link rel="stylesheet" href="regionColor.css" />
+    <link rel="stylesheet" href="plugin_page.css" />
+    <link rel="stylesheet" href="regionalWarnings.css" />
+    <link rel="stylesheet" href="settingsManagement.css" />
+    <link rel="stylesheet" href="urlManagement.css" />
+    
     <script src="coloris.js"></script>
   </head>
   <body>
     <h1>AWS Console Title Bar</h1>
+    <div id="awsso-footer"><img src="../icons/cog.svg" class="svg-image" alt="SVG Image" /></div>
     <div id="accborder">
       <div id="accurl">
-        <div class="page-choice-urls"> AAAAAA</div>
+        <div class="page-choice-urls">AAAAAA</div>
       </div>
-      <div class="settings"><img src="../icons/tab.png"  alt="Tab"  /></div>
     </div>
     <div id="settingsBlock">
       <div id="awsBanner">
@@ -21,100 +27,98 @@
         <span id="awsBannerAccountName">Prod</span>
       </div>
       <div id="accountColors">
-        <form id="colorForm">
-          <div>
-            <div class="colorLabel"><label for="backgroundColor">Banner Background</label></div>
-            <input type="text" id="backgroundColor" name="background" data-coloris />
-          </div>
-          <div>
-            <div class="colorLabel"><label for="textColor">Account NameText</label></div>
-            <input type="text" id="textColor" name="text" data-coloris />
-          </div>
-        </form>
-      </div>
-      <div id="hiddenBox">&nbsp;</div>
-      <div id="add-url-container">
-        <p>Add URL and Title</p>
-        <form id="url-form">
-          <label for="url-input">URL: </label>
-          <input type="text" id="url-input" required />
-          <br />
-          <label for="title-input">Title: </label>
-          <input type="text" id="title-input" required />
-          <br />
-          <button type="submit">Add</button>
-        </form>
+            <div class="colorLabel">Account Name Text</div>
+            <div class="color-by-region">
+              <div id="cbr-100-color" class="clr-field" style="color: white">
+                <button type="button" aria-labelledby="clr-open-label"></button>
+                <input type="text" id="cbr-100" data-coloris class="instance3"/>
+              </div>
+              <div id="cbr-100" class="pill-label"></div>
+            </div>
+
       </div>
       <div id="regionHighlights">
-        <h2>Color by Region</h2><br/>
-        <div class="floatOptions"><span>Full banner</span><span>region box</span><span>All Accounts</span></div>
-  <!--      <input class="regionalHighlight" data-coloris  data-region="N. Virginia"></input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Ohio">Ohio</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="N. California">N. California</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Oregon">Oregon</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Cape Town">Cape Town</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Hong Kong">Hong Kong</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Mumbai">Mumbai</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Osaka-Local">Osaka-Local</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Seoul">Seoul</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Singapore">Singapore</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Sydney">Sydney</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Tokyo">Tokyo</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Central">Central</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Beijing">Beijing</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Ningxia">Ningxia</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Frankfurt">Frankfurt</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Ireland">Ireland</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="London">London</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Milan">Milan</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Paris">Paris</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Stockholm">Stockholm</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Bahrain">Bahrain</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="Sao Paulo">Sao Paulo</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="US-East">US-East</input>
-        <ipnut class="regionalHighlight"  data-coloris  data-region="US-West">US-West</input>-->
-          <div class="pill-wrapper">
-            <input type="text" class="pill-input regionalHighlight" data-coloris data-region="US-West" value="" readonly>
-            <span class="pill-label">US-West</span>
-          </div>
-
-          <div class="example full">
-            <p>Full size thumbnail</p>
-            <div class="clr-field" style="color: rgb(255, 204, 0);"><button type="button" aria-labelledby="clr-open-label"></button><input type="text" data-coloris class="coloris instance3" value="#ffcc00"></div>
-          </div>
-
+        <h2>Banner Background Color</h2>
+        <div class="floatOptions"><span id="toggleBannerOff" style="width:85px">Region Block</span><span id="toggleAllRegionsOff"  style="width:95px">Specific Region</span><span id="toggleAllAccountOff"  style="width:85px">This Account</span></div>
+        <br/>
+        <div class="floatOptions"><span id="toggleBannerOn" style="width:85px">Full Banner</span><span id="toggleAllRegionsOn" style="width:95px">All Regions</span><span id="toggleAllAccountOn"  style="width:85px">All Accounts</span></div>
+        <div id="singleRegion">
+          <div class="color-by-region"><div id="cbr-22-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-22-input" type="text" data-coloris class="instance3"/></div><div id="cbr-22" class="pill-label" data-region="Bahrain">Bahrain</div></div>
+          <div class="color-by-region"><div id="cbr-14-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-14-input" type="text" data-coloris class="instance3"/></div><div id="cbr-14" class="pill-label" data-region="Beijing">Beijing</div></div>
+          <div class="color-by-region"><div id="cbr-05-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-05-input" type="text" data-coloris class="instance3"/></div><div id="cbr-05" class="pill-label" data-region="Cape Town">Cape Town</div></div>
+          <div class="color-by-region"><div id="cbr-13-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-13-input" type="text" data-coloris class="instance3"/></div><div id="cbr-13" class="pill-label" data-region="Central">Central</div></div>
+          <div class="color-by-region"><div id="cbr-16-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-16-input" type="text" data-coloris class="instance3"/></div><div id="cbr-16" class="pill-label" data-region="Frankfurt">Frankfurt</div></div>
+          <div class="color-by-region"><div id="cbr-06-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-06-input" type="text" data-coloris class="instance3"/></div><div id="cbr-06" class="pill-label" data-region="Hong Kong">Hong Kong</div></div>
+          <div class="color-by-region"><div id="cbr-17-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-17-input" type="text" data-coloris class="instance3"/></div><div id="cbr-17" class="pill-label" data-region="Ireland">Ireland</div></div>
+          <div class="color-by-region"><div id="cbr-18-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-18-input" type="text" data-coloris class="instance3"/></div><div id="cbr-18" class="pill-label" data-region="London">London</div></div>
+          <div class="color-by-region"><div id="cbr-19-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-19-input" type="text" data-coloris class="instance3"/></div><div id="cbr-19" class="pill-label" data-region="Milan">Milan</div></div>
+          <div class="color-by-region"><div id="cbr-07-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-07-input" type="text" data-coloris class="instance3"/></div><div id="cbr-07" class="pill-label" data-region="Mumbai">Mumbai</div></div>
+          <div class="color-by-region"><div id="cbr-03-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-03-input" type="text" data-coloris class="instance3"/></div><div id="cbr-03" class="pill-label" data-region="N. California">N. California</div></div>
+          <div class="color-by-region"><div id="cbr-01-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-01-input" type="text" data-coloris class="instance3"/></div><div id="cbr-01" class="pill-label" data-region="N. Virginia">N. Virginia</div></div>
+          <div class="color-by-region"><div id="cbr-15-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-15-input" type="text" data-coloris class="instance3"/></div><div id="cbr-15" class="pill-label" data-region="Ningxia">Ningxia</div></div>
+          <div class="color-by-region"><div id="cbr-02-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-02-input" type="text" data-coloris class="instance3"/></div><div id="cbr-02" class="pill-label" data-region="Ohio">Ohio</div></div>
+          <div class="color-by-region"><div id="cbr-04-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-04-input" type="text" data-coloris class="instance3"/></div><div id="cbr-04" class="pill-label" data-region="Oregon">Oregon</div></div>
+          <div class="color-by-region"><div id="cbr-08-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-08-input" type="text" data-coloris class="instance3"/></div><div id="cbr-08" class="pill-label" data-region="Osaka-Local">Osaka-Local</div></div>
+          <div class="color-by-region"><div id="cbr-20-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-20-input" type="text" data-coloris class="instance3"/></div><div id="cbr-20" class="pill-label" data-region="Paris">Paris</div></div>
+          <div class="color-by-region"><div id="cbr-23-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-23-input" type="text" data-coloris class="instance3"/></div><div id="cbr-23" class="pill-label" data-region="Sao Paulo">Sao Paulo</div></div>
+          <div class="color-by-region"><div id="cbr-09-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-09-input" type="text" data-coloris class="instance3"/></div><div id="cbr-09" class="pill-label" data-region="Seoul">Seoul</div></div>
+          <div class="color-by-region"><div id="cbr-10-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-10-input" type="text" data-coloris class="instance3"/></div><div id="cbr-10" class="pill-label" data-region="Singapore">Singapore</div></div>
+          <div class="color-by-region"><div id="cbr-21-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-21-input" type="text" data-coloris class="instance3"/></div><div id="cbr-21" class="pill-label" data-region="Stockholm">Stockholm</div></div>
+          <div class="color-by-region"><div id="cbr-11-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-11-input" type="text" data-coloris class="instance3"/></div><div id="cbr-11" class="pill-label" data-region="Sydney">Sydney</div></div>
+          <div class="color-by-region"><div id="cbr-12-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-12-input" type="text" data-coloris class="instance3"/></div><div id="cbr-12" class="pill-label" data-region="Tokyo">Tokyo</div></div>
+          <div class="color-by-region"><div id="cbr-24-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-24-input" type="text" data-coloris class="instance3"/></div><div id="cbr-24" class="pill-label" data-region="US-East">US-East</div></div>
+          <div class="color-by-region"><div id="cbr-25-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-25-input" type="text" data-coloris class="instance3"/></div><div id="cbr-25" class="pill-label" data-region="US-West">US-West</div></div>
         </div>
-
+        <div id="allRegions">
+          <div class="color-by-region"><div id="cbr-99-color" class="clr-field" style="color: white"><button type="button" aria-labelledby="clr-open-label"></button><input id="cbr-99-input" type="text" data-coloris class="instance3"/></div><div id="cbr-99" class="pill-label" data-region="All Regions">All Regions</div></div>
+        </div>
+      </div>
       <div id="regionWarnings">
-        <h2>Flashing Warning</h2><br/>
-        <div class="floatOptions"><span>Invert Selection</span><span>All Accounts</span></div>
-        <span data-regionwarning="Bahrain">Bahrain</span>
-        <span data-regionwarning="Beijing">Beijing</span>
-        <span data-regionwarning="Cape Town">Cape Town</span>
-        <span data-regionwarning="Central">Central</span>
-        <span data-regionwarning="Frankfurt">Frankfurt</span>
-        <span data-regionwarning="Hong Kong">Hong Kong</span>
-        <span data-regionwarning="Ireland">Ireland</span>
-        <span data-regionwarning="London">London</span>
-        <span data-regionwarning="Milan">Milan</span>
-        <span data-regionwarning="Mumbai">Mumbai</span>
-        <span data-regionwarning="N. California">N. California</span>
-        <span data-regionwarning="N. Virginia">N. Virginia</span>
-        <span data-regionwarning="Ningxia">Ningxia</span>
-        <span data-regionwarning="Ohio">Ohio</span>
-        <span data-regionwarning="Oregon">Oregon</span>
-        <span data-regionwarning="Osaka-Local">Osaka-Local</span>
-        <span data-regionwarning="Paris">Paris</span>
-        <span data-regionwarning="Sao Paulo">Sao Paulo</span>
-        <span data-regionwarning="Seoul">Seoul</span>
-        <span data-regionwarning="Singapore">Singapore</span>
-        <span data-regionwarning="Stockholm">Stockholm</span>
-        <span data-regionwarning="Sydney">Sydney</span>
-        <span data-regionwarning="Tokyo">Tokyo</span>
-        <span data-regionwarning="US-East">US-East</span>
-        <span data-regionwarning="US-West">US-West</span>
+        <h2>Hazzard Regions</h2>
+        <div class="floatOptions"><span id="hazardThisAccount">This Account</span><span id="hazardAllAccounts">All Accounts</span></div>
+        <div class="region" data-regionwarning="Bahrain">Bahrain</div>
+        <div class="region" data-regionwarning="Beijing">Beijing</div>
+        <div class="region" data-regionwarning="Cape Town">Cape Town</div>
+        <div class="region" data-regionwarning="Central">Central</div>
+        <div class="region" data-regionwarning="Frankfurt">Frankfurt</div>
+        <div class="region" data-regionwarning="Hong Kong">Hong Kong</div>
+        <div class="region" data-regionwarning="Ireland">Ireland</div>
+        <div class="region" data-regionwarning="London">London</div>
+        <div class="region" data-regionwarning="Milan">Milan</div>
+        <div class="region" data-regionwarning="Mumbai">Mumbai</div>
+        <div class="region" data-regionwarning="N. California">N. California</div>
+        <div class="region" data-regionwarning="N. Virginia">N. Virginia</div>
+        <div class="region" data-regionwarning="Ningxia">Ningxia</div>
+        <div class="region" data-regionwarning="Ohio">Ohio</div>
+        <div class="region" data-regionwarning="Oregon">Oregon</div>
+        <div class="region" data-regionwarning="Osaka-Local">Osaka-Local</div>
+        <div class="region" data-regionwarning="Paris">Paris</div>
+        <div class="region" data-regionwarning="Sao Paulo">Sao Paulo</div>
+        <div class="region" data-regionwarning="Seoul">Seoul</div>
+        <div class="region" data-regionwarning="Singapore">Singapore</div>
+        <div class="region" data-regionwarning="Stockholm">Stockholm</div>
+        <div class="region" data-regionwarning="Sydney">Sydney</div>
+        <div class="region" data-regionwarning="Tokyo">Tokyo</div>
+        <div class="region" data-regionwarning="US-East">US-East</div>
+        <div class="region" data-regionwarning="US-West">US-West</div>
+      </div>
+      <div id="add-url-container">
+        <p>Quick Link</p>
+        <form id="url-form">
+          <div>
+            <label for="url-input">URL: </label>
+            <input type="text" id="url-input" required />
+            <label for="title-input">Title: </label>
+            <input type="text" id="title-input" required />
+          </div>
+          <div>
+            <div class="righsection">
+              <button type="submit">Add/Update</button>
+            </div>
+            <div class="floatLeftOptions"><span id="currentTab">Current Tab</span><span id="newTabs">New Tab</span></div>
+          </div>
+        </form>
       </div>
     </div>
-    <div id="awsso-footer"><img src="../icons/cog.svg" class="svg-image" alt="SVG Image" /></div>
   </body>
 </html>

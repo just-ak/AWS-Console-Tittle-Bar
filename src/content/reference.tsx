@@ -1,3 +1,23 @@
+import { AccountDescription } from './accountDescription';
+export interface PopupComms {
+  accountId: string;
+}
+
+export const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+interface RegionalWarningConfig {
+  regionWarning: string;
+  onOff: boolean;
+}
+
+interface RegionColorConfig {
+  regionWarning: string;
+  color: string;
+}
+interface AccountRegionColors {
+  accountId: string;
+  regionColors: RegionColorConfig[];
+}
 export interface AccountDetails {
   id: string;
   color: string;
@@ -6,34 +26,111 @@ export interface AccountDetails {
   headerColor: string;
 }
 
-export interface PopupComms {
-  accountId: string;
-}
-
-export interface cp_AccountDetails {
+export interface Account {
   id: string;
   color: string;
-  background: string;
-  headerBackground: string;
-  headerColor: string;
 }
 
-const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+export interface AccountNumbers {
+  [accountId: string]: Account;
+}
 
-export const cp_isChrome = isChrome;
-export const pp_isChrome = isChrome;
+export interface linkDetail {
+  url: string;
+  title: string;
+  currentTab: boolean;
+}
 
-const isElementLoaded = async (selector) => {
+export interface Config {
+  RegionWarnings: RegionalWarningConfig[];
+  AccountDetails: AccountDetails[];
+  RegionColors: {
+    allRegions: boolean;
+    allAccounts: boolean;
+    banner: boolean;
+    regionColors: RegionColorConfig[];
+  };
+  AccountRegionColors: AccountRegionColors[];
+  Links: {
+    linkDetails: linkDetail[];
+  };
+}
+
+export class AWSConsoleTitleBar {
+  static colorThreshold = 40;
+  static popFactor = 1.5;
+  static onColor = 'white';
+  static offColor = 'lightgreen';
+  static emptyConfig: Config = {
+    RegionWarnings: [],
+    AccountDetails: [],
+    RegionColors: {
+      allRegions: false,
+      allAccounts: false,
+      banner: false,
+      regionColors: [],
+    },
+    AccountRegionColors: [],
+    Links: {
+      linkDetails: [],
+    },
+  };
+  // This is a singleton
+  // config should always be accessed via instance
+  // e.g.
+  //   AWSConsoleTitleBar.instance.config
+  //
+  static instance: AWSConsoleTitleBar;
+  static accountDescription: AccountDescription;
+  config: Config = AWSConsoleTitleBar.emptyConfig;
+
+  static async get(): Promise<boolean> {
+    if (!AWSConsoleTitleBar.instance) {
+      //chrome.storage.local.clear();
+      AWSConsoleTitleBar.instance = new AWSConsoleTitleBar();
+      AWSConsoleTitleBar.accountDescription = new AccountDescription({
+        accountNameColorId: 'cbr-100',
+        sampleBannerId: 'awsBannerAccountName',
+      });
+    }
+
+    return await new Promise(function (resolve) {
+      chrome.storage.local.get('awsConsoleTitleBar', function (response) {
+        try {
+          AWSConsoleTitleBar.instance.config = JSON.parse(response.awsConsoleTitleBar);
+          resolve(true);
+        } catch (e) {
+          resolve(true);
+        }
+      });
+    });
+  }
+
+  static async save() {
+    console.log('Saving');
+    console.log(JSON.stringify(AWSConsoleTitleBar.instance.config));
+    return await new Promise((resolve, reject) => {
+      try {
+        chrome.storage.local.set({
+          awsConsoleTitleBar: JSON.stringify(AWSConsoleTitleBar.instance.config),
+        });
+        // console.log('Saved');
+        resolve(true);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+}
+
+export const isElementLoaded = async (selector) => {
   while (document.querySelector(selector) === null) {
     await new Promise((resolve) => requestAnimationFrame(resolve));
   }
   return document.querySelector(selector);
 };
 
-export const cp_isElementLoaded = isElementLoaded;
-export const pp_isElementLoaded = isElementLoaded;
-
-async function putPopupComms(data: PopupComms) {
+export async function putPopupComms(data: PopupComms) {
   return await new Promise((resolve, reject) => {
     if (data.accountId) {
       return chrome.storage.local.set({
@@ -45,10 +142,7 @@ async function putPopupComms(data: PopupComms) {
   });
 }
 
-export const cp_putPopupComms = putPopupComms;
-export const pp_putPopupComms = putPopupComms;
-
-async function getPopupComms() {
+export async function getPopupComms() {
   return await new Promise((resolve, reject) =>
     chrome.storage.local.get('popupcomms', (response) => {
       try {
@@ -60,92 +154,3 @@ async function getPopupComms() {
     })
   );
 }
-export const cp_getPopupComms = getPopupComms;
-export const pp_getPopupComms = getPopupComms;
-
-async function getAdditionalLinks() {
-  return await new Promise(function (resolve, reject) {
-    chrome.storage.local.get('jsoninfo', function (response) {
-      try {
-        const accountDetails = JSON.parse(response.jsoninfo);
-        resolve(accountDetails);
-      } catch (e) {
-        reject(false);
-      }
-    });
-  });
-}
-
-export const cp_getAdditionalLinks = getAdditionalLinks;
-export const pp_getAdditionalLinks = getAdditionalLinks;
-
-async function saveAdditionalLinks(data) {
-  return await new Promise((resolve, reject) => {
-    try {
-      chrome.storage.local.set({
-        jsoninfo: JSON.stringify(data),
-      });
-      resolve(true);
-    } catch (e) {
-      reject(e);
-    }
-  });
-}
-
-export const cp_saveAdditionalLinks = saveAdditionalLinks;
-export const pp_saveAdditionalLinks = saveAdditionalLinks;
-
-async function saveAllAccounts(data) {
-  return await new Promise((resolve, reject) => {
-    try {
-      chrome.storage.local.set({
-        jsonaccounts: JSON.stringify(data),
-      });
-      resolve(true);
-    } catch (e) {
-      reject(e);
-    }
-  });
-}
-export const cp_saveAllAccounts = saveAllAccounts;
-export const pp_saveAllAccounts = saveAllAccounts;
-export const pr_saveAllAccounts = saveAllAccounts;
-
-async function getAccount(accountId) {
-  return await new Promise((resolve, reject) =>
-    chrome.storage.local.get('jsonaccounts', (response) => {
-      try {
-        const accountDetails: AccountDetails = JSON.parse(response.jsonaccounts);
-        if (accountDetails && accountDetails[accountId] !== undefined) {
-          resolve(accountDetails[accountId]);
-        } else {
-          reject(`Unknown Account Id: ${accountId}`);
-        }
-      } catch (e) {
-        reject(e);
-      }
-    })
-  );
-}
-export const cp_getAccount = getAccount;
-export const pp_getAccount = getAccount;
-
-async function getAllAccounts() {
-  return await new Promise((resolve, reject) =>
-    chrome.storage.local.get('jsonaccounts', (response) => {
-      if (response) {
-        try {
-          resolve(JSON.parse(response.jsonaccounts));
-        } catch (e) {
-          resolve({});
-        }
-      } else {
-        resolve({});
-      }
-      reject();
-    })
-  );
-}
-export const cp_getAllAccounts = getAllAccounts;
-export const pp_getAllAccounts = getAllAccounts;
-export const pr_getAllAccounts = getAllAccounts;

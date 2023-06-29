@@ -31,14 +31,4 @@ pre code {
   padding: 0;
   margin: 0;
 }
-#accountColors input {
-  padding: 0px;
-}
-
-#accountColors label {
-  width: 300px;
-  display: inline-block;
-  font-size: 14px;
-  line-height: 2;
-}
 

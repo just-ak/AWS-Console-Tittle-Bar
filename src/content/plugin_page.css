@@ -1,14 +1,16 @@
 html {
-  width: 520px;
+  /* width: 520px; */
   box-sizing: border-box;
 }
 
 body {
-  width: 520px;
+  width: 280px;
   padding: 0px;
-  margin: 0px;
-  border: 0px solid rgb(70, 70, 70);
+  margin: 10px;
+  /* border: 0px solid rgb(70, 70, 70); */
+  box-sizing: border-box;
   min-height: 100px;
+  user-select: none;
 }
 html {
   font-family: Arial, Helvetica, sans-serif;
@@ -19,177 +21,15 @@ h1 {
   text-align: center;
 }
 
-#hiddenBox {
-  height: 0px;
-  box-sizing: inherit;
-}
-#regionWarnings, #regionHighlights {
-  box-sizing: inherit;
-  cursor: pointer;
-}
-
-#regionWarnings {
-box-sizing: inherit;
-}
-#regionWarnings h2 ,
-#regionHighlights h2 {
-  font-size: .9em;
-  font-weight: bold;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding: 0px 5px;
-  text-align: left;
-}
-#regionWarnings .floatOptions ,
-#regionHighlights .floatOptions {
-  
-  text-align: right;
-  right:0px;
-  position: absolute;
-  margin-top: -2em;
-}
-
-#regionWarnings .floatOptions span,
-#regionHighlights .floatOptions span{
-  
-border-color: #57c264;
-}
-.settings .button,
-#regionWarnings span ,
-#regionHighlights span {
-  display: inline-block;
-  padding: 2px 4px;
-  border: 1px solid #9c9b9b;
-  color: #000000;
-  border-radius: 30px;
-  font-weight: bold;
-  margin: 2px;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: .6em;
-
-}
-
-
-.full .clr-field button {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-}
-
-
-
-
 #awsBanner {
   background-color: #232f3e;
   color: rgb(255, 255, 255);
-  font-size: .8em;
+  font-size: 0.8em;
   font-weight: bold;
-  width:100%;
+  width: 100%;
   text-align: center;
   box-sizing: inherit;
 }
-
-#accurl {
-  margin-bottom: 5px;
-  box-sizing: inherit;
-}
-
-#accborder img {
-  text-align: right;
-  background-color: rgb(215, 215, 215);
-  text-align: right;
-  position:absolute;
-  margin-top:-10px;
-  right: 0px;
-  background-color: #57c264;
-  height: 1.2em;
-  margin: 0px 0px 0px 4px;
-  
-}
-#awsso-footer {
-  float: right;
-  font-size: 1em;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  box-sizing: inherit;
-}
-
-#awsso-footer:hover {
-  background-color: #dfbb6f;
-}
-#awsso-footer {
-  cursor: pointer;
-}
-
-#add-url-container {
-  font-size: 0.8em;
-  font-weight: bold;;
-  text-align: center;
-  line-height: 1.2em;
-}
-
-#add-url-container input {
-  width:70%;
-  margin: 2px;
-  font-size: 0.8em;
-}
-
-.svg-image {
-  height: 1.2em;
-  margin: 0px 0px 0px 4px;
-}
-#accountColors {
-  margin-top: 10px;
-  text-align: center;
-  font-size: 0.8em;
-  text-align: left;
-}
-#accountColors {
-  text-align: center;
-}
-
-#settingsBlock {
-  width:95%;
-  margin: 8px 2px 2px 8px;
-}
-#accountColors .colorLabel {
-  display: inline-block;
-  width: 140px;
-  margin: 0px;
-  padding: 0px;
-
-  text-align: left;
-  font-size: 0.8em;
-  font-weight: bold;
-}
-#accountColors input {
-  appearance: auto;
-  width: 8em;
-  height: 1.2em;
-  cursor: default;
-  box-sizing: unset;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(84, 84, 84);
-  border-image: none;
-  padding: 0px;
-  background-color: transparent;
-}
-
-.remove-url {
-  cursor: pointer;
-  font-weight: bold;
-  color: white;
-  background-color: red;
-}
-#accborder {
-  margin: 0px 20px 2px 20px;
-  border-bottom: 1px solid gray;
-  text-align: center;
-}
-
 
 .page-choice {
   width: 100%;
@@ -207,17 +47,23 @@ border-color: #57c264;
   overflow: hidden;
 }
 .page-choice-urls:hover {
-  background-color: #57c264;
+  background-color: #c29e57;
 }
 
-
-@keyframes blinkingBackground{
-  0%		{ background-color: #10c018;}
-  25%		{ background-color: #1056c0;}
-  50%		{ background-color: #ef0a1a;}
-  75%		{ background-color: #254878;}
-  100%	        { background-color: #04a1d5;}
+@keyframes blinkingBackground {
+  0% {
+    background-color: #10c018;
+  }
+  25% {
+    background-color: #1056c0;
+  }
+  50% {
+    background-color: #ef0a1a;
+  }
+  75% {
+    background-color: #254878;
+  }
+  100% {
+    background-color: #04a1d5;
+  }
 }
-
-
-

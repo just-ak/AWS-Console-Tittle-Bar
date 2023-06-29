@@ -1,15 +1,7 @@
-const { pr_getAllAccounts, pr_saveAllAccounts } = require('./reference');
+import { AccountDescription } from './accountDescription';
 
 const jsonElementID = 'jsoninfo';
-const jsonAccElementID = 'jsonaccounts';
-
-interface AccountDetails {
-  id: string;
-  color: string;
-  background: string;
-  headerBackground: string;
-  headerColor: string;
-}
+// const jsonAccElementID = 'jsonaccounts';
 
 function save_options() {
   const jsonTextArea = document.getElementById(jsonElementID) as HTMLTextAreaElement;
@@ -39,9 +31,14 @@ function restore_options() {
     }
   );
 
-  pr_getAllAccounts().then((data) => {
-    showAccounts(data);
-  });
+  AccountDescription.getAllAccounts()
+    .then((data) => {
+      showAccounts(data);
+      return data;
+    })
+    .catch((err) => {
+      console.log(`Error: AccountDescription #3 ${err}`);
+    });
 }
 
 // Retrieve JSON data from chrome.storage.local
@@ -66,10 +63,14 @@ const showAccounts = (jsonData) => {
         console.log(`Color : ${selectedColor}`);
         const accountId = (event.target as HTMLInputElement).parentNode.querySelector('label').textContent.split(':')[1].trim();
         console.log(`Acc : ${accountId}`);
-        const curList = pr_getAllAccounts().then((data) => {
-          data[accountId].color = selectedColor;
-          pr_saveAllAccounts(data);
-        });
+        AccountDescription.getAllAccounts()
+          .then((data) => {
+            data[accountId].color = selectedColor;
+            AccountDescription.saveAllAccounts(data);
+          })
+          .catch((err) => {
+            console.log(`Error: AccountDescription #4 ${err}`);
+          });
       });
 
       accountDiv.appendChild(colorInput);

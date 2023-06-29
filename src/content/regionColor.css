@@ -1,0 +1,90 @@
+
+
+.color-by-region {
+  height: 1em;
+  min-width: 90px;
+  display: inline-block;
+  position: relative;
+  border: none;
+
+}
+.color-by-region input {
+  width: 0px;
+  height: 10px;
+  color: transparent;
+ background-color: transparent;
+ border: none;
+}
+.color-by-region .pill-label,
+.color-by-region .clr-field {
+  display: inline-block;
+  position: relative;
+}
+.color-by-region .clr-field {
+  background-color: transparent;
+  border: none;
+
+}
+.color-by-region .pill-label {
+  color: #000000;
+  position: absolute;
+  left: 0px;
+  font-size: 0.6em;
+  font-weight: bold;
+  margin: 5px 5px 5px 5px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 84px;
+}
+
+.color-by-region .clr-field button {
+  height: 1.6em;
+  width: 90px;
+  border-radius: 30px;
+  border: 1px solid #9c9b9b;
+  padding: 2px 4px;
+  font-size: 0.6em;
+  margin: 2px;
+  left: 0px;
+  top: 8px;
+}
+
+#allRegions {
+  display: none;
+}
+
+
+
+#accountColors {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.8em;
+  text-align: left;
+}
+
+#accountColors .colorLabel {
+  display: inline-block;
+  width: 140px;
+  margin: 0px;
+  padding: 0px;
+
+  text-align: left;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+#accountColors input  {
+  height: 1.6em;
+  width: 90px;
+  border-radius: 30px;
+  padding: 2px 4px;
+  font-size: 0.6em;
+  margin: 2px;
+  left: 0px;
+  top: 8px;
+}
+
+#accountColors button {
+  height: 2.2em;
+  width: 100px;
+}

@@ -1,0 +1,100 @@
+#add-url-container {
+  font-size: 0.8em;
+  text-align: left;
+  line-height: 1.2em;
+  padding-bottom: 10px;
+  height: 170px;
+  box-sizing: border-box;
+}
+
+#add-url-container .floatOptions {
+  text-align: right;
+  right: 0px;
+  position: absolute;
+  margin-top: -2em;
+  cursor: pointer;
+  padding-right: 20px;
+}
+
+#add-url-container .floatLeftOptions {
+  text-align: right;
+  left: 20px;
+  position: absolute;
+  margin-top: -2em;
+  cursor: pointer;
+  padding-right: 20px;
+}
+#add-url-container .floatLeftOptions span,
+#add-url-container .floatOptions span{
+  background-color: rgb(255, 255, 255);
+  border-radius: 30px;
+  border: 1px solid #9c9b9b;
+  color: #000000;
+  display: inline-block;
+  font-size: 0.7em;
+  font-weight: bold;
+  left: 0px;
+  padding: 1px 4px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 80px;
+  top: 8px;
+}
+
+#add-url-container .svg-image {
+  background-color:  white !important;
+}
+
+#add-url-container p {
+  /* text-align: left; */
+  font-weight: bold;
+}
+
+#add-url-container label {
+  font-size: 0.8em;
+}
+#add-url-container input {
+  width: 90%;
+  margin: 2px;
+  font-size: 0.8em;
+  box-sizing: content-box;
+}
+#add-url-container .righsection {
+  text-align: right;
+}
+#add-url-container form button {
+  font-size: 0.8em;
+  margin: 5px;
+}
+
+
+#accurl {
+  margin-bottom: 5px;
+  box-sizing: inherit;
+}
+
+#accurl .remove-url ,
+#accurl .edit-url {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#accborder {
+  margin: 20px 20px 2px 20px;
+  border-bottom: 1px solid gray;
+  text-align: center;
+}
+
+#accborder .remove-url,
+#accborder .edit-url
+{
+  visibility: hidden;
+}
+#accborder img {
+  text-align: right;
+  /* position: absolute; */
+  margin-top: -10px;
+  right: 0px;
+  height: 1.2em;
+  margin: 0px 0px 0px 4px;
+}
