@@ -38,8 +38,7 @@
         }
     ],
     "options_ui": {
-        "page": "content/preferences.html",
-        "browser_style": true
+        "page": "content/preferences.html"
     },
     "permissions": ["storage"]
   }

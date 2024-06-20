@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 //const RemovePlugin = require('remove-files-webpack-plugin');
 
 module.exports = {
+  devtool: "source-map",
   mode: 'production',
   entry: {
     preferences: './src/content/preferences.ts',

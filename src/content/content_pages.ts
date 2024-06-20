@@ -7,6 +7,7 @@ const {
   cp_getAllAccounts,
 } = require('./reference');
 
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log(`Message : ${JSON.stringify(message)}`);
   console.log(`Message : ${JSON.stringify(sender)}`);
@@ -142,48 +143,30 @@ cp_isElementLoaded('[data-testid="account-detail-menu"]').then((selector) => {
 //                                                                                                                                                                      \______/
 
 if (window.location.href.includes('awsapps.com/start')) {
-  const handleMutations = (mutationsList, observer) => {
-    for (const mutation of mutationsList) {
-      if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-        for (const node of mutation.addedNodes) {
-          if (node instanceof HTMLElement && node.matches('sso-expander')) {
-            extractAccountData();
-            break;
-          }
-        }
-      }
-    }
+const accountListCells = document.querySelectorAll('[data-testid="account-list-cell"]');
+let newJsonData = {};
+accountListCells.forEach((element) => {
+  // Query for the <strong> element within this element to get the account name
+  const accountNameElement = element.querySelector('strong');
+  const accountName = accountNameElement ? accountNameElement.textContent.trim() : 'Unknown Account Name';
+
+  // Query for the div with class 'awsui_key-label-variant_18wu0_1iaas_317' to get the account number and email
+  const accountInfoElement = element.querySelector('.awsui_key-label-variant_18wu0_1iaas_317');
+  let accountNumber = 'Unknown Account Number';
+  if (accountInfoElement) {
+    const accountInfoParts = accountInfoElement.textContent.split(' | ');
+    accountNumber = accountInfoParts.length > 0 ? accountInfoParts[0] : 'Unknown Account Number';
+    // trim the account number to remove any leading or trailing whitespace
+    accountNumber = accountNumber.trim();
+  }
+  console.log(`Account Name: ${accountName}, Account Number: ${accountNumber}`);
+  newJsonData[accountNumber] = {
+    id: accountName,
+    color: '#57f104',
   };
-
-  const observer = new MutationObserver(handleMutations);
-  const observerOptions = {
-    childList: true,
-    subtree: true,
-  };
-  observer.observe(document, observerOptions);
-}
-
-const extractAccountData = () => {
-  cp_isElementLoaded('.portal-instance-section').then((selector) => {
-    cp_getAllAccounts().then((jsonData) => {
-      const accountElements = document.querySelectorAll('.name');
-      const accountIdElements = document.querySelectorAll('.accountId');
-
-      for (let i = 0; i < accountElements.length; i++) {
-        const accountName = accountElements[i].textContent;
-        const accountId = accountIdElements[i].textContent.slice(1); // Remove the '#' symbol
-
-        if (jsonData[accountId] !== undefined) {
-          jsonData[accountId].id = accountName;
-        } else {
-          jsonData[accountId] = {
-            id: accountName,
-            color: '#57f104',
-          };
-        }
-      }
-      cp_saveAllAccounts(jsonData);
-      cp_getAllAccounts();
-    });
   });
-};
+  cp_getAllAccounts().then((jsonData) => {
+    cp_saveAllAccounts({...jsonData, ...newJsonData});
+    cp_getAllAccounts();  
+  });  
+}
