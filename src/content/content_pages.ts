@@ -12,6 +12,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log(`Message : ${JSON.stringify(message)}`);
   console.log(`Message : ${JSON.stringify(sender)}`);
   if (message == 'popupcomms') {
+    console.log(`Popup Comms  A1`);
     const baseElement = document.querySelector('[data-testid="account-detail-menu"]');
     let accountId;
     if (baseElement) {
@@ -143,30 +144,46 @@ cp_isElementLoaded('[data-testid="account-detail-menu"]').then((selector) => {
 //                                                                                                                                                                      \______/
 
 if (window.location.href.includes('awsapps.com/start')) {
-const accountListCells = document.querySelectorAll('[data-testid="account-list-cell"]');
-let newJsonData = {};
-accountListCells.forEach((element) => {
-  // Query for the <strong> element within this element to get the account name
-  const accountNameElement = element.querySelector('strong');
-  const accountName = accountNameElement ? accountNameElement.textContent.trim() : 'Unknown Account Name';
+  const handleAccountList = (dataBlock: Element) => {
+    let newJsonData = {};
+    Array.from(dataBlock.children).forEach((element) => {
+      const accountNameElement = element.querySelector('strong').innerHTML;
+      const accountName = accountNameElement ? accountNameElement : 'Unknown Account Name';
 
-  // Query for the div with class 'awsui_key-label-variant_18wu0_1iaas_317' to get the account number and email
-  const accountInfoElement = element.querySelector('.awsui_key-label-variant_18wu0_1iaas_317');
-  let accountNumber = 'Unknown Account Number';
-  if (accountInfoElement) {
-    const accountInfoParts = accountInfoElement.textContent.split(' | ');
-    accountNumber = accountInfoParts.length > 0 ? accountInfoParts[0] : 'Unknown Account Number';
-    // trim the account number to remove any leading or trailing whitespace
-    accountNumber = accountNumber.trim();
+      let accountNumber = 'Unknown Account Number';
+      element.querySelectorAll('div').forEach((divElement) => {
+        if (divElement.textContent.includes(' | ')) {
+          // console.log(`Found div with " | ": ${divElement.textContent}`);
+          const accountInfoParts = divElement.textContent.split(' | ');
+          accountNumber = accountInfoParts.length > 0 ? accountInfoParts[0] : 'Unknown Account Number';
+          accountNumber = accountNumber.trim();
+        }
+      });
+      console.log(`Account Name: ${accountName}, Account Number: ${accountNumber}`);
+      newJsonData[accountNumber] = {
+        id: accountName,
+        color: '#57f104',
+      };
+    });
+    cp_getAllAccounts().then((jsonData) => {
+      cp_saveAllAccounts({ ...jsonData, ...newJsonData });
+      cp_getAllAccounts();
+    });
   }
-  console.log(`Account Name: ${accountName}, Account Number: ${accountNumber}`);
-  newJsonData[accountNumber] = {
-    id: accountName,
-    color: '#57f104',
-  };
+
+  // Create a MutationObserver to watch for changes in the DOM
+  const observer = new MutationObserver((mutationsList, observer) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'childList') {
+        const accountListElement = document.querySelector('div[data-testid="account-list"]');
+        if (accountListElement) {
+          observer.disconnect();
+          handleAccountList(accountListElement);
+        }
+      }
+    }
   });
-  cp_getAllAccounts().then((jsonData) => {
-    cp_saveAllAccounts({...jsonData, ...newJsonData});
-    cp_getAllAccounts();  
-  });  
+  // Start observing the document body for child list changes
+  observer.observe(document.body, { childList: true, subtree: true });
 }
+
