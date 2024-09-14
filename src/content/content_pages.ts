@@ -147,7 +147,7 @@ if (window.location.href.includes('awsapps.com/start')) {
   const handleAccountList = (dataBlock: Element) => {
     let newJsonData = {};
     Array.from(dataBlock.children).forEach((element) => {
-      const accountNameElement = element.querySelector('strong').innerHTML;
+      const accountNameElement = element.querySelector('strong').querySelector('div').innerHTML;
       const accountName = accountNameElement ? accountNameElement : 'Unknown Account Name';
 
       let accountNumber = 'Unknown Account Number';
