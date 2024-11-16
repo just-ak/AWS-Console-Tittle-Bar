@@ -39,7 +39,7 @@
     "buildZ": "tsc",
     "watchZ": "tsc --watch"
   },
-  "version": "4.5.0",
+  "version": "5.0.0",
   "dependencies": {
     "@semantic-release/git": "^10.0.1",
     "@types/es6-promise": "^3.3.0",
@@ -47,3 +47,4 @@
     "ts-node": "^10.9.2"
   }
 }
+

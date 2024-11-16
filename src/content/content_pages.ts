@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log(`Message : ${JSON.stringify(sender)}`);
   if (message == 'popupcomms') {
     console.log(`Popup Comms  A1`);
-    const baseElement = document.querySelector('[data-testid="account-detail-menu"]');
+    const baseElement = document.querySelector('[data-testid="more-menu__awsc-nav-account-menu-button"]');
     let accountId;
     if (baseElement) {
       const spanElement = baseElement.querySelectorAll('span')[1];
@@ -47,18 +47,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 //                                                                                                                            /$$  \ $$
 //                                                                                                                           |  $$$$$$/
 //                                                                                                                            \______/
+//       
 
-cp_isElementLoaded('[data-testid="account-detail-menu"]').then((selector) => {
-  const baseElement = document.querySelector('[data-testid="account-detail-menu"]');
-  let accountId;
-  if (baseElement) {
-    const spanElement = baseElement.querySelectorAll('span')[1];
-
-    if (spanElement) {
-      accountId = spanElement.innerText.replace(/-/g, '');
-    }
-  }
-
+function addAccountDetailsToPage(accountId: string) {
   if (accountId) {
     console.log(`Account No Found on New Page ${accountId}`);
     cp_getAccount(accountId)
@@ -129,7 +120,39 @@ cp_isElementLoaded('[data-testid="account-detail-menu"]').then((selector) => {
   } else {
     console.warn('Unable to find Account Id');
   }
-});
+
+}
+function getCookie(name: string): string | null {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
+  return null;
+}
+
+function getAWSUserInfoAccountNumber(): string | null {
+  const cookieValue = getCookie('aws-userInfo');
+  if (cookieValue) {
+    try {
+      const userInfo = JSON.parse(decodeURIComponent(cookieValue));
+      const arn = userInfo.arn;
+      if (arn) {
+        const match = arn.match(/arn:aws:sts::(\d+):/);
+        return match ? match[1] : null;
+      }
+    } catch (error) {
+      console.error('Error parsing aws-userInfo cookie:', error);
+      return null;
+    }
+  }
+  return null;
+}
+
+if (!window.location.href.includes('awsapps.com/start')) {
+  cp_isElementLoaded('[data-testid="awsc-nav-regions-menu-button"]').then((selector) => {
+    const accountNumber = getAWSUserInfoAccountNumber();
+    addAccountDetailsToPage(accountNumber);
+  });
+}
 
 //   /$$$$$$  /$$      /$$  /$$$$$$         /$$$$$$                                          /$$                  /$$$$$$   /$$$$$$   /$$$$$$        /$$$$$$$
 //  /$$__  $$| $$  /$ | $$ /$$__  $$       /$$__  $$                                        | $$                 /$$__  $$ /$$__  $$ /$$__  $$      | $$__  $$
