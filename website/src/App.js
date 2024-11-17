@@ -5,7 +5,7 @@ import awsLogo from './assets/aws-logo.png'; // Add your AWS logo image here
 
 function App() {
   return (
-    <Router basename="/">
+    <Router basename="/AWS-Console-Title-Bar">
       <div className="container">
         <header>
           <img src={awsLogo} alt="AWS Logo" className="logo" />
