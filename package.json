@@ -32,7 +32,7 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "build": "webpack --mode production",
-    "websiteBuild": "cd website && yarn build",
+    "websiteBuild": "cd website && npm run build",
     "prepublishOnly": "yarn build",
     "start": "npm run watch",
     "watch": "webpack --mode development --watch",
