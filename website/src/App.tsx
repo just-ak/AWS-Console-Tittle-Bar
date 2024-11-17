@@ -58,33 +58,9 @@ function App() {
           <a href="https://github.com/just-ak/AWS-Console-Title-Bar" className="button">GitHub Repository</a>
         </section>
         <section className="readme">
-          <h2>README.md</h2>
-          <p>For detailed information, refer to the README.md file:</p>
-          <pre>
-            {`
-# AWS Console Title Bar
-
-Chrome Plugin: [AWS Console Title Bar](https://chrome.google.com/webstore/detail/aws-console-title-bar/jhenfbkjfncfbimbkhakchbdefigenfp?hl=en)
-
-FireFox Plugin [AWS Console Title Bar](https://addons.mozilla.org/en-GB/firefox/addon/aws-console-title-bar/)
-
-The AWS Console Title Bar is a plugin designed to assist users of the AWS Console with SSO who have multiple accounts. It helps them identify the account they are currently logged into by displaying the account name on the menu bar in the console's top right corner.
-
-To allow the plugin to work on each AWS Console URL, follow these steps:
-
-1) Install the plugin.
-2) Open the AWS Console.
-3) Click on the plugin icon in the browser's toolbar. It will have a green dot on it.
-4) From the drop-down menu, select "Allow on all AWS Console URLs" or a similar option. This will ensure that the plugin works consistently across different AWS Console URLs.
-
-## Export / Import of URLs
-...
-...
-## Manifest V3 Migration
-
-For information on migrating to Manifest V3 in Chrome extensions, refer to [https://developer.chrome.com/docs/extensions/migrating/to-service-workers/#move-dom-and-window](https://developer.chrome.com/docs/extensions/migrating/to-service-workers/#move-dom-and-window).
-            `}
-          </pre>
+          <h2>Contributing</h2>
+          <p>For detailed information on how to contribute and configure your local environment refer to the README.md file:</p>
+         
         </section>
       </main>
       <footer>
