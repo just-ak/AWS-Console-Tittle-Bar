@@ -72,7 +72,7 @@ main {
   padding: 2rem;
 }
 
-.features, .how-it-works, .description, .cta, .screenshots {
+.permissions, .backup-settings, .features, .how-it-works, .description, .cta, .screenshots, .github, .readme {
   margin-bottom: 2rem;
   padding: 2rem;
   background-color: white;
@@ -84,17 +84,17 @@ main {
   color: #333; /* Ensure text is visible */
 }
 
-.features h2, .how-it-works h2, .description h2, .cta h2 {
+.backup-settings h2, .permissions h2, .features h2, .how-it-works h2, .description h2, .cta h2, .github h2, .readme h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
 
-.features ul, .how-it-works ol {
+.backup-settings ul, .permissions ul,.features ul, .how-it-works ol {
   padding-left: 1.5rem;
   text-align: left;
 }
 
-.features li, .how-it-works li {
+.backup-settings li, .permissions li, .features li, .how-it-works li {
   margin-bottom: 0.5rem;
   font-size: 1.1rem;
 }
@@ -190,7 +190,7 @@ button {
   }
 }
 
-.features, .how-it-works, .description, .cta, .screenshots {
+.features, .how-it-works, .description, .cta, .screenshots, .permissions, .backup-settings, .github, .readme {
   animation: slide-in 0.6s ease-out forwards;
 }
 
@@ -210,6 +210,22 @@ button {
   animation-delay: 0.8s;
 }
 
+.permissions {
+  animation-delay: 1s;
+}
+
+.backup-settings {
+  animation-delay: 1.2s;
+}
+
+.github {
+  animation-delay: 1.4s;
+}
+
+.readme {
+  animation-delay: 1.6s;
+}
+
 .github {
   color: #333;
 }
@@ -221,4 +237,4 @@ button {
 
 .description p {
   text-align: left;
-} 
+}

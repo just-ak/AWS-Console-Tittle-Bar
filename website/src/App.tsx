@@ -1,8 +1,9 @@
-// import { useState } from 'react'
 import './App.css'
 import AKFDEV_Logo from './assets/AKFDEV_Logo.png'
 import packageJson from '../package.json'
 import screenshot2 from './docs/screenshot2.png'
+import permissionsImg from './docs/permissions.png'
+import backupImg from './docs/backup.png'
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -39,6 +40,24 @@ function App() {
           <img src={screenshot2} alt="Screenshot Hero" width="50%"/>
           <br/>
           {/* <img src={screenshot2} alt="Screenshot 2" width="50%"/> */}
+        </section>
+        <section className="permissions">
+          <h2>Required Permissions</h2>
+          <p>The AWS Console Title Bar plugin requires permissions so that it can:</p>
+          <ul>
+            <li>Read your users arn on aws.amazon.com sites to determin the account no </li>
+          </ul>
+          <img src={permissionsImg} alt="Permissions" width="50%" />
+        </section>
+        <section className="backup-settings">
+          <h2>Backup and Restore Settings</h2>
+          <p>You can backup or copy your settings using a JSON file. Follow these steps:</p>
+          <ol>
+            <li>Go to the plugin settings page.</li>
+            <li>Copy the settings JSON and save them as a file file.</li>
+            <li>To import settings, paste in a new JSON file and click on the "Import" button.</li>
+          </ol>
+          <img src={backupImg} alt="Backup Settings" width="50%" />
         </section>
         <section className="description">
           <h2>Product Description</h2>
