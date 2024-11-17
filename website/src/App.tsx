@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+import AKFDEV_Logo from './assets/AKFDEV_Logo.png'
+import packageJson from '../package.json' // Add this line
 
 function App() {
   const [count, setCount] = useState(0)
@@ -7,6 +9,7 @@ function App() {
   return (
     <>
       <header>
+        <img src={AKFDEV_Logo} alt="AKFDEV Logo" className="logo" />
         <h1>AWS Console Title Bar</h1>
         <p>Making life easier for people managing multiple AWS accounts</p>
       </header>
@@ -49,6 +52,7 @@ function App() {
       </main>
       <footer>
         <p>&copy; 2023 AKFDEV.com All rights reserved.</p>
+        <p>Version: {packageJson.version}</p> {/* Add this line */}
       </footer>
     </>
   )

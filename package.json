@@ -38,9 +38,10 @@
     "watch": "webpack --mode development --watch",
     "archive": "rm -rf ./dist && rm -rf ./archive && yarn build && tsc && rm -rf ./dist/index.html && rm -rf ./dist/content_pages.js && rm -rf ./dist/content/plugin_page.js && rm -rf ./dist/content/preferences.js  && mkdir -p archive && cd dist && zip -r ../archive/archive.zip . && cd .. && npx addons-linter archive/archive.zip  ",
     "buildZ": "tsc",
-    "watchZ": "tsc --watch"
+    "watchZ": "tsc --watch",
+    "sync-versions": "ts-node scripts/syncVersions"
   },
-  "version": "5.0.0",
+  "version": "5.1.0",
   "dependencies": {
     "@semantic-release/git": "^10.0.1",
     "@types/es6-promise": "^3.3.0",
