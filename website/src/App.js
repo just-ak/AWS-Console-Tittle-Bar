@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router} from 'react-router-dom';
 import './App.css';
 import awsLogo from './assets/aws-logo.png'; // Add your AWS logo image here
 
