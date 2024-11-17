@@ -28,6 +28,17 @@ function onError(error) {
   console.log(`Error: ${error}`);
 }
 
+function openHelpPage() {
+  const helpUrl = 'https://aws-console-title-bar.akfdev.com/';
+  if (typeof browser !== 'undefined') {
+    browser.tabs.create({ url: helpUrl }).then(onUpdated, onError);
+  } else if (typeof chrome !== 'undefined') {
+    chrome.tabs.create({ url: helpUrl }, onUpdated);
+  } else {
+    console.error('Browser API not supported');
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.tabs.sendMessage(tabs[0].id, 'popupcomms', (response) => {
@@ -112,6 +123,8 @@ document.addEventListener('DOMContentLoaded', function () {
       (document.getElementById('use-container') as HTMLInputElement).checked = false;
     });
   });
+
+  document.getElementById('help-button').addEventListener('click', openHelpPage);
 });
 
 const updatePopupUrls = () => {

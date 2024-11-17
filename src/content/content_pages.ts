@@ -9,10 +9,10 @@ const {
 
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log(`Message : ${JSON.stringify(message)}`);
-  console.log(`Message : ${JSON.stringify(sender)}`);
+  // console.log(`Message : ${JSON.stringify(message)}`);
+  // console.log(`Message : ${JSON.stringify(sender)}`);
   if (message == 'popupcomms') {
-    console.log(`Popup Comms  A1`);
+    // console.log(`Popup Comms  A1`);
     const accountNumber = getAWSUserInfoAccountNumber();
     if (accountNumber) {
       sendResponse({ title: document.title, accountId: accountNumber });

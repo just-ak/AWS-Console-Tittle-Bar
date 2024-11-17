@@ -238,7 +238,8 @@ input:checked + .slider:before {
 }
 
 #help-button {
-    font-size: 0.8em;
-    color: #495057;
-    font-weight: bold;
-  }
+  font-size: 0.8em;
+  color: #495057;
+  font-weight: bold;
+  cursor: pointer; /* Ensure cursor changes to pointer */
+}
