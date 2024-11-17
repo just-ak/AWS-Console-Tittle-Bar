@@ -60,8 +60,9 @@ document.addEventListener('DOMContentLoaded', function () {
           if (useContainer) {
             containerId = await createContainer(containerTitle);
             browser.tabs.create({ url: chosenPage, cookieStoreId: containerId }).then(onUpdated, onError);
-          }
+          } else {
           browser.tabs.create({ url: chosenPage }).then(onUpdated, onError);
+          }
         } catch (error) {
           console.error('Failed to create container and open tab:', error);
         }

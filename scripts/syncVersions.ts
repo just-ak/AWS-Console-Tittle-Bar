@@ -5,6 +5,7 @@ const rootPackageJson = require('../package.json');
 const websitePackageJsonPath = path.join(__dirname, '../website/package.json');
 const manifestJsonPath = path.join(__dirname, '../src/manifest.json');
 const pluginPageHtmlPath = path.join(__dirname, '../src/content/plugin_page.html');
+const preferencesPageHtmlPath = path.join(__dirname, '../src/content/preferences.html');
 
 const updateVersion = (filePath: string, version: string) => {
   const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -21,6 +22,8 @@ const updateHtmlVersion = (filePath: string, version: string) => {
 updateVersion(websitePackageJsonPath, rootPackageJson.version);
 updateVersion(manifestJsonPath, rootPackageJson.version);
 updateHtmlVersion(pluginPageHtmlPath, rootPackageJson.version);
+updateHtmlVersion(preferencesPageHtmlPath, rootPackageJson.version);
+
 
 console.log(`Synchronized version to ${rootPackageJson.version}`);
 console.log(`Updated HTML version to ${rootPackageJson.version}`);

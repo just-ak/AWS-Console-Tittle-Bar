@@ -35,7 +35,8 @@ function restore_options() {
     },
     function (options) {
       const jsonTextArea = document.getElementById(jsonElementID) as HTMLTextAreaElement;
-      jsonTextArea.value = options.jsoninfo;
+      jsonTextArea.value = JSON.stringify(JSON.parse(options.jsoninfo), null, 2);
+      jsonTextArea.style.height = `${jsonTextArea.scrollHeight}px`;
     }
   );
 

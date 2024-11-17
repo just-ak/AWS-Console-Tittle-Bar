@@ -70,7 +70,9 @@ async function getAdditionalLinks() {
         const accountDetails = JSON.parse(response.jsoninfo);
         resolve(accountDetails);
       } catch (e) {
-        reject(false);
+        console.error(`Error in getAdditionalLinks: ${e}`);
+        const accountDetails ={urls:[]};
+        resolve(accountDetails);
       }
     });
   });

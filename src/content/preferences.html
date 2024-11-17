@@ -1,29 +1,35 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="preferences.css" />
+    <title>Preferences</title>
   </head>
-<body>
-<p>
-  Add you account number json,with colour modifications if required.
-  https / http entries will add items to the drop down menu.
-</p>
-<p id="accountColors">Accounts</p>
-<p id="managed-jsoninfo" >
-  <pre><code>
+  <body>
+    <section>
+      <h1>Account Settings</h1>
+      <p>
+        Add your account number JSON, with color modifications if required.
+        HTTPS/HTTP entries will add items to the drop-down menu.
+      </p>
+      <div id="accountColors">
+        <B>Example</B>
+        <pre><code>
 {
   "urls":[
-      {"url":"https://example.com","title":"Example.con"}
-      ,{"url":"https://example.awsapps.com/start","title":"AWS Console: Example"}
+      {"url":"https://example.com","title":"Example.com"},
+      {"url":"https://example.awsapps.com/start","title":"AWS Console: Example"}
   ]
 }
-</code></pre></p>
-
-<label>URL Links</label><br/>
-<button id="save">Import</button>
-<textarea id="jsoninfo" name="jsoninfo" rows="5" cols="50"></textarea><br/>
-<div id="status"></div>
-</body>
+</code></pre>
+      </div>
+      <label for="jsoninfo">Config JSON</label><br/>
+      <textarea id="jsoninfo" name="jsoninfo" rows="5" cols="50"></textarea><br/>
+      <button id="save" class="modern-button">Import</button>
+      <div id="status"></div>
+    </section>
+    <footer>
+      <span id="version-number">Version: 5.1.5</span>
+    </footer>
+  </body>
 </html>
