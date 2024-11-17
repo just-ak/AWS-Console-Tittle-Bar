@@ -3,6 +3,8 @@ import AKFDEV_Logo from './assets/AKFDEV_Logo.png'
 import packageJson from '../package.json'
 import screenshot2 from './docs/screenshot2.png'
 import permissionsImg from './docs/permissions.png'
+import plugPermission from './docs/plug-permission.png'
+import plugPermission2 from './docs/plug-permission2.png'
 import backupImg from './docs/backup.png'
 
 function App() {
@@ -48,6 +50,14 @@ function App() {
             <li>Read your users arn on aws.amazon.com sites to determin the account no </li>
           </ul>
           <img src={permissionsImg} alt="Permissions" width="50%" />
+
+          <h3>Required Permissions</h3>
+          <p>Individual URL's will require a quick click...</p>
+          <ul>
+            <li>Checkout the little green dot</li>
+          </ul>
+          <img src={plugPermission} alt="Permissions" width="10%" /><br/>
+          <img src={plugPermission2} alt="Permissions" width="20%" />
         </section>
         <section className="backup-settings">
           <h2>Backup and Restore Settings</h2>

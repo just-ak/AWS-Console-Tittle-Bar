@@ -1,6 +1,6 @@
 # AWS Console Title Bar
 
-[https://aws-console-title-bar.akfdev.com]https://aws-console-title-bar.akfdev.com
+[https://aws-console-title-bar.akfdev.com](https://aws-console-title-bar.akfdev.com)
 
 Chrome Plugin: [AWS Console Title Bar](https://chrome.google.com/webstore/detail/aws-console-title-bar/jhenfbkjfncfbimbkhakchbdefigenfp?hl=en)
 
@@ -118,12 +118,9 @@ Access the Chrome Web Store for more information:
 
 - [https://chrome.google.com/webstore/devconsole/80050481-57f7-4a10-8bb4-7e6dfe5bec47/jhenfbkjfncfbimbkhakchbdefigenfp/edit/package](https://chrome.google.com/webstore/devconsole/80050481-57f7-4a10-8bb4-7e6dfe5bec47/jhenfbkjfncfbimbkhakchbdefigenfp/edit/package)
 
-## Current Problems
+## Issues
 
-There are a couple of known issues with the plugin:
-
-1. Browser plugins don't resize correctly after creation.
-2. The HTML5 color picker doesn't work properly on Firefox for browser plugins. The plugin uses [https://github.com/mdbassit/Coloris](https://github.com/mdbassit/Coloris) as a workaround.
+https://github.com/just-ak/AWS-Console-Tittle-Bar/issues
 
 ## Manifest V3 Migration
 
