@@ -23,7 +23,11 @@
         <label for="title-input">Title: </label>
         <input type="text" id="title-input" required>
         <br>
-        <label for="use-container">Firefox Containers: </label><input type="checkbox" id="use-container">
+        <label for="use-container">Firefox Containers: </label>
+        <label class="switch">
+          <input type="checkbox" id="use-container">
+          <span class="slider round"></span>
+        </label>
         <br>
         <div id="container-switches"></div>
         <button type="submit" data-commit-type="new" class="modern-button">New</button>
