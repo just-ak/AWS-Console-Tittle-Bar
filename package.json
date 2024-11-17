@@ -39,7 +39,8 @@
     "archive": "rm -rf ./dist && rm -rf ./archive && yarn build && tsc && rm -rf ./dist/index.html && rm -rf ./dist/content_pages.js && rm -rf ./dist/content/plugin_page.js && rm -rf ./dist/content/preferences.js  && mkdir -p archive && cd dist && zip -r ../archive/archive.zip . && cd .. && npx addons-linter archive/archive.zip  ",
     "buildZ": "tsc",
     "watchZ": "tsc --watch",
-    "sync-versions": "ts-node scripts/syncVersions"
+    "sync-versions": "ts-node scripts/syncVersions",
+    "webPreview": "npm run sync-versions && cd website && npm run preview"
   },
   "version": "5.1.0",
   "dependencies": {
