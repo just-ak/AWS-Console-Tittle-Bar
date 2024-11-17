@@ -13,17 +13,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log(`Message : ${JSON.stringify(sender)}`);
   if (message == 'popupcomms') {
     console.log(`Popup Comms  A1`);
-    const baseElement = document.querySelector('[data-testid="more-menu__awsc-nav-account-menu-button"]');
-    let accountId;
-    if (baseElement) {
-      const spanElement = baseElement.querySelectorAll('span')[1];
-
-      if (spanElement) {
-        accountId = spanElement.innerText.replace(/-/g, '');
-      }
-    }
-    if (accountId) {
-      sendResponse({ title: document.title, accountId: accountId });
+    const accountNumber = getAWSUserInfoAccountNumber();
+    if (accountNumber) {
+      sendResponse({ title: document.title, accountId: accountNumber });
     }
   }
   if ((message as string).startsWith('updateColour')) {

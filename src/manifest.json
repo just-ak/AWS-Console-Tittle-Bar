@@ -40,5 +40,5 @@
     "options_ui": {
         "page": "content/preferences.html"
     },
-    "permissions": ["storage"]
+    "permissions": ["storage","contextualIdentities","cookies"]
   }
