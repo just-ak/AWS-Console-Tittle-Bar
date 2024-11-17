@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const titleInput = document.getElementById('title-input') as HTMLInputElement;
     const useContainer = (document.getElementById('use-container') as HTMLInputElement).checked;
     const commitType = (event.submitter as HTMLButtonElement).dataset.commitType;
-
     const url = urlInput.value;
     const title = titleInput.value;
 
@@ -89,22 +88,18 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!accountDetails['urls']) {
         accountDetails['urls'] = [];
       }
-
       if (commitType === 'new') {
         accountDetails['urls'].push({ url: url, title: title, useContainer: useContainer });
-        console.log('New URL:', url);
       } else if (commitType === 'update') {
-        console.log('Update URL:', url);
-        const index = accountDetails['urls'].findIndex(item => item.title === title);
-        
+        const index = accountDetails['urls'].findIndex(item => item.url === url);  
         if (index !== -1) {
           accountDetails['urls'][index] = { url: url, title: title, useContainer: useContainer };
+        } else {
+          accountDetails['urls'].push({ url: url, title: title, useContainer: useContainer });
         }
       } else if (commitType === 'delete') {
-        console.log('Delete URL:', url);
-        accountDetails['urls'] = accountDetails['urls'].filter(item => item.title !== title);
+        accountDetails['urls'] = accountDetails['urls'].filter(item => item.url !== url);
       }
-
       pp_saveAdditionalLinks(accountDetails);
       updatePopupUrls();
       console.log('URL:', url);
@@ -128,27 +123,10 @@ const updatePopupUrls = () => {
         elementAccountDiv.style.display = 'flex';
         const elementAccountName = document.createElement('span');
         elementAccountName.classList.add('page-choice-urls');
-        elementAccountName.innerText = `${urlItem.title}`;// (${urlItem.useContainer ? 'Container' : 'No Container'})`;
+        elementAccountName.innerText = `${urlItem.title}`;
         elementAccountName.dataset.url = urlItem.url;
         elementAccountName.dataset.useContainer = urlItem.useContainer;
-
-        const elementRemoveAccountName = document.createElement('span');
-        elementRemoveAccountName.classList.add('remove-url');
-        elementRemoveAccountName.setAttribute('data-key', urlItem.title);
-        elementRemoveAccountName.innerText = 'X';
-        elementRemoveAccountName.addEventListener('click', function (event) {
-          const title = (event.target as HTMLElement).dataset.key;
-          pp_getAdditionalLinks().then((data) => {
-            const urls = data['urls'];
-            const newUrls = urls.filter((item) => item.title !== title);
-            data['urls'] = newUrls;
-            pp_saveAdditionalLinks(data);
-            updatePopupUrls();
-          });
-        });
-        elementRemoveAccountName.style.visibility = 'hidden';
         elementAccountDiv.appendChild(elementAccountName);
-        //elementAccountDiv.appendChild(elementRemoveAccountName);
         accurl.appendChild(elementAccountDiv);
       }
     }
