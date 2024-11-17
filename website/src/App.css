@@ -72,7 +72,7 @@ main {
   padding: 2rem;
 }
 
-.features, .how-it-works, .description, .cta {
+.features, .how-it-works, .description, .cta, .screenshots {
   margin-bottom: 2rem;
   padding: 2rem;
   background-color: white;
@@ -190,7 +190,7 @@ button {
   }
 }
 
-.features, .how-it-works, .description, .cta {
+.features, .how-it-works, .description, .cta, .screenshots {
   animation: slide-in 0.6s ease-out forwards;
 }
 
@@ -206,6 +206,19 @@ button {
   animation-delay: 0.6s;
 }
 
-.cta {
+.cta, .screenshots {
   animation-delay: 0.8s;
 }
+
+.github {
+  color: #333;
+}
+
+.readme {
+  color: #474747;
+  text-align: left;
+}
+
+.description p {
+  text-align: left;
+} 

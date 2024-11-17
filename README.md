@@ -127,3 +127,7 @@ There are a couple of known issues with the plugin:
 
 For information on migrating to Manifest V3 in Chrome extensions, refer to [https://developer.chrome.com/docs/extensions/migrating/to-service-workers/#move-dom-and-window](https://developer.chrome.com/docs/extensions/migrating/to-service-workers/#move-dom-and-window).
 
+## Website Promotion
+
+Visit our website for more information and updates: [AWS Console Title Bar Website](https://aws-console-title-bar.example.com)
+
