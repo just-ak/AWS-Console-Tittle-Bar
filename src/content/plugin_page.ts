@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if ((e.target as HTMLElement).classList.contains('page-choice-urls')) {
       const chosenPage = (e.target as HTMLElement).dataset.url;
       const containerTitle = (e.target as HTMLElement).innerText;
-      const useContainer = (e.target as HTMLElement).dataset.useContainer === 'true'?true:false; //(document.getElementById('data-use-container') as HTMLInputElement).checked;
+      const useContainer = (e.target as HTMLElement).dataset.useContainer === 'true'?true:false; 
       if (accountColorsDiv.style.visibility === 'hidden') {
         try {
           let containerId = null;
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
         (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'edit';
         (document.getElementById('url-input') as HTMLInputElement).value = chosenPage;
         (document.getElementById('title-input') as HTMLInputElement).value = containerTitle;
-        (document.getElementById('use-container') as HTMLInputElement).checked = useContainer;// === 'true' ? true : false;
+        (document.getElementById('use-container') as HTMLInputElement).checked = useContainer;
       }
     }
   });
