@@ -29,13 +29,13 @@ function onError(error) {
 
 document.addEventListener('DOMContentLoaded', function () {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    console.log('Send');
     chrome.tabs.sendMessage(tabs[0].id, 'popupcomms', (response) => {
-      console.log(JSON.stringify(response));
-      if (response && response.accountId) {
-        showSingleAccount(response.accountId);
-      } else {
-        console.error('accountId is undefined in response:', response);
+      if (response) {
+        if (response.accountId) {
+          showSingleAccount(response.accountId);
+        } else {
+          console.error('accountId is undefined in response:', response);
+        }
       }
     });
   });
@@ -45,27 +45,24 @@ document.addEventListener('DOMContentLoaded', function () {
   accurl.addEventListener('click', async function (e) {
     if ((e.target as HTMLElement).classList.contains('page-choice-urls')) {
       const chosenPage = (e.target as HTMLElement).dataset.url;
-      // console.log('Chosen page:', (e.target as HTMLElement).innerText);
-      const containerTitle =  (e.target as HTMLElement).innerText;
+      const containerTitle = (e.target as HTMLElement).innerText;
       const useContainer = (e.target as HTMLElement).dataset.useContainer; //(document.getElementById('data-use-container') as HTMLInputElement).checked;
       if (accountColorsDiv.style.visibility === 'hidden') {
-        console.log('Open new tab');
         try {
           let containerId = null;
           if (useContainer) {
             containerId = await createContainer(containerTitle);
+            browser.tabs.create({ url: chosenPage, cookieStoreId: containerId }).then(onUpdated, onError);
           }
-          const updating = browser.tabs.create({ url: chosenPage, cookieStoreId: containerId });
-          updating.then(onUpdated, onError);
+          browser.tabs.create({ url: chosenPage }).then(onUpdated, onError);
         } catch (error) {
           console.error('Failed to create container and open tab:', error);
         }
       } else {
-        console.log('Edit item');
         (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'edit';
         (document.getElementById('url-input') as HTMLInputElement).value = chosenPage;
-        (document.getElementById('title-input') as HTMLInputElement).value = containerTitle;    
-        (document.getElementById('use-container') as HTMLInputElement).checked = useContainer==='true'?true:false;
+        (document.getElementById('title-input') as HTMLInputElement).value = containerTitle;
+        (document.getElementById('use-container') as HTMLInputElement).checked = useContainer === 'true' ? true : false;
       }
     }
   });
@@ -74,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const urlForm = document.getElementById('url-form');
   urlForm.addEventListener('submit', function (event) {
-    // console.log(`Event Details ${JSON.stringify(event, null, 2)}`);
     event.preventDefault();
 
     const urlInput = document.getElementById('url-input') as HTMLInputElement;
@@ -91,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (commitType === 'new') {
         accountDetails['urls'].push({ url: url, title: title, useContainer: useContainer });
       } else if (commitType === 'update') {
-        const index = accountDetails['urls'].findIndex(item => item.url === url);  
+        const index = accountDetails['urls'].findIndex(item => item.url === url);
         if (index !== -1) {
           accountDetails['urls'][index] = { url: url, title: title, useContainer: useContainer };
         } else {
@@ -102,9 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       pp_saveAdditionalLinks(accountDetails);
       updatePopupUrls();
-      console.log('URL:', url);
-      console.log('Title:', title);
-      console.log('Use Container:', useContainer);
       urlInput.value = '';
       titleInput.value = '';
       (document.getElementById('use-container') as HTMLInputElement).checked = false;
@@ -161,7 +154,6 @@ const getIconFromName = (name: string): string => {
 const createContainer = (name: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     if (typeof browser !== 'undefined' && browser.contextualIdentities) {
-      console.log('Creating container:', name);
       const color = getColorFromName(name);
       const icon = getIconFromName(name);
       browser.contextualIdentities.create({
@@ -228,14 +220,8 @@ const showSingleAccount = (accountId) => {
     colorInput.value = account.color;
 
     colorInput.addEventListener('focus', function () {
-      // Check if the hidden box is currently hidden
-      // if (hiddenBox.style.height === '0px') {
       hiddenBox.style.height = '150px';
     });
-    // colorInput.addEventListener('blur', function () {
-    //     hiddenBox.style.height = '0px';
-
-    // });
 
     colorInput.addEventListener('change', function (event) {
       const selectedColor = (event.target as HTMLInputElement).value;
