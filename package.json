@@ -42,7 +42,7 @@
     "sync-versions": "ts-node scripts/syncVersions",
     "webPreview": "npm run sync-versions && cd website && npm run preview"
   },
-  "version": "5.1.1",
+  "version": "5.1.2",
   "dependencies": {
     "@semantic-release/git": "^10.0.1",
     "@types/es6-promise": "^3.3.0",
