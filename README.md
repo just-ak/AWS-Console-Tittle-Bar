@@ -1,5 +1,7 @@
 # AWS Console Title Bar
 
+[https://aws-console-title-bar.akfdev.com]https://aws-console-title-bar.akfdev.com
+
 Chrome Plugin: [AWS Console Title Bar](https://chrome.google.com/webstore/detail/aws-console-title-bar/jhenfbkjfncfbimbkhakchbdefigenfp?hl=en)
 
 FireFox Plugin [AWS Console Title Bar](https://addons.mozilla.org/en-GB/firefox/addon/aws-console-title-bar/)
