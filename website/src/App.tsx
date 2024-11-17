@@ -74,7 +74,7 @@ function App() {
         <section className="github">
           <h2>GitHub Repository</h2>
           <p>Check out the source code and contribute to the project on GitHub:</p>
-          <a href="https://github.com/just-ak/AWS-Console-Title-Bar" className="button">GitHub Repository</a>
+          <a href="https://github.com/just-ak/AWS-Console-Tittle-Bar" className="button">GitHub Repository</a>
         </section>
         <section className="readme">
           <h2>Contributing</h2>
