@@ -23,7 +23,7 @@ h1 {
 #accurl {
   margin-bottom: 5px;
 }
-#awsso-footer {
+#awsso-header {
   float: right;
   font-size: 1em;
   position: absolute;
@@ -31,10 +31,10 @@ h1 {
   left: 0px;
 }
 
-#awsso-footer:hover {
+#awsso-header:hover {
   background-color: #dfbb6f;
 }
-#awsso-footer {
+#awsso-header {
   cursor: pointer;
 }
 
@@ -191,4 +191,30 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(14px);
+}
+
+#awsso-footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  transform: scale(0.8);
+  transform-origin: bottom right;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding-right: 5%;
+}
+
+#awsso-footer .svg-image {
+  margin-right: 8px;
+}
+
+#version-number {
+  font-size: 0.8em;
+  color: #495057;
+  font-weight: bold;
 }

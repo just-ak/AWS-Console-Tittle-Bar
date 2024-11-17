@@ -7,7 +7,7 @@ const {
 } = require('./reference');
 
 
-const cogIcon = document.getElementById('awsso-footer');
+const cogIcon = document.getElementById('awsso-header');
 const accountColorsDiv = document.getElementById('accountColors');
 const urlAddDiv = document.getElementById('add-url-container');
 const hiddenBox = document.getElementById('hiddenBox');
