@@ -1,18 +1,16 @@
-import React from 'react';
-import { BrowserRouter as Router} from 'react-router-dom';
-import './App.css';
-import awsLogo from './assets/aws-logo.png'; // Add your AWS logo image here
+import { useState } from 'react'
+import './App.css'
 
 function App() {
+  const [count, setCount] = useState(0)
+
   return (
-    <Router basename="/AWS-Console-Title-Bar">
-      <div className="container">
-        <header>
-          <img src={awsLogo} alt="AWS Logo" className="logo" />
-          <h1>AWS Console Title Bar</h1>
-          <p>Manage multiple AWS accounts with ease</p>
-        </header>
-        <main>
+    <>
+      <header>
+        <h1>AWS Console Title Bar</h1>
+        <p>Making life easier for people managing multiple AWS accounts</p>
+      </header>
+      <main>
           <section className="features">
             <h2>Features</h2>
             <ul>
@@ -40,13 +38,17 @@ function App() {
               <a href="https://addons.mozilla.org/en-GB/firefox/addon/aws-console-title-bar/" className="button">Firefox Add-ons</a>
             </div>
           </section>
+          <br/>
+          <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+
         </main>
-        <footer>
-          <p>&copy; 2023 AWS Console Title Bar. All rights reserved.</p>
-        </footer>
-      </div>
-    </Router>
-  );
+      <footer>
+        <p>&copy; 2023 AWS Console Title Bar. All rights reserved.</p>
+      </footer>
+    </>
+  )
 }
 
-export default App;
+export default App
