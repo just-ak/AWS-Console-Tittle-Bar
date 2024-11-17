@@ -41,4 +41,11 @@
       <span id="version-number">Version: 5.1.1</span>
     </div>
   </body>
+  <script>
+    const isFirefox = typeof InstallTrigger !== 'undefined';
+    if (!isFirefox) {
+      document.querySelector('label[for="use-container"]').style.display = 'none';
+      document.getElementById('use-container').style.display = 'none';
+    }
+  </script>
 </html>
