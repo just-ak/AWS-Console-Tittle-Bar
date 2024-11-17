@@ -74,11 +74,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const urlForm = document.getElementById('url-form');
   urlForm.addEventListener('submit', function (event) {
+    // console.log(`Event Details ${JSON.stringify(event, null, 2)}`);
     event.preventDefault();
 
     const urlInput = document.getElementById('url-input') as HTMLInputElement;
     const titleInput = document.getElementById('title-input') as HTMLInputElement;
     const useContainer = (document.getElementById('use-container') as HTMLInputElement).checked;
+    const commitType = (event.submitter as HTMLButtonElement).dataset.commitType;
 
     const url = urlInput.value;
     const title = titleInput.value;
@@ -87,7 +89,22 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!accountDetails['urls']) {
         accountDetails['urls'] = [];
       }
-      accountDetails['urls'].push({ url: url, title: title, useContainer: useContainer });
+
+      if (commitType === 'new') {
+        accountDetails['urls'].push({ url: url, title: title, useContainer: useContainer });
+        console.log('New URL:', url);
+      } else if (commitType === 'update') {
+        console.log('Update URL:', url);
+        const index = accountDetails['urls'].findIndex(item => item.title === title);
+        
+        if (index !== -1) {
+          accountDetails['urls'][index] = { url: url, title: title, useContainer: useContainer };
+        }
+      } else if (commitType === 'delete') {
+        console.log('Delete URL:', url);
+        accountDetails['urls'] = accountDetails['urls'].filter(item => item.title !== title);
+      }
+
       pp_saveAdditionalLinks(accountDetails);
       updatePopupUrls();
       console.log('URL:', url);
@@ -114,6 +131,7 @@ const updatePopupUrls = () => {
         elementAccountName.innerText = `${urlItem.title}`;// (${urlItem.useContainer ? 'Container' : 'No Container'})`;
         elementAccountName.dataset.url = urlItem.url;
         elementAccountName.dataset.useContainer = urlItem.useContainer;
+
         const elementRemoveAccountName = document.createElement('span');
         elementRemoveAccountName.classList.add('remove-url');
         elementRemoveAccountName.setAttribute('data-key', urlItem.title);
@@ -130,7 +148,7 @@ const updatePopupUrls = () => {
         });
         elementRemoveAccountName.style.visibility = 'hidden';
         elementAccountDiv.appendChild(elementAccountName);
-        elementAccountDiv.appendChild(elementRemoveAccountName);
+        //elementAccountDiv.appendChild(elementRemoveAccountName);
         accurl.appendChild(elementAccountDiv);
       }
     }
