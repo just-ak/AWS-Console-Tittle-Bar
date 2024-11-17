@@ -1,3 +1,5 @@
+declare const InstallTrigger: any;
+
 const {
   pp_getAllAccounts,
   pp_saveAdditionalLinks,
@@ -5,7 +7,6 @@ const {
   pp_saveAllAccounts,
   pp_isChrome,
 } = require('./reference');
-
 
 const cogIcon = document.getElementById('awsso-header');
 const accountColorsDiv = document.getElementById('accountColors');
@@ -39,6 +40,12 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+  const isFirefox = typeof InstallTrigger !== 'undefined';
+  if (!isFirefox) {
+   (document.querySelector('label[for="use-container"]')  as HTMLElement) .style.display = 'none';
+    document.getElementById('use-container').style.display = 'none';
+  }
 
   const accurl = document.getElementById('accurl');
 
