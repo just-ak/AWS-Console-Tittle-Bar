@@ -121,6 +121,7 @@ h1 {
   cursor: pointer;
   overflow: hidden;
   user-select: none; /* Prevent text selection during drag */
+  text-align: left; /* Change alignment to left */
 }
 .page-choice-urls:hover {
   background-color: #57c264;
