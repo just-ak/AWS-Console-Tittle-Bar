@@ -248,3 +248,24 @@ input:checked + .slider:before {
   font-weight: bold;
   cursor: pointer; /* Ensure cursor changes to pointer */
 }
+
+.group-title {
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.group-select-container {
+  display: flex;
+  align-items: center;
+}
+
+.group-select-container select {
+  flex: 1;
+  margin-right: 5px;
+}
+
+.group-select-container input {
+  flex: 1;
+  width: 50%;
+}

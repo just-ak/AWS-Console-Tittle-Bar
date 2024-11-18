@@ -118,6 +118,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  const groupSelect = document.getElementById('group-select') as HTMLSelectElement;
+  const newGroupInput = document.getElementById('new-group-input') as HTMLInputElement;
+
+  // Populate group dropdown
+  pp_getAdditionalLinks().then((accountDetails) => {
+    const groups = new Set(accountDetails['urls'].map(url => url.group || 'Default'));
+    groups.forEach(group => {
+      const option = (document.createElement('option') as HTMLOptionElement );
+      option.value = group as string;
+      option.text = group as string;
+      groupSelect.add(option);
+    });
+  });
+
   updatePopupUrls();
 
   const urlForm = document.getElementById('url-form');
@@ -130,19 +144,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const commitType = (event.submitter as HTMLButtonElement).dataset.commitType;
     const url = urlInput.value;
     const title = titleInput.value;
+    const group = newGroupInput.value || groupSelect.value;
 
     pp_getAdditionalLinks().then((accountDetails) => {
       if (!accountDetails['urls']) {
         accountDetails['urls'] = [];
       }
       if (commitType === 'new') {
-        accountDetails['urls'].push({ url: url, title: title, useContainer: useContainer });
+        accountDetails['urls'].push({ url: url, title: title, useContainer: useContainer, group: group });
       } else if (commitType === 'update') {
         const index = accountDetails['urls'].findIndex(item => item.url === url);
         if (index !== -1) {
-          accountDetails['urls'][index] = { url: url, title: title, useContainer: useContainer };
+          accountDetails['urls'][index] = { url: url, title: title, useContainer: useContainer, group: group };
         } else {
-          accountDetails['urls'].push({ url: url, title: title, useContainer: useContainer });
+          accountDetails['urls'].push({ url: url, title: title, useContainer: useContainer, group: group });
         }
       } else if (commitType === 'delete') {
         accountDetails['urls'] = accountDetails['urls'].filter(item => item.url !== url);
@@ -151,6 +166,8 @@ document.addEventListener('DOMContentLoaded', function () {
       updatePopupUrls();
       urlInput.value = '';
       titleInput.value = '';
+      newGroupInput.value = '';
+      groupSelect.value = 'Default';
       (document.getElementById('use-container') as HTMLInputElement).checked = false;
     });
   });
@@ -163,18 +180,31 @@ const updatePopupUrls = () => {
     const accurl = document.getElementById('accurl');
     accurl.innerHTML = '';
     if (accountDetails['urls']) {
-      for (const i in accountDetails['urls']) {
-        const urlItem = accountDetails['urls'][i];
-        const elementAccountDiv = document.createElement('div');
-        elementAccountDiv.style.display = 'flex';
-        const elementAccountName = document.createElement('span');
-        elementAccountName.classList.add('page-choice-urls');
-        elementAccountName.innerText = `${urlItem.title}`;
-        elementAccountName.dataset.url = urlItem.url;
-        elementAccountName.dataset.useContainer = urlItem.useContainer;
-        elementAccountName.draggable = true; // Make the element draggable
-        elementAccountDiv.appendChild(elementAccountName);
-        accurl.appendChild(elementAccountDiv);
+      const groupedUrls = accountDetails['urls'].reduce((acc, urlItem) => {
+        const group = urlItem.group || 'Default';
+        if (!acc[group]) acc[group] = [];
+        acc[group].push(urlItem);
+        return acc;
+      }, {});
+
+      for (const group in groupedUrls) {
+        const groupDiv = document.createElement('div');
+        groupDiv.classList.add('group-title');
+        groupDiv.innerText = group;
+        accurl.appendChild(groupDiv);
+
+        groupedUrls[group].forEach(urlItem => {
+          const elementAccountDiv = document.createElement('div');
+          elementAccountDiv.style.display = 'flex';
+          const elementAccountName = document.createElement('span');
+          elementAccountName.classList.add('page-choice-urls');
+          elementAccountName.innerText = `${urlItem.title}`;
+          elementAccountName.dataset.url = urlItem.url;
+          elementAccountName.dataset.useContainer = urlItem.useContainer;
+          elementAccountName.draggable = true;
+          elementAccountDiv.appendChild(elementAccountName);
+          accurl.appendChild(elementAccountDiv);
+        });
       }
     }
   });
