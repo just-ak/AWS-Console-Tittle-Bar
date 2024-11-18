@@ -120,9 +120,13 @@ h1 {
   text-align: center;
   cursor: pointer;
   overflow: hidden;
+  user-select: none; /* Prevent text selection during drag */
 }
 .page-choice-urls:hover {
   background-color: #57c264;
+}
+.page-choice-urls:active {
+  opacity: 0.6; /* Visual feedback when dragging */
 }
 .page-choice:hover {
   background-color: #57c264;

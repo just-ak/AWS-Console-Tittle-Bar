@@ -87,6 +87,37 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  accurl.addEventListener('dragstart', function (e) {
+    if ((e.target as HTMLElement).classList.contains('page-choice-urls')) {
+      e.dataTransfer.setData('text/plain', (e.target as HTMLElement).dataset.url);
+      e.dataTransfer.effectAllowed = 'move';
+    }
+  });
+
+  accurl.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  });
+
+  accurl.addEventListener('drop', function (e) {
+    e.preventDefault();
+    const draggedUrl = e.dataTransfer.getData('text/plain');
+    const target = e.target as HTMLElement;
+    if (target.classList.contains('page-choice-urls')) {
+      const targetUrl = target.dataset.url;
+      pp_getAdditionalLinks().then((accountDetails) => {
+        const urls = accountDetails['urls'];
+        const draggedIndex = urls.findIndex(item => item.url === draggedUrl);
+        const targetIndex = urls.findIndex(item => item.url === targetUrl);
+        if (draggedIndex !== -1 && targetIndex !== -1) {
+          const [draggedItem] = urls.splice(draggedIndex, 1);
+          urls.splice(targetIndex, 0, draggedItem);
+          pp_saveAdditionalLinks(accountDetails).then(updatePopupUrls);
+        }
+      });
+    }
+  });
+
   updatePopupUrls();
 
   const urlForm = document.getElementById('url-form');
@@ -141,6 +172,7 @@ const updatePopupUrls = () => {
         elementAccountName.innerText = `${urlItem.title}`;
         elementAccountName.dataset.url = urlItem.url;
         elementAccountName.dataset.useContainer = urlItem.useContainer;
+        elementAccountName.draggable = true; // Make the element draggable
         elementAccountDiv.appendChild(elementAccountName);
         accurl.appendChild(elementAccountDiv);
       }
