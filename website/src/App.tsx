@@ -5,6 +5,7 @@ import screenshot2 from './docs/screenshot2.png'
 import permissionsImg from './docs/permissions.png'
 import plugPermission from './docs/plug-permission.png'
 import plugPermission2 from './docs/plug-permission2.png'
+import groups from './docs/groups.png'
 import backupImg from './docs/backup.png'
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
   return (
     <>
       <header>
-        <img src={AKFDEV_Logo} alt="AKFDEV Logo" className="logo" />
+        <a href='https://akfdev.com' ><img src={AKFDEV_Logo} alt="AKFDEV Logo" className="logo" /></a>
         <h1>AWS Console Title Bar</h1>
         <p>Making life easier for people managing multiple AWS accounts</p>
       </header>
@@ -25,6 +26,7 @@ function App() {
             <li>Supports multiple accounts with SSO</li>
             <li>Easy to install and configure</li>
             <li>Works on Chrome and Firefox</li>
+            <li>Group URLs for better organization</li>
           </ul>
         </section>
         <section className="how-it-works">
@@ -47,14 +49,14 @@ function App() {
           <h2>Required Permissions</h2>
           <p>The AWS Console Title Bar plugin requires permissions so that it can:</p>
           <ul>
-            <li>Read your users arn on aws.amazon.com sites to determin the account no </li>
+            <li>Read your users arn on aws.amazon.com sites to determine the account number</li>
           </ul>
           <img src={permissionsImg} alt="Permissions" width="50%" />
 
           <h3>Required Permissions</h3>
-          <p>Individual URL's will require a quick click...</p>
+          <p>Individual URLs will require a quick click...</p>
           <ul>
-            <li>Checkout the little green dot</li>
+            <li>Check out the little green dot</li>
           </ul>
           <img src={plugPermission} alt="Permissions" width="10%" /><br/>
           <img src={plugPermission2} alt="Permissions" width="20%" />
@@ -64,7 +66,7 @@ function App() {
           <p>You can backup or copy your settings using a JSON file. Follow these steps:</p>
           <ol>
             <li>Go to the plugin settings page.</li>
-            <li>Copy the settings JSON and save them as a file file.</li>
+            <li>Copy the settings JSON and save them as a file.</li>
             <li>To import settings, paste in a new JSON file and click on the "Import" button.</li>
           </ol>
           <img src={backupImg} alt="Backup Settings" width="50%" />
@@ -72,6 +74,11 @@ function App() {
         <section className="description">
           <h2>Product Description</h2>
           <p>The AWS Console Title Bar plugin is designed to help users manage multiple AWS accounts with ease. By displaying the account name prominently on the AWS Console menu bar, users can quickly identify which account they are working in, reducing the risk of errors and improving workflow efficiency. The plugin supports multiple accounts with Single Sign-On (SSO) and is easy to install and configure. Whether you are using Chrome or Firefox, the AWS Console Title Bar plugin is the perfect tool to streamline your AWS account management.</p>
+        </section>
+        <section className="grouped-urls">
+          <h2>Grouped URLs</h2>
+          <p>Manage your URLs by grouping them for better organization:</p>
+          <img src={groups} alt="Permissions" width="20%" /><br/>
         </section>
         <section className="cta">
           <h2>Get Started</h2>
@@ -89,12 +96,28 @@ function App() {
         <section className="readme">
           <h2>Contributing</h2>
           <p>For detailed information on how to contribute and configure your local environment refer to the README.md file:</p>
-         
         </section>
       </main>
       <footer>
-        <p>&copy; 2023 AKFDEV.com All rights reserved.</p>
-        <p>Version: {packageJson.version}</p>
+        <div className="footer-section">
+          <h3>Contact Us</h3>
+          <p>Company Address: 1234 AKFDEV St, Tech City, TC 56789</p>
+          <p>Contact: John Doe - john.doe@akfdev.com</p>
+          <p>Support: Jane Smith - jane.smith@akfdev.com</p>
+        </div>
+        <div className="footer-section">
+          <h3>About</h3>
+          <p>&copy; 2023 <a href='https://akfdev.com'>AKFDEV</a>. All rights reserved.</p>
+          <p>Version: {packageJson.version}</p>
+        </div>
+        <div className="footer-section">
+          <h3>Follow Us</h3>
+          <div className="social-links">
+            <a href="https://twitter.com/akfdev" target="_blank" rel="noopener noreferrer">Twitter</a>
+            <a href="https://linkedin.com/company/akfdev" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://github.com/just-ak/AWS-Console-Tittle-Bar" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
       </footer>
     </>
   )

@@ -72,7 +72,7 @@ main {
   padding: 2rem;
 }
 
-.permissions, .backup-settings, .features, .how-it-works, .description, .cta, .screenshots, .github, .readme {
+.permissions, .backup-settings, .features, .how-it-works, .description, .cta, .screenshots, .github, .readme, .grouped-urls {
   margin-bottom: 2rem;
   padding: 2rem;
   background-color: white;
@@ -84,7 +84,7 @@ main {
   color: #333; /* Ensure text is visible */
 }
 
-.backup-settings h2, .permissions h2, .features h2, .how-it-works h2, .description h2, .cta h2, .github h2, .readme h2 {
+.backup-settings h2, .permissions h2, .features h2, .how-it-works h2, .description h2, .cta h2, .github h2, .readme h2, .grouped-urls h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
@@ -130,10 +130,56 @@ main {
 }
 
 footer {
-  text-align: center;
-  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
   background-color: #007bff;
   color: white;
+}
+
+footer .footer-section {
+  flex: 1;
+  padding: 0 1rem;
+}
+
+footer .footer-section p,
+footer .footer-section a {
+  margin: 0.5rem 0;
+}
+
+footer .footer-section a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer .footer-section a:hover {
+  color: #ffdd57;
+}
+
+footer .social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+footer .social-links a {
+  color: white;
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+footer .social-links a:hover {
+  color: #ffdd57;
+}
+
+footer .contact-details {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+footer .contact-details p {
+  margin: 0.2rem 0;
 }
 
 .App {
@@ -190,7 +236,7 @@ button {
   }
 }
 
-.features, .how-it-works, .description, .cta, .screenshots, .permissions, .backup-settings, .github, .readme {
+.features, .how-it-works, .description, .cta, .screenshots, .permissions, .backup-settings, .github, .readme, .grouped-urls {
   animation: slide-in 0.6s ease-out forwards;
 }
 
