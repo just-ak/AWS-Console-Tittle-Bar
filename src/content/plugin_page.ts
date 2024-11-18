@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const isFirefox = typeof InstallTrigger !== 'undefined';
   if (!isFirefox) {
-   (document.querySelector('label[for="use-container"]')  as HTMLElement) .style.display = 'none';
+    (document.querySelector('label[for="use-container"]') as HTMLElement).style.display = 'none';
     document.getElementById('use-container').style.display = 'none';
   }
 
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if ((e.target as HTMLElement).classList.contains('page-choice-urls')) {
       const chosenPage = (e.target as HTMLElement).dataset.url;
       const containerTitle = (e.target as HTMLElement).innerText;
-      const useContainer = (e.target as HTMLElement).dataset.useContainer === 'true'?true:false; 
+      const useContainer = (e.target as HTMLElement).dataset.useContainer === 'true' ? true : false;
       if (accountColorsDiv.style.visibility === 'hidden') {
         try {
           let containerId = null;
@@ -72,12 +72,12 @@ document.addEventListener('DOMContentLoaded', function () {
             containerId = await createContainer(containerTitle);
             browser.tabs.create({ url: chosenPage, cookieStoreId: containerId }).then(onUpdated, onError);
           } else {
-          browser.tabs.create({ url: chosenPage }).then(onUpdated, onError);
+            chrome.tabs.create({ url: chosenPage }).then(onUpdated, onError);
           }
         } catch (error) {
           console.error('Failed to create container and open tab:', error);
         }
-      } 
+      }
       else {
         (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'edit';
         (document.getElementById('url-input') as HTMLInputElement).value = chosenPage;

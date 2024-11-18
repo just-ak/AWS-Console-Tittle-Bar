@@ -1,5 +1,11 @@
 {
   "author": "Andrew Kentigern-Fox <andrew@akfdev.com>",
+  "dependencies": {
+    "@semantic-release/git": "^10.0.1",
+    "@types/es6-promise": "^3.3.0",
+    "jest": "^29.5.0",
+    "ts-node": "^10.9.2"
+  },
   "description": "Browser Extension for AWS Account Names",
   "devDependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -29,25 +35,18 @@
   "private": false,
   "repository": "git@github.com:just-ak/AWS-Console-Tittle-Bar.git",
   "scripts": {
+    "archive": "npm run sync-versions && rm -rf ./dist && rm -rf ./archive && yarn build && tsc && rm -rf ./dist/index.html && rm -rf ./dist/content_pages.js && rm -rf ./dist/content/plugin_page.js && rm -rf ./dist/content/preferences.js  && mkdir -p archive && cd dist && zip -r ../archive/archive.zip . && cd .. && npx addons-linter archive/archive.zip  ",
+    "build": "npm run sync-versions && webpack --mode production",
+    "buildZ": "tsc",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "build": "npm run sync-versions && webpack --mode production",
-    "websiteBuild": "cd website && npm run build",
     "prepublishOnly": "yarn build",
     "start": "npm run watch",
-    "watch": "webpack --mode development --watch",
-    "archive": "npm run sync-versions && rm -rf ./dist && rm -rf ./archive && yarn build && tsc && rm -rf ./dist/index.html && rm -rf ./dist/content_pages.js && rm -rf ./dist/content/plugin_page.js && rm -rf ./dist/content/preferences.js  && mkdir -p archive && cd dist && zip -r ../archive/archive.zip . && cd .. && npx addons-linter archive/archive.zip  ",
-    "buildZ": "tsc",
-    "watchZ": "tsc --watch",
     "sync-versions": "ts-node scripts/syncVersions",
-    "webPreview": "npm run sync-versions && cd website && npm run preview"
+    "watch": "webpack --mode development --watch",
+    "watchZ": "tsc --watch",
+    "webPreview": "npm run sync-versions && cd website && npm run preview",
+    "websiteBuild": "cd website && npm run build"
   },
-  "version": "5.1.6",
-  "dependencies": {
-    "@semantic-release/git": "^10.0.1",
-    "@types/es6-promise": "^3.3.0",
-    "jest": "^29.5.0",
-    "ts-node": "^10.9.2"
-  }
+  "version": "5.1.7"
 }
-
