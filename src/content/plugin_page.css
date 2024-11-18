@@ -6,7 +6,7 @@ body {
   border: 0px solid rgb(70, 70, 70);
   overflow: hidden;
   min-height: 100px;
-  padding-bottom: 13px; /* Reduce bottom padding */
+  padding-bottom: 25px; /* Reduce bottom padding by 15px */
 }
 html {
   font-family: Arial, Helvetica, sans-serif;
@@ -201,7 +201,7 @@ input:checked + .slider:before {
 
 #awsso-footer {
   position: fixed;
-  bottom: 0;
+  bottom: 0px;
   right: 0;
   transform: scale(0.8);
   transform-origin: bottom right;
@@ -228,7 +228,7 @@ input:checked + .slider:before {
 
 #help-footer {
   position: fixed;
-  bottom: -5px;
+  bottom: -5px; 
   left: -20px;
   transform: scale(0.8);
   transform-origin: bottom right;

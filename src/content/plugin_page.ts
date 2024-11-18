@@ -196,6 +196,7 @@ const updatePopupUrls = () => {
         groupedUrls[group].forEach(urlItem => {
           const elementAccountDiv = document.createElement('div');
           elementAccountDiv.style.display = 'flex';
+          elementAccountDiv.style.marginLeft = '20px'; // Indent URLs within each group
           const elementAccountName = document.createElement('span');
           elementAccountName.classList.add('page-choice-urls');
           elementAccountName.innerText = `${urlItem.title}`;
