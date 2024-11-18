@@ -45,34 +45,108 @@
 /* ///////////////// */
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background-color: #f0f0f0;
 }
 
-header {
+.header {
   background-color: #007bff;
   color: white;
   padding: 2rem 0;
   text-align: center;
 }
 
-header h1 {
+.header .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.header .logo {
+  height: 6em;
+  margin-bottom: 1rem;
+}
+
+.header h1 {
   font-size: 2.5rem;
   margin: 0;
 }
 
-header p {
+.header p {
   font-size: 1.2rem;
   margin: 0.5rem 0 0;
 }
 
-main {
-  padding: 2rem;
+.main {
+  padding: 2rem 0;
 }
 
-.permissions, .backup-settings, .features, .how-it-works, .description, .cta, .screenshots, .github, .readme, .grouped-urls {
+.main .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.feature-highlights {
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background-color: white; /* Ensure background color is set */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  opacity: 1; /* Ensure opacity is set to 1 */
+  transform: translateY(0); /* Ensure transform is set to 0 */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.feature-highlights h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.feature-highlights .feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.feature-card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.feature-card img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.how-it-works, .screenshots, .permissions, .backup-settings, .description, .grouped-urls, .cta, .github, .readme {
   margin-bottom: 2rem;
   padding: 2rem;
   background-color: white;
@@ -81,35 +155,38 @@ main {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  color: #333; /* Ensure text is visible */
 }
 
-.backup-settings h2, .permissions h2, .features h2, .how-it-works h2, .description h2, .cta h2, .github h2, .readme h2, .grouped-urls h2 {
+.how-it-works h2, .screenshots h2, .permissions h2, .backup-settings h2, .description h2, .grouped-urls h2, .cta h2, .github h2, .readme h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
 
-.backup-settings ul, .permissions ul,.features ul, .how-it-works ol {
+.how-it-works ol, .permissions ul, .backup-settings ol {
   padding-left: 1.5rem;
   text-align: left;
 }
 
-.backup-settings li, .permissions li, .features li, .how-it-works li {
+.how-it-works li, .permissions li, .backup-settings li {
   margin-bottom: 0.5rem;
   font-size: 1.1rem;
 }
 
-.description p {
-  font-size: 1.2rem;
-  color: #666;
+.screenshot, .permissions-img, .backup-img, .grouped-urls-img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
 }
 
-.cta p {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+.permissions-img-small {
+  width: 10%;
 }
 
-.buttons {
+.permissions-img-medium {
+  width: 20%;
+}
+
+.cta .buttons {
   display: flex;
   justify-content: center;
   gap: 1rem;
@@ -129,57 +206,59 @@ main {
   background-color: #0056b3;
 }
 
-footer {
-  display: flex;
-  justify-content: space-between;
-  padding: 2rem;
+.footer {
   background-color: #007bff;
   color: white;
+  padding: 2rem 0;
 }
 
-footer .footer-section {
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer .footer-section {
   flex: 1;
   padding: 0 1rem;
 }
 
-footer .footer-section p,
-footer .footer-section a {
+.footer .footer-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.footer .footer-section p,
+.footer .footer-section a {
   margin: 0.5rem 0;
 }
 
-footer .footer-section a {
+.footer .footer-section a {
   color: white;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
-footer .footer-section a:hover {
+.footer .footer-section a:hover {
   color: #ffdd57;
 }
 
-footer .social-links {
+.footer .social-links {
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
 }
 
-footer .social-links a {
+.footer .social-links a {
   color: white;
   font-size: 1.5rem;
   transition: color 0.3s ease;
 }
 
-footer .social-links a:hover {
+.footer .social-links a:hover {
   color: #ffdd57;
-}
-
-footer .contact-details {
-  margin-top: 1rem;
-  text-align: left;
-}
-
-footer .contact-details p {
-  margin: 0.2rem 0;
 }
 
 .App {
@@ -284,3 +363,5 @@ button {
 .description p {
   text-align: left;
 }
+
+/* ...existing code... */
