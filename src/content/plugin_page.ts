@@ -173,6 +173,26 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.getElementById('help-button').addEventListener('click', openHelpPage);
+
+  const sortUrlsSwitch = document.getElementById('sort-urls') as HTMLInputElement;
+
+  sortUrlsSwitch.addEventListener('change', function () {
+    const selectedGroup = (document.getElementById('group-select') as HTMLSelectElement).value;
+    pp_getAdditionalLinks().then((accountDetails) => {
+      if (!accountDetails['groups']) {
+        accountDetails['groups'] = {};
+      }
+      if (!accountDetails['groups'][selectedGroup]) {
+        accountDetails['groups'][selectedGroup] = {};
+      }
+      accountDetails['groups'][selectedGroup].sortUrls = sortUrlsSwitch.checked;
+      pp_saveAdditionalLinks(accountDetails).then(updatePopupUrls);
+    });
+  });
+
+  sortUrlsSwitch.addEventListener('change', function () {
+    updatePopupUrls();
+  });
 });
 
 const updatePopupUrls = () => {
@@ -180,6 +200,7 @@ const updatePopupUrls = () => {
     const accurl = document.getElementById('accurl');
     accurl.innerHTML = '';
     if (accountDetails['urls']) {
+      const sortUrlsSwitch = document.getElementById('sort-urls') as HTMLInputElement;
       const groupedUrls = accountDetails['urls'].reduce((acc, urlItem) => {
         const group = urlItem.group || 'Default';
         if (!acc[group as string]) acc[group as string] = [];
@@ -193,7 +214,7 @@ const updatePopupUrls = () => {
         if (a[0] === a[0].toUpperCase() && b[0] === b[0].toLowerCase()) return 1;
         if (a[0] === a[0].toLowerCase() && b[0] === b[0].toUpperCase()) return -1;
         return comparison;
-    });
+      });
 
       for (const group of sortedGroups) {
         const groupDiv = document.createElement('div');
@@ -201,7 +222,13 @@ const updatePopupUrls = () => {
         groupDiv.innerText = group;
         accurl.appendChild(groupDiv);
 
-        groupedUrls[group as string].forEach(urlItem => {
+        let urls = groupedUrls[group as string];
+        const sortUrls = accountDetails['groups'] && accountDetails['groups'][group as string] && accountDetails['groups'][group as string].sortUrls;
+        if (sortUrls) {
+          urls = urls.sort((a, b) => a.title.localeCompare(b.title, 'en'));
+        }
+
+        urls.forEach(urlItem => {
           const elementAccountDiv = document.createElement('div');
           elementAccountDiv.style.display = 'flex';
           elementAccountDiv.style.marginLeft = '20px'; // Indent URLs within each group
@@ -275,7 +302,7 @@ cogIcon.addEventListener('click', function () {
   if (accountColorsDiv.style.visibility === 'hidden') {
     accountColorsDiv.style.visibility = 'unset';
     urlAddDiv.style.visibility = 'unset';
-    urlAddDiv.style.height = '150px';
+    urlAddDiv.style.height = '200px'; // Increased height
     (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'new';
     toggleVisibility(true);
   } else {
