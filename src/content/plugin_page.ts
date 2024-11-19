@@ -65,10 +65,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const chosenPage = (e.target as HTMLElement).dataset.url;
       const containerTitle = (e.target as HTMLElement).innerText;
       const group = (e.target as HTMLElement).dataset.group; 
-      const useContainer = (e.target as HTMLElement).dataset.useContainer === 'true' ? true : false;
       if (accountColorsDiv.style.visibility === 'hidden') {
         try {
           let containerId = null;
+          const useContainer = (document.querySelector(`option[value="${group}"]`) as HTMLOptionElement).dataset.useContainer === 'true';
           if (useContainer) {
             containerId = await createContainer(group);
             browser.tabs.create({ url: chosenPage, cookieStoreId: containerId }).then(onUpdated, onError);
@@ -78,14 +78,12 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
           console.error('Failed to create container and open tab:', error);
         }
-      }
-      else {
+      } else {
         (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'edit';
         (document.getElementById('url-input') as HTMLInputElement).value = chosenPage;
         (document.getElementById('title-input') as HTMLInputElement).value = containerTitle;
         (document.getElementById('group-select') as HTMLSelectElement).value = group;
         (document.getElementById('new-group-input') as HTMLInputElement).value = '';
-        (document.getElementById('use-container') as HTMLInputElement).checked = useContainer;
       }
     }
   });
@@ -131,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const option = (document.createElement('option') as HTMLOptionElement );
       option.value = group as string;
       option.text = group as string;
+      option.dataset.useContainer = accountDetails['groups'] && accountDetails['groups'][group as string] ? accountDetails['groups'][group as string].useContainer : 'false';
       groupSelect.add(option);
     });
   });
@@ -143,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const urlInput = document.getElementById('url-input') as HTMLInputElement;
     const titleInput = document.getElementById('title-input') as HTMLInputElement;
-    const useContainer = (document.getElementById('use-container') as HTMLInputElement).checked;
     const commitType = (event.submitter as HTMLButtonElement).dataset.commitType;
     const url = urlInput.value;
     const title = titleInput.value;
@@ -171,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function () {
       titleInput.value = '';
       newGroupInput.value = '';
       groupSelect.value = 'Default';
-      (document.getElementById('use-container') as HTMLInputElement).checked = false;
     });
   });
 
@@ -185,8 +182,8 @@ const updatePopupUrls = () => {
     if (accountDetails['urls']) {
       const groupedUrls = accountDetails['urls'].reduce((acc, urlItem) => {
         const group = urlItem.group || 'Default';
-        if (!acc[group]) acc[group] = [];
-        acc[group].push(urlItem);
+        if (!acc[group as string]) acc[group as string] = [];
+        acc[group as string].push(urlItem);
         return acc;
       }, {});
 
@@ -196,7 +193,7 @@ const updatePopupUrls = () => {
         groupDiv.innerText = group;
         accurl.appendChild(groupDiv);
 
-        groupedUrls[group].forEach(urlItem => {
+        groupedUrls[group as string].forEach(urlItem => {
           const elementAccountDiv = document.createElement('div');
           elementAccountDiv.style.display = 'flex';
           elementAccountDiv.style.marginLeft = '20px'; // Indent URLs within each group
