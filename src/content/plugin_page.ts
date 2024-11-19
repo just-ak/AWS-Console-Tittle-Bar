@@ -187,7 +187,15 @@ const updatePopupUrls = () => {
         return acc;
       }, {});
 
-      for (const group in groupedUrls) {
+      const sortedGroups = Object.keys(groupedUrls).sort((a, b) => {
+        const comparison = a.localeCompare(b, 'en');
+        if (comparison === 0) return 0;
+        if (a[0] === a[0].toUpperCase() && b[0] === b[0].toLowerCase()) return 1;
+        if (a[0] === a[0].toLowerCase() && b[0] === b[0].toUpperCase()) return -1;
+        return comparison;
+    });
+
+      for (const group of sortedGroups) {
         const groupDiv = document.createElement('div');
         groupDiv.classList.add('group-title');
         groupDiv.innerText = group;
