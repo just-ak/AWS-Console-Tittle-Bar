@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
   accurl.addEventListener('click', async function (e) {
     if ((e.target as HTMLElement).classList.contains('page-choice-urls')) {
       const chosenPage = (e.target as HTMLElement).dataset.url;
+      const recordId = (e.target as HTMLElement).dataset.recordId;
       const containerTitle = (e.target as HTMLElement).innerText;
       const group = (e.target as HTMLElement).dataset.group; 
       if (accountColorsDiv.style.visibility === 'hidden') {
@@ -81,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'edit';
         (document.getElementById('url-input') as HTMLInputElement).value = chosenPage;
+        (document.getElementById('url-input') as HTMLInputElement).dataset.recordId = recordId;
         (document.getElementById('title-input') as HTMLInputElement).value = containerTitle;
         (document.getElementById('group-select') as HTMLSelectElement).value = group;
         (document.getElementById('new-group-input') as HTMLInputElement).value = '';
@@ -145,6 +147,21 @@ document.addEventListener('DOMContentLoaded', function () {
   updatePopupUrls();
 
   const urlForm = document.getElementById('url-form');
+  let sequenceNumber = 0;
+
+  pp_getAdditionalLinks().then((accountDetails) => {
+    if (accountDetails['urls'] && accountDetails['urls'].length > 0) {
+      accountDetails['urls'].forEach((item, index) => {
+        item.id = index.toString();
+      });
+      pp_saveAdditionalLinks(accountDetails).then(() => {
+        const maxId = Math.max(...accountDetails['urls'].map(item => parseInt(item.id, 10)));
+        sequenceNumber = isNaN(maxId) ? 0 : maxId + 1;
+        updatePopupUrls();
+      });
+    }
+  });
+
   urlForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -154,22 +171,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const url = urlInput.value;
     const title = titleInput.value;
     const group = newGroupInput.value || groupSelect.value;
+    const recordId = urlInput.dataset.recordId ;//|| (sequenceNumber++).toString();
 
     pp_getAdditionalLinks().then((accountDetails) => {
       if (!accountDetails['urls']) {
         accountDetails['urls'] = [];
       }
-      if (commitType === 'new') {
-        accountDetails['urls'].push({ url: url, title: title, group: group });
-      } else if (commitType === 'update') {
-        const index = accountDetails['urls'].findIndex(item => item.url === url);
+      if (commitType === 'save-as-new') {
+        const maxId = Math.max(...accountDetails['urls'].map(item => parseInt(item.id, 10)));
+        console.log('maxId:', maxId);
+        accountDetails['urls'].push({ id: maxId+1, url: url, title: title, group: group });
+      } else if (commitType === 'save') {
+        const index = accountDetails['urls'].findIndex(item => item.id === recordId);
         if (index !== -1) {
-          accountDetails['urls'][index] = { url: url, title: title, group: group };
-        } else {
-          accountDetails['urls'].push({ url: url, title: title, group: group });
+          accountDetails['urls'][index] = { id: recordId, url: url, title: title, group: group };
         }
       } else if (commitType === 'delete') {
-        accountDetails['urls'] = accountDetails['urls'].filter(item => item.url !== url);
+        console.log('Deleting record:', recordId);
+        accountDetails['urls'] = accountDetails['urls'].filter(item => item.id !== recordId);
       }
       pp_saveAdditionalLinks(accountDetails);
       updatePopupUrls();
@@ -177,6 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
       titleInput.value = '';
       newGroupInput.value = '';
       groupSelect.value = 'Default';
+      delete urlInput.dataset.recordId;
     });
   });
 
@@ -261,10 +281,12 @@ const updatePopupUrls = () => {
           elementAccountName.classList.add('page-choice-urls');
           elementAccountName.innerText = `${urlItem.title}`;
           elementAccountName.dataset.url = urlItem.url;
+          elementAccountName.dataset.recordId = urlItem.id;
           elementAccountName.dataset.group = group;
           elementAccountName.draggable = true;
           elementAccountDiv.appendChild(elementAccountName);
           accurl.appendChild(elementAccountDiv);
+          console.log('elementAccountName:', elementAccountName);
         });
       }
 
@@ -306,7 +328,7 @@ const createContainer = (group: string): Promise<string> => {
       const color = getColorFromName(group);
       const icon = getIconFromName(group);
       browser.contextualIdentities.create({
-        name: `${group} - AWS Console Titlebar`,
+        name: `${group}`,
         color: color,
         icon: icon
       }).then((identity) => {
