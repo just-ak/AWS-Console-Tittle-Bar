@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const url = urlInput.value;
     const title = titleInput.value;
     const group = newGroupInput.value || groupSelect.value;
-    const recordId = urlInput.dataset.recordId ;//|| (sequenceNumber++).toString();
+    const recordId = urlInput.dataset.recordId;
 
     pp_getAdditionalLinks().then((accountDetails) => {
       if (!accountDetails['urls']) {
@@ -179,17 +179,21 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       if (commitType === 'save-as-new') {
         const maxId = Math.max(...accountDetails['urls'].map(item => parseInt(item.id, 10)));
-        console.log('maxId:', maxId);
-        accountDetails['urls'].push({ id: maxId+1, url: url, title: title, group: group });
+        accountDetails['urls'].push({ id: (maxId + 1).toString(), url: url, title: title, group: group });
       } else if (commitType === 'save') {
         const index = accountDetails['urls'].findIndex(item => item.id === recordId);
         if (index !== -1) {
           accountDetails['urls'][index] = { id: recordId, url: url, title: title, group: group };
         }
       } else if (commitType === 'delete') {
-        console.log('Deleting record:', recordId);
         accountDetails['urls'] = accountDetails['urls'].filter(item => item.id !== recordId);
       }
+
+      // Update groups if a new group has been created
+      if (newGroupInput.value && !accountDetails['groups'][newGroupInput.value]) {
+        accountDetails['groups'][newGroupInput.value] = { sortUrls: false, useContainer: false };
+      }
+
       pp_saveAdditionalLinks(accountDetails);
       updatePopupUrls();
       urlInput.value = '';
