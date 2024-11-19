@@ -64,12 +64,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if ((e.target as HTMLElement).classList.contains('page-choice-urls')) {
       const chosenPage = (e.target as HTMLElement).dataset.url;
       const containerTitle = (e.target as HTMLElement).innerText;
+      const group = (e.target as HTMLElement).dataset.group; 
       const useContainer = (e.target as HTMLElement).dataset.useContainer === 'true' ? true : false;
       if (accountColorsDiv.style.visibility === 'hidden') {
         try {
           let containerId = null;
           if (useContainer) {
-            containerId = await createContainer(containerTitle);
+            containerId = await createContainer(group);
             browser.tabs.create({ url: chosenPage, cookieStoreId: containerId }).then(onUpdated, onError);
           } else {
             chrome.tabs.create({ url: chosenPage }).then(onUpdated, onError);
@@ -82,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function () {
         (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'edit';
         (document.getElementById('url-input') as HTMLInputElement).value = chosenPage;
         (document.getElementById('title-input') as HTMLInputElement).value = containerTitle;
+        (document.getElementById('group-select') as HTMLSelectElement).value = group;
+        (document.getElementById('new-group-input') as HTMLInputElement).value = '';
         (document.getElementById('use-container') as HTMLInputElement).checked = useContainer;
       }
     }
@@ -151,13 +154,13 @@ document.addEventListener('DOMContentLoaded', function () {
         accountDetails['urls'] = [];
       }
       if (commitType === 'new') {
-        accountDetails['urls'].push({ url: url, title: title, useContainer: useContainer, group: group });
+        accountDetails['urls'].push({ url: url, title: title, group: group });
       } else if (commitType === 'update') {
         const index = accountDetails['urls'].findIndex(item => item.url === url);
         if (index !== -1) {
-          accountDetails['urls'][index] = { url: url, title: title, useContainer: useContainer, group: group };
+          accountDetails['urls'][index] = { url: url, title: title, group: group };
         } else {
-          accountDetails['urls'].push({ url: url, title: title, useContainer: useContainer, group: group });
+          accountDetails['urls'].push({ url: url, title: title, group: group });
         }
       } else if (commitType === 'delete') {
         accountDetails['urls'] = accountDetails['urls'].filter(item => item.url !== url);
@@ -201,12 +204,16 @@ const updatePopupUrls = () => {
           elementAccountName.classList.add('page-choice-urls');
           elementAccountName.innerText = `${urlItem.title}`;
           elementAccountName.dataset.url = urlItem.url;
-          elementAccountName.dataset.useContainer = urlItem.useContainer;
+          elementAccountName.dataset.group = group;
           elementAccountName.draggable = true;
           elementAccountDiv.appendChild(elementAccountName);
           accurl.appendChild(elementAccountDiv);
         });
       }
+
+      // Adjust the height of the accurl div based on the number of URLs
+      const urlCount = accountDetails['urls'].length;
+      accurl.style.height = `${Math.min(urlCount * 30, 300)}px`; // Max height of 300px
     }
   });
 };
@@ -236,13 +243,13 @@ const getIconFromName = (name: string): string => {
   return icons[index];
 };
 
-const createContainer = (name: string): Promise<string> => {
+const createContainer = (group: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     if (typeof browser !== 'undefined' && browser.contextualIdentities) {
-      const color = getColorFromName(name);
-      const icon = getIconFromName(name);
+      const color = getColorFromName(group);
+      const icon = getIconFromName(group);
       browser.contextualIdentities.create({
-        name: `${name} - AWS Console Titlebar`,
+        name: `${group} - AWS Console Titlebar`,
         color: color,
         icon: icon
       }).then((identity) => {

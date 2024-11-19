@@ -23,6 +23,8 @@ h1 {
 
 #accurl {
   margin-bottom: 5px;
+  overflow-y: auto; 
+  max-height: 300px;
 }
 #awsso-header {
   float: right;
