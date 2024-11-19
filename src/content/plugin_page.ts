@@ -84,6 +84,14 @@ document.addEventListener('DOMContentLoaded', function () {
         (document.getElementById('title-input') as HTMLInputElement).value = containerTitle;
         (document.getElementById('group-select') as HTMLSelectElement).value = group;
         (document.getElementById('new-group-input') as HTMLInputElement).value = '';
+        const sortUrlsSwitch = document.getElementById('sort-urls') as HTMLInputElement;
+        const useContainerCheckbox = document.getElementById('use-container') as HTMLInputElement;
+        pp_getAdditionalLinks().then((accountDetails) => {
+          if (accountDetails['groups'] && accountDetails['groups'][group]) {
+            sortUrlsSwitch.checked = accountDetails['groups'][group].sortUrls || false;
+            useContainerCheckbox.checked = accountDetails['groups'][group].useContainer || false;
+          }
+        });
       }
     }
   });
@@ -175,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('help-button').addEventListener('click', openHelpPage);
 
   const sortUrlsSwitch = document.getElementById('sort-urls') as HTMLInputElement;
-
+  const useContainerSwitch = document.getElementById('use-container') as HTMLInputElement;
   sortUrlsSwitch.addEventListener('change', function () {
     const selectedGroup = (document.getElementById('group-select') as HTMLSelectElement).value;
     pp_getAdditionalLinks().then((accountDetails) => {
@@ -186,6 +194,23 @@ document.addEventListener('DOMContentLoaded', function () {
         accountDetails['groups'][selectedGroup] = {};
       }
       accountDetails['groups'][selectedGroup].sortUrls = sortUrlsSwitch.checked;
+      accountDetails['groups'][selectedGroup].useContainer = useContainerSwitch.checked;
+      pp_saveAdditionalLinks(accountDetails).then(updatePopupUrls);
+    });
+  });
+
+  
+  useContainerSwitch.addEventListener('change', function () {
+    const selectedGroup = (document.getElementById('group-select') as HTMLSelectElement).value;
+    pp_getAdditionalLinks().then((accountDetails) => {
+      if (!accountDetails['groups']) {
+        accountDetails['groups'] = {};
+      }
+      if (!accountDetails['groups'][selectedGroup]) {
+        accountDetails['groups'][selectedGroup] = {};
+      }
+      accountDetails['groups'][selectedGroup].sortUrls = sortUrlsSwitch.checked;
+      accountDetails['groups'][selectedGroup].useContainer = useContainerSwitch.checked;
       pp_saveAdditionalLinks(accountDetails).then(updatePopupUrls);
     });
   });
