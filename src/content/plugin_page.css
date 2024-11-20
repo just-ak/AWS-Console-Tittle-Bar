@@ -5,12 +5,14 @@ body {
   margin: 0px;
   border: 0px solid rgb(70, 70, 70);
   overflow: hidden;
-  min-height: 100px;
-  padding-bottom: 25px; /* Reduce bottom padding by 15px */
+  min-height: 150px;
+  padding-bottom: 25px;
 }
+
 html {
   font-family: Arial, Helvetica, sans-serif;
 }
+
 h1 {
   font-size: 1em;
   width: 100%;
@@ -23,22 +25,21 @@ h1 {
 
 #accurl {
   margin-bottom: 5px;
-  overflow-y: auto; 
-  max-height: 300px;
+  height: 250px;
+  overflow-y: auto;
 }
+
 #awsso-header {
   float: right;
   font-size: 1em;
   position: absolute;
   top: 0px;
   left: 0px;
+  cursor: pointer;
 }
 
 #awsso-header:hover {
   background-color: #dfbb6f;
-}
-#awsso-header {
-  cursor: pointer;
 }
 
 #add-url-container {
@@ -49,7 +50,7 @@ h1 {
 }
 
 #add-url-container input {
-  width:70%;
+  width: 70%;
   margin: 2px;
 }
 
@@ -57,16 +58,12 @@ h1 {
   height: 1.2em;
   margin: 0px 0px 0px 4px;
 }
+
 #accountColors {
   margin-top: 10px;
   visibility: hidden;
   text-align: center;
 }
-#accountColors {
-  visibility: visible;
-  text-align: center;
-}
-
 
 .remove-url {
   cursor: pointer;
@@ -74,12 +71,12 @@ h1 {
   color: white;
   background-color: red;
 }
+
 #accborder {
   margin: 0px 20px 2px 20px;
   border-bottom: 1px solid gray;
   text-align: center;
 }
-
 
 #accountColors input[type='color' i] {
   appearance: auto;
@@ -95,48 +92,26 @@ h1 {
   border-image: none;
   padding: 0px;
 }
-.page-choice {
-  width: 100%;
-  font-size: 1em;
-  text-align: center;
-  cursor: pointer;
-  overflow: hidden;
-}
-.page-choice-http {
-  width: 100%;
-  font-size: 1em;
-  text-align: center;
-  cursor: pointer;
-  overflow: hidden;
-}
-.page-choice-https {
-  width: 100%;
-  font-size: 1em;
-  text-align: center;
-  cursor: pointer;
-  overflow: hidden;
-}
+
 .page-choice-urls {
   width: 100%;
   font-size: 1em;
-  text-align: center;
+  text-align: left;
   cursor: pointer;
   overflow: hidden;
-  user-select: none; /* Prevent text selection during drag */
-  text-align: left; /* Change alignment to left */
+  user-select: none;
 }
+
 .page-choice-urls:hover {
   background-color: #57c264;
 }
+
 .page-choice-urls:active {
-  opacity: 0.6; /* Visual feedback when dragging */
-}
-.page-choice:hover {
-  background-color: #57c264;
+  opacity: 0.6;
 }
 
 .modern-button {
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50;
   border: none;
   color: white;
   padding: 5px 10px;
@@ -217,20 +192,15 @@ input:checked + .slider:before {
   padding-right: 5%;
 }
 
-#awsso-footer .svg-image {
-  margin-right: 8px;
-}
-
 #version-number {
   font-size: 0.8em;
   color: #495057;
   font-weight: bold;
 }
 
-
 #help-footer {
   position: fixed;
-  bottom: -5px; 
+  bottom: -5px;
   left: -20px;
   transform: scale(0.8);
   transform-origin: bottom right;
@@ -248,7 +218,7 @@ input:checked + .slider:before {
   font-size: 0.8em;
   color: #495057;
   font-weight: bold;
-  cursor: pointer; /* Ensure cursor changes to pointer */
+  cursor: pointer;
 }
 
 .group-title {
@@ -260,14 +230,74 @@ input:checked + .slider:before {
 .group-select-container {
   display: flex;
   align-items: center;
+  padding-right: 10px;
 }
 
 .group-select-container select {
   flex: 1;
   margin-right: 5px;
+  padding-right: 10px;
 }
 
 .group-select-container input {
   flex: 1;
   width: 50%;
+  padding-right: 10px;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1px;
+}
+
+.form-group label {
+  flex: 0 0 50px;
+  text-align: left;
+  margin-right: 3px;
+}
+
+.form-group input,
+.form-group select {
+  flex: 1;
+}
+
+#url-management {
+  margin: 0px 10px 0px 10px;
+}
+
+#group-management {
+  margin: 10px 0;
+}
+
+#group-management input {
+  width: 70%;
+  margin: 2px;
+}
+
+#group-management .modern-button {
+  margin-top: 10px;
+}
+
+#group-list-container {
+  margin-top: 20px;
+  text-align: left;
+  font-size: 0.9em;
+  margin: 0px 10px 0px 10px;
+}
+
+#group-list {
+  margin-top: 10px;
+  height: 3em;
+  overflow-y: auto;
+}
+
+.group-item {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}
+
+.group-item:hover {
+  background-color: #f0f0f0;
 }

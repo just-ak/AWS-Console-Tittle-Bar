@@ -242,6 +242,72 @@ document.addEventListener('DOMContentLoaded', function () {
   sortUrlsSwitch.addEventListener('change', function () {
     updatePopupUrls();
   });
+
+  const groupForm = document.getElementById('group-form') as HTMLFormElement;
+
+  groupForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const newGroupInput = document.getElementById('new-group-input') as HTMLInputElement;
+    const groupName = newGroupInput.value;
+
+    pp_getAdditionalLinks().then((accountDetails) => {
+      if (!accountDetails['groups']) {
+        accountDetails['groups'] = {};
+      }
+      if (!accountDetails['groups'][groupName]) {
+        accountDetails['groups'][groupName] = { sortUrls: false, useContainer: false };
+      }
+
+      pp_saveAdditionalLinks(accountDetails).then(() => {
+        updatePopupUrls();
+        updateGroupList();
+        newGroupInput.value = '';
+      });
+    });
+  });
+
+  document.getElementById('delete-group-button').addEventListener('click', function () {
+    const groupSelect = document.getElementById('group-select') as HTMLSelectElement;
+    const selectedGroup = groupSelect.value;
+
+    pp_getAdditionalLinks().then((accountDetails) => {
+      if (accountDetails['groups'] && accountDetails['groups'][selectedGroup]) {
+        delete accountDetails['groups'][selectedGroup];
+        accountDetails['urls'] = accountDetails['urls'].filter(url => url.group !== selectedGroup);
+
+        pp_saveAdditionalLinks(accountDetails).then(() => {
+          updatePopupUrls();
+          updateGroupList();
+        });
+      }
+    });
+  });
+
+  document.getElementById('save-group-button').addEventListener('click', function () {
+    const groupSelect = document.getElementById('group-select') as HTMLSelectElement;
+    const selectedGroup = groupSelect.value;
+    const sortUrlsSwitch = document.getElementById('sort-urls') as HTMLInputElement;
+    const useContainerSwitch = document.getElementById('use-container') as HTMLInputElement;
+
+    pp_getAdditionalLinks().then((accountDetails) => {
+      if (!accountDetails['groups']) {
+        accountDetails['groups'] = {};
+      }
+      if (!accountDetails['groups'][selectedGroup]) {
+        accountDetails['groups'][selectedGroup] = {};
+      }
+      accountDetails['groups'][selectedGroup].sortUrls = sortUrlsSwitch.checked;
+      accountDetails['groups'][selectedGroup].useContainer = useContainerSwitch.checked;
+
+      pp_saveAdditionalLinks(accountDetails).then(() => {
+        updatePopupUrls();
+        updateGroupList();
+      });
+    });
+  });
+
+  updateGroupList();
 });
 
 const updatePopupUrls = () => {
@@ -294,9 +360,24 @@ const updatePopupUrls = () => {
         });
       }
 
-      // Adjust the height of the accurl div based on the number of URLs
-      const urlCount = accountDetails['urls'].length;
-      accurl.style.height = `${Math.min(urlCount * 30, 300)}px`; // Max height of 300px
+      // Fix the height of the accurl div to 250px with scrolling
+      accurl.style.height = '250px';
+      accurl.style.overflowY = 'auto';
+    }
+  });
+};
+
+const updateGroupList = () => {
+  pp_getAdditionalLinks().then((accountDetails) => {
+    const groupList = document.getElementById('group-list');
+    groupList.innerHTML = '';
+    if (accountDetails['groups']) {
+      Object.keys(accountDetails['groups']).forEach(group => {
+        const groupItem = document.createElement('div');
+        groupItem.classList.add('group-item');
+        groupItem.innerText = group;
+        groupList.appendChild(groupItem);
+      });
     }
   });
 };
@@ -353,7 +434,7 @@ cogIcon.addEventListener('click', function () {
   if (accountColorsDiv.style.visibility === 'hidden') {
     accountColorsDiv.style.visibility = 'unset';
     urlAddDiv.style.visibility = 'unset';
-    urlAddDiv.style.height = '200px'; // Increased height
+    urlAddDiv.style.height = '450px'; // Increased height
     (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'new';
     toggleVisibility(true);
   } else {
