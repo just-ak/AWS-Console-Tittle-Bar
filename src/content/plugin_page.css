@@ -1,12 +1,12 @@
-html,
+
 body {
-  width: 320px;
-  padding: 0px;
+  width: 340px;
+  padding: 0px 0px 10px 0px;
   margin: 0px;
-  border: 0px solid rgb(70, 70, 70);
-  overflow: hidden;
-  min-height: 150px;
-  padding-bottom: 25px;
+  border: 4px solid rgb(93, 49, 49);
+  overflow: auto;
+  background-color: blue;
+  min-height: 200px; /* Increased min-height */
 }
 
 html {
@@ -267,9 +267,9 @@ input:checked + .slider:before {
   margin: 0px 10px 0px 10px;
 }
 
-#group-management {
-  margin: 10px 0;
-}
+/* #group-management {
+  margin: 10px 0px 30px 0px;
+} */
 
 #group-management input {
   width: 70%;
@@ -281,23 +281,39 @@ input:checked + .slider:before {
 }
 
 #group-list-container {
-  margin-top: 20px;
+  margin-top: 2px;
   text-align: left;
   font-size: 0.9em;
   margin: 0px 10px 0px 10px;
 }
 
 #group-list {
-  margin-top: 10px;
-  height: 3em;
+  margin-top: 1px;
+  height: 3em; 
   overflow-y: auto;
+  border: 1px solid #ccc;
+  
 }
 
 .group-item {
-  padding: 5px;
+  padding: 1px;
   border-bottom: 1px solid #ccc;
 }
 
 .group-item:hover {
   background-color: #f0f0f0;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.url-item {
+  display: flex;
+  margin-left: 20px; /* Indent URLs within each group */
+}
+
+.color-input {
+  color: inherit;
+  background-color: inherit;
 }

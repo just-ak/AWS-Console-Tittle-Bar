@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const recordId = (e.target as HTMLElement).dataset.recordId;
       const containerTitle = (e.target as HTMLElement).innerText;
       const group = (e.target as HTMLElement).dataset.group; 
-      if (accountColorsDiv.style.visibility === 'hidden') {
+      if (accountColorsDiv.classList.contains('hidden')) {
         try {
           let containerId = null;
           const useContainer = (document.querySelector(`option[value="${group}"]`) as HTMLOptionElement).dataset.useContainer === 'true';
@@ -345,8 +345,7 @@ const updatePopupUrls = () => {
 
         urls.forEach(urlItem => {
           const elementAccountDiv = document.createElement('div');
-          elementAccountDiv.style.display = 'flex';
-          elementAccountDiv.style.marginLeft = '20px'; // Indent URLs within each group
+          elementAccountDiv.classList.add('url-item'); // Add class for styling
           const elementAccountName = document.createElement('span');
           elementAccountName.classList.add('page-choice-urls');
           elementAccountName.innerText = `${urlItem.title}`;
@@ -434,7 +433,8 @@ cogIcon.addEventListener('click', function () {
   if (accountColorsDiv.style.visibility === 'hidden') {
     accountColorsDiv.style.visibility = 'unset';
     urlAddDiv.style.visibility = 'unset';
-    urlAddDiv.style.height = '450px'; // Increased height
+    urlAddDiv.style.height = '290px'; // Increased height
+    urlAddDiv.style.backgroundColor = 'orange';
     (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'new';
     toggleVisibility(true);
   } else {
@@ -470,9 +470,7 @@ const showSingleAccount = (accountId) => {
     nameLabel.textContent = account.id + ': ' + accountId;
     accountDiv.appendChild(nameLabel);
     const colorInput = document.createElement('input');
-    colorInput.style.color = account.color;
-    colorInput.style.backgroundColor = account.color;
-    colorInput.dataset.coloris = '';
+    colorInput.classList.add('color-input'); // Add class for styling
     colorInput.value = account.color;
 
     colorInput.addEventListener('focus', function () {
