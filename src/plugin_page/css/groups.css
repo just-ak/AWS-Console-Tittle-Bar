@@ -1,0 +1,75 @@
+.group-title {
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.group-select-container {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.group-select-container select {
+    flex: 1;
+    margin-right: 5px;
+    padding-right: 10px;
+}
+
+.group-select-container input {
+    flex: 1;
+    width: 50%;
+    padding-right: 10px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 1px;
+}
+
+.form-group label {
+    flex: 0 0 50px;
+    text-align: left;
+    margin-right: 3px;
+}
+
+.form-group input,
+.form-group select {
+    flex: 1;
+}
+
+
+#group-management input {
+    width: 70%;
+    margin: 2px;
+}
+
+#group-management .modern-button {
+    margin-top: 10px;
+}
+
+#group-list-container {
+    margin-top: 2px;
+    text-align: left;
+    font-size: 0.9em;
+    margin: 0px 10px 0px 10px;
+}
+
+#group-list {
+    margin-top: 1px;
+    height: 3em;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+
+}
+
+.group-item {
+    padding: 1px;
+    border-bottom: 1px solid #ccc;
+}
+
+.group-item:hover {
+    background-color: #f0f0f0;
+}

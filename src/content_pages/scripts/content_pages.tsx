@@ -1,13 +1,22 @@
+
+
 const {
+  
   cp_getAccount,
   cp_putPopupComms,
   cp_isElementLoaded,
   cp_saveAllAccounts,
   cp_AccountDetails,
   cp_getAllAccounts,
-} = require('./reference');
+} = require('../../common/reference');
 
-
+export interface AccountDetails {
+  id: string;
+  color: string;
+  background: string;
+  headerBackground: string;
+  headerColor: string;
+}
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // console.log(`Message : ${JSON.stringify(message)}`);
   // console.log(`Message : ${JSON.stringify(sender)}`);

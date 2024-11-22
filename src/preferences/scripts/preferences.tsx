@@ -1,4 +1,7 @@
-const { pr_getAllAccounts, pr_saveAllAccounts } = require('./reference');
+import '../css/preferences.css';
+
+const { pr_getAllAccounts, pr_saveAllAccounts }
+  = require('../../common/reference');
 
 const jsonElementID = 'jsoninfo';
 const jsonAccElementID = 'jsonaccounts';

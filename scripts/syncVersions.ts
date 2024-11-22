@@ -4,8 +4,8 @@ import path from 'path';
 const rootPackageJson = require('../package.json');
 const websitePackageJsonPath = path.join(__dirname, '../website/package.json');
 const manifestJsonPath = path.join(__dirname, '../src/manifest.json');
-const pluginPageHtmlPath = path.join(__dirname, '../src/content/plugin_page.html');
-const preferencesPageHtmlPath = path.join(__dirname, '../src/content/preferences.html');
+const pluginPageHtmlPath = path.join(__dirname, '../src/plugin_page/index.ejs');
+const preferencesPageHtmlPath = path.join(__dirname, '../src/preferences/index.html');
 
 const updateVersion = (filePath: string, version: string) => {
   const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf8'));

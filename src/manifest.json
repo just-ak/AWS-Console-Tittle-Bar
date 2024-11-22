@@ -4,7 +4,7 @@
   "description": "Add Additional information to the AWS title bar.",
   "action": {
     "default_title": "AWS Console Banner Information",
-    "default_popup": "content/plugin_page.html",
+    "default_popup": "plugin_page/index.html",
     "default_icon": {
       "16": "icons/Logo-16.png",
       "32": "icons/Logo-32.png"
@@ -24,10 +24,10 @@
   "content_scripts": [
     {
       "css": [
-        "content/content_pages.css"
+        "content_pages/css/content_pages.css"
       ],
       "js": [
-        "content/content_pages_bundle.js"
+        "content_pages/scripts/content_pages_bundle.js"
       ],
       "matches": [
         "https://console.aws.amazon.com/*",
@@ -38,7 +38,7 @@
     }
   ],
   "options_ui": {
-    "page": "content/preferences.html"
+    "page": "preferences/index.html"
   },
   "permissions": [
     "storage",

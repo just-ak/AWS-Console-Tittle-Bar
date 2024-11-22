@@ -1,0 +1,22 @@
+
+
+
+#url-management {
+    margin: 0px 10px 0px 10px;
+  }
+  
+
+
+
+  #add-url-container {
+    font-size: 1em;
+    text-align: center;
+    line-height: 1.2em;
+    height: 0px;
+  }
+  
+  #add-url-container input {
+    width: 70%;
+    margin: 2px;
+  }
+  

@@ -1,3 +1,10 @@
+import '../css/account_colour.css';
+import '../css/base.css';
+import '../css/footer.css';
+import '../css/groups.css';
+import '../css/header.css';
+import '../css/url_form.css';
+
 declare const InstallTrigger: any;
 
 const {
@@ -6,13 +13,14 @@ const {
   pp_getAdditionalLinks,
   pp_saveAllAccounts,
   pp_isChrome,
-} = require('./reference');
+} = require('../../common/reference');
 
+console.log('start:');
 const cogIcon = document.getElementById('awsso-header');
-const accountColorsDiv = document.getElementById('accountColors');
+const accountColorsDiv = document.getElementById('accountColors') as HTMLDivElement;
 const urlAddDiv = document.getElementById('add-url-container');
 const hiddenBox = document.getElementById('hiddenBox');
-
+console.log('hiddenBox:', JSON.stringify(document, null, 2));
 
 accountColorsDiv.style.visibility = 'hidden';
 hiddenBox.style.height = '0px';
@@ -58,14 +66,14 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('use-container').style.display = 'none';
   }
 
-  const accurl = document.getElementById('accurl');
+  const urlList = document.getElementById('urlList');
 
-  accurl.addEventListener('click', async function (e) {
+  urlList.addEventListener('click', async function (e) {
     if ((e.target as HTMLElement).classList.contains('page-choice-urls')) {
       const chosenPage = (e.target as HTMLElement).dataset.url;
       const recordId = (e.target as HTMLElement).dataset.recordId;
       const containerTitle = (e.target as HTMLElement).innerText;
-      const group = (e.target as HTMLElement).dataset.group; 
+      const group = (e.target as HTMLElement).dataset.group;
       if (accountColorsDiv.classList.contains('hidden')) {
         try {
           let containerId = null;
@@ -98,19 +106,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  accurl.addEventListener('dragstart', function (e) {
+  urlList.addEventListener('dragstart', function (e) {
     if ((e.target as HTMLElement).classList.contains('page-choice-urls')) {
       e.dataTransfer.setData('text/plain', (e.target as HTMLElement).dataset.url);
       e.dataTransfer.effectAllowed = 'move';
     }
   });
 
-  accurl.addEventListener('dragover', function (e) {
+  urlList.addEventListener('dragover', function (e) {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
   });
 
-  accurl.addEventListener('drop', function (e) {
+  urlList.addEventListener('drop', function (e) {
     e.preventDefault();
     const draggedUrl = e.dataTransfer.getData('text/plain');
     const target = e.target as HTMLElement;
@@ -136,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
   pp_getAdditionalLinks().then((accountDetails) => {
     const groups = new Set(accountDetails['urls'].map(url => url.group || 'Default'));
     groups.forEach(group => {
-      const option = (document.createElement('option') as HTMLOptionElement );
+      const option = (document.createElement('option') as HTMLOptionElement);
       option.value = group as string;
       option.text = group as string;
       option.dataset.useContainer = accountDetails['groups'] && accountDetails['groups'][group as string] ? accountDetails['groups'][group as string].useContainer : 'false';
@@ -223,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  
+
   useContainerSwitch.addEventListener('change', function () {
     const selectedGroup = (document.getElementById('group-select') as HTMLSelectElement).value;
     pp_getAdditionalLinks().then((accountDetails) => {
@@ -308,12 +316,15 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   updateGroupList();
+
+
 });
 
 const updatePopupUrls = () => {
+  console.log('Updating popup urls');
   pp_getAdditionalLinks().then((accountDetails) => {
-    const accurl = document.getElementById('accurl');
-    accurl.innerHTML = '';
+    const urlList = document.getElementById('urlList');
+    urlList.innerHTML = '';
     if (accountDetails['urls']) {
       const sortUrlsSwitch = document.getElementById('sort-urls') as HTMLInputElement;
       const groupedUrls = accountDetails['urls'].reduce((acc, urlItem) => {
@@ -335,7 +346,7 @@ const updatePopupUrls = () => {
         const groupDiv = document.createElement('div');
         groupDiv.classList.add('group-title');
         groupDiv.innerText = group;
-        accurl.appendChild(groupDiv);
+        urlList.appendChild(groupDiv);
 
         let urls = groupedUrls[group as string];
         const sortUrls = accountDetails['groups'] && accountDetails['groups'][group as string] && accountDetails['groups'][group as string].sortUrls;
@@ -354,14 +365,10 @@ const updatePopupUrls = () => {
           elementAccountName.dataset.group = group;
           elementAccountName.draggable = true;
           elementAccountDiv.appendChild(elementAccountName);
-          accurl.appendChild(elementAccountDiv);
+          urlList.appendChild(elementAccountDiv);
           console.log('elementAccountName:', elementAccountName);
         });
       }
-
-      // Fix the height of the accurl div to 250px with scrolling
-      accurl.style.height = '250px';
-      accurl.style.overflowY = 'auto';
     }
   });
 };

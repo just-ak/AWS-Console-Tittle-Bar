@@ -1,0 +1,26 @@
+.color-input {
+  color: inherit;
+  background-color: inherit;
+}
+
+#accborder {
+  margin: 0px 20px 2px 20px;
+  border-bottom: 1px solid gray;
+  text-align: center;
+  background-color: antiquewhite;
+}
+
+#accountColors input[type='color' i] {
+  appearance: auto;
+  width: 50px;
+  height: 1.2em;
+  cursor: default;
+  box-sizing: unset;
+  background-color: buttonface;
+  color: buttontext;
+  border-width: 0px;
+  border-style: none;
+  border-color: transparent;
+  border-image: none;
+  padding: 0px;
+}
