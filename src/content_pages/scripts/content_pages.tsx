@@ -1,5 +1,5 @@
 
-
+console.log('Content Script Loaded');
 const {
   
   cp_getAccount,

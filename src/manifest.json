@@ -24,10 +24,10 @@
   "content_scripts": [
     {
       "css": [
-        "content_pages/css/content_pages.css"
+        "content_pages.css"
       ],
       "js": [
-        "content_pages/scripts/content_pages_bundle.js"
+        "scripts/content_pages_bundle.js"
       ],
       "matches": [
         "https://console.aws.amazon.com/*",

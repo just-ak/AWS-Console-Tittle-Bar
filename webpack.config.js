@@ -91,11 +91,15 @@ module.exports = {
       filename: 'preferences/index.html',
       chunks: ['preferences'],
     }),
+    new HtmlWebpackPlugin({
+      chunks: ['content_pages'],
+    }),
     new CopyWebpackPlugin({
       patterns: [
         { from: 'src/manifest.json', to: 'manifest.json' },
         { from: 'src/coloris/coloris.js', to: 'coloris/coloris.js' },
         { from: 'src/coloris/coloris.css', to: 'coloris/coloris.css' },
+        { from: 'src/content_pages/css/content_pages.css', to: 'content_pages.css' },
         { from: 'src/icons', to: 'icons' },
       ],
     }),
