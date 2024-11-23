@@ -6,11 +6,12 @@ import '../css/groups.css';
 import '../css/header.css';
 import '../css/url_form.css';
 import '../css/url_list.css';
+import '../css/account_config.css';
 const { initializeHeader } = require('./header');
+const { initializeBody } = require('./body');
 
 initializeHeader();
-
-
+initializeBody();
 
 declare const InstallTrigger: any;
 
@@ -26,19 +27,11 @@ const {
 const {
   pp_accountConfigDiv,
   pp_urlAddDiv,
-  pp_hiddenBox,
+  pp_cogIcon,
+  // pp_hiddenBox,
 } = require('./dom');
 
 pp_debugLog('start:');
-const accountConfigDiv = document.getElementById('accountConfig') as HTMLDivElement;
-const urlAddDiv = document.getElementById('add-url-container');
-const hiddenBox = document.getElementById('hiddenBox');
-pp_debugLog('hiddenBox:', JSON.stringify(document, null, 2));
-
-accountConfigDiv.style.visibility = 'hidden';
-hiddenBox.style.height = '0px';
-urlAddDiv.style.height = '0px';
-urlAddDiv.style.visibility = 'hidden';
 
 function onUpdated(tab) {
   console.log(`Updated tab: ${tab.id}`);
@@ -81,12 +74,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const urlList = document.getElementById('urlList');
 
   urlList.addEventListener('click', async function (e) {
-    if ((e.target as HTMLElement).classList.contains('page-choice-urls')) {
+    if ((e.target as HTMLElement).classList.contains('url-link')) {
       const chosenPage = (e.target as HTMLElement).dataset.url;
       const recordId = (e.target as HTMLElement).dataset.recordId;
       const containerTitle = (e.target as HTMLElement).innerText;
       const group = (e.target as HTMLElement).dataset.group;
-      if (accountConfigDiv.classList.contains('hidden')) {
+      if (pp_cogIcon.dataset.action === 'runMode' || pp_cogIcon.dataset.action === undefined) {
+       
         try {
           let containerId = null;
           const useContainer = (document.querySelector(`option[value="${group}"]`) as HTMLOptionElement).dataset.useContainer === 'true';
@@ -119,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   urlList.addEventListener('dragstart', function (e) {
-    if ((e.target as HTMLElement).classList.contains('page-choice-urls')) {
+    if ((e.target as HTMLElement).classList.contains('url-link')) {
       e.dataTransfer.setData('text/plain', (e.target as HTMLElement).dataset.url);
       e.dataTransfer.effectAllowed = 'move';
     }
@@ -134,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
     const draggedUrl = e.dataTransfer.getData('text/plain');
     const target = e.target as HTMLElement;
-    if (target.classList.contains('page-choice-urls')) {
+    if (target.classList.contains('url-link')) {
       const targetUrl = target.dataset.url;
       pp_getAdditionalLinks().then((accountDetails) => {
         const urls = accountDetails['urls'];
@@ -370,7 +364,7 @@ const updatePopupUrls = () => {
           const elementAccountDiv = document.createElement('div');
           elementAccountDiv.classList.add('url-item'); // Add class for styling
           const elementAccountName = document.createElement('span');
-          // elementAccountName.classList.add('page-choice-urls');
+          elementAccountName.classList.add('url-link');
           elementAccountName.innerText = `${urlItem.title}`;
           elementAccountName.dataset.url = urlItem.url;
           elementAccountName.dataset.recordId = urlItem.id;
@@ -497,9 +491,9 @@ const showSingleAccount = (accountId) => {
     colorInput.classList.add('color-input'); // Add class for styling
     colorInput.value = account.color;
 
-    colorInput.addEventListener('focus', function () {
-      hiddenBox.style.height = '150px';
-    });
+    // colorInput.addEventListener('focus', function () {
+    //   hiddenBox.style.height = '150px';
+    // });
 
     colorInput.addEventListener('change', function (event) {
       const selectedColor = (event.target as HTMLInputElement).value;

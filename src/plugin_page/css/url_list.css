@@ -1,16 +1,18 @@
 #urlListBoarder {
-    margin: 0px 20px 2px 20px;
-    border-bottom: 1px solid gray;
+    padding: 0px 10px 0px 10px;
+    /* border-bottom: 1px solid gray; */
     text-align: center;
     background-color: antiquewhite;
+    /* overflow-x: hidden; */
 }
 
 
 #urlList {
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
     height: 250px;
     background-color: cadetblue;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #urlList .group-title {

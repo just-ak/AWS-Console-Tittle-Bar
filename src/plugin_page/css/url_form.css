@@ -12,7 +12,8 @@
     font-size: 1em;
     text-align: center;
     line-height: 1.2em;
-    height: 0px;
+    /* height: 0px; */
+    /* overflow: hidden; */
   }
   
   #add-url-container input {

@@ -1,28 +1,57 @@
-body {
-  width: 340px;
-  padding: 0px 0px 10px 0px;
-  margin: 0px;
-  border: 4px solid rgb(255, 0, 0);
-  overflow: hidden;
-  background-color: rgb(255, 170, 0);
-  min-height: 200px;
-  /* Increased min-height */
-}
+/* Notes:
+
+    Firefox restricts developers from explicitly resizing the popup via JavaScript for security reasons.
+    The popup size is limited by Firefox: minimum size is 48x48px,
+     and the maximum size is 800x600px.
+    Test your popup on various screen resolutions to ensure it renders correctly.
+
+If you need further adjustments, let me know! */
 
 html {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: rgb(255, 0, 234);
 }
 
-h1 {
-  font-size: 1em;
-  width: 100%;
-  text-align: center;
+body {
+  width: 340px;
+  padding: 0px;
+  margin: 0px;
+  padding: 0px;
+  min-height: 250px;
+  max-height: 800px;
+  max-width: 600px;
+  overflow: hidden;
 }
 
-#hiddenBox {
+#firefox-viewport {
+  background-color: rgb(136, 0, 255)  ;
+  padding-bottom:35px;
+}
+
+/* #firefox-viewport .small {
+  height: 250px;
+  width: 340px;
+  background-color: rosybrown;
+  border: 4px solid rgb(255, 0, 0);
+  background-color: rgb(255, 170, 0);
+}
+
+#firefox-viewport .large {
+  height: 800px;
+  width: 600px;
+  background-color: lightseagreen;
+  border: 4px solid rgb(225, 255, 0);
+
+} */
+
+
+
+#edit-mode {
+  background-color: rgb(107, 73, 32);
+  padding: 50px;
+}
+/* #hiddenBox {
   height: 0px;
-}
+} */
 
 #accountConfig {
   margin-top: 10px;
