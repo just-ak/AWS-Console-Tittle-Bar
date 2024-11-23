@@ -6,6 +6,12 @@ import '../css/groups.css';
 import '../css/header.css';
 import '../css/url_form.css';
 import '../css/url_list.css';
+const { initializeHeader } = require('./header');
+
+initializeHeader();
+
+
+
 declare const InstallTrigger: any;
 
 const {
@@ -14,20 +20,25 @@ const {
   pp_getAdditionalLinks,
   pp_saveAllAccounts,
   pp_isChrome,
+  pp_debugLog,
 } = require('../../common/reference');
 
-console.log('start:');
-const cogIcon = document.getElementById('awsso-header');
+const {
+  pp_accountConfigDiv,
+  pp_urlAddDiv,
+  pp_hiddenBox,
+} = require('./dom');
+
+pp_debugLog('start:');
 const accountConfigDiv = document.getElementById('accountConfig') as HTMLDivElement;
 const urlAddDiv = document.getElementById('add-url-container');
 const hiddenBox = document.getElementById('hiddenBox');
-console.log('hiddenBox:', JSON.stringify(document, null, 2));
+pp_debugLog('hiddenBox:', JSON.stringify(document, null, 2));
 
 accountConfigDiv.style.visibility = 'hidden';
 hiddenBox.style.height = '0px';
 urlAddDiv.style.height = '0px';
 urlAddDiv.style.visibility = 'hidden';
-
 
 function onUpdated(tab) {
   console.log(`Updated tab: ${tab.id}`);
@@ -127,8 +138,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const targetUrl = target.dataset.url;
       pp_getAdditionalLinks().then((accountDetails) => {
         const urls = accountDetails['urls'];
-        const draggedIndex = urls.findIndex(item => item.url === draggedUrl);
-        const targetIndex = urls.findIndex(item => item.url === targetUrl);
+        const draggedIndex = urls.findIndex((item) => item.url === draggedUrl);
+        const targetIndex = urls.findIndex((item) => item.url === targetUrl);
         if (draggedIndex !== -1 && targetIndex !== -1) {
           const [draggedItem] = urls.splice(draggedIndex, 1);
           urls.splice(targetIndex, 0, draggedItem);
@@ -143,12 +154,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Populate group dropdown
   pp_getAdditionalLinks().then((accountDetails) => {
-    const groups = new Set(accountDetails['urls'].map(url => url.group || 'Default'));
-    groups.forEach(group => {
-      const option = (document.createElement('option') as HTMLOptionElement);
+    const groups = new Set(accountDetails['urls'].map((url) => url.group || 'Default'));
+    groups.forEach((group) => {
+      const option = document.createElement('option') as HTMLOptionElement;
       option.value = group as string;
       option.text = group as string;
-      option.dataset.useContainer = accountDetails['groups'] && accountDetails['groups'][group as string] ? accountDetails['groups'][group as string].useContainer : 'false';
+      option.dataset.useContainer =
+        accountDetails['groups'] && accountDetails['groups'][group as string]
+          ? accountDetails['groups'][group as string].useContainer
+          : 'false';
       groupSelect.add(option);
     });
   });
@@ -164,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
         item.id = index.toString();
       });
       pp_saveAdditionalLinks(accountDetails).then(() => {
-        const maxId = Math.max(...accountDetails['urls'].map(item => parseInt(item.id, 10)));
+        const maxId = Math.max(...accountDetails['urls'].map((item) => parseInt(item.id, 10)));
         sequenceNumber = isNaN(maxId) ? 0 : maxId + 1;
         updatePopupUrls();
       });
@@ -187,15 +201,15 @@ document.addEventListener('DOMContentLoaded', function () {
         accountDetails['urls'] = [];
       }
       if (commitType === 'save-as-new') {
-        const maxId = Math.max(...accountDetails['urls'].map(item => parseInt(item.id, 10)));
+        const maxId = Math.max(...accountDetails['urls'].map((item) => parseInt(item.id, 10)));
         accountDetails['urls'].push({ id: (maxId + 1).toString(), url: url, title: title, group: group });
       } else if (commitType === 'save') {
-        const index = accountDetails['urls'].findIndex(item => item.id === recordId);
+        const index = accountDetails['urls'].findIndex((item) => item.id === recordId);
         if (index !== -1) {
           accountDetails['urls'][index] = { id: recordId, url: url, title: title, group: group };
         }
       } else if (commitType === 'delete') {
-        accountDetails['urls'] = accountDetails['urls'].filter(item => item.id !== recordId);
+        accountDetails['urls'] = accountDetails['urls'].filter((item) => item.id !== recordId);
       }
 
       // Update groups if a new group has been created
@@ -231,7 +245,6 @@ document.addEventListener('DOMContentLoaded', function () {
       pp_saveAdditionalLinks(accountDetails).then(updatePopupUrls);
     });
   });
-
 
   useContainerSwitch.addEventListener('change', function () {
     const selectedGroup = (document.getElementById('group-select') as HTMLSelectElement).value;
@@ -283,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
     pp_getAdditionalLinks().then((accountDetails) => {
       if (accountDetails['groups'] && accountDetails['groups'][selectedGroup]) {
         delete accountDetails['groups'][selectedGroup];
-        accountDetails['urls'] = accountDetails['urls'].filter(url => url.group !== selectedGroup);
+        accountDetails['urls'] = accountDetails['urls'].filter((url) => url.group !== selectedGroup);
 
         pp_saveAdditionalLinks(accountDetails).then(() => {
           updatePopupUrls();
@@ -317,12 +330,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   updateGroupList();
-
-
 });
 
 const updatePopupUrls = () => {
-  console.log('Updating popup urls');
+  pp_debugLog('Updating popup urls');
   pp_getAdditionalLinks().then((accountDetails) => {
     const urlList = document.getElementById('urlList');
     urlList.innerHTML = '';
@@ -355,7 +366,7 @@ const updatePopupUrls = () => {
           urls = urls.sort((a, b) => a.title.localeCompare(b.title, 'en'));
         }
 
-        urls.forEach(urlItem => {
+        urls.forEach((urlItem) => {
           const elementAccountDiv = document.createElement('div');
           elementAccountDiv.classList.add('url-item'); // Add class for styling
           const elementAccountName = document.createElement('span');
@@ -367,7 +378,7 @@ const updatePopupUrls = () => {
           elementAccountName.draggable = true;
           elementAccountDiv.appendChild(elementAccountName);
           urlList.appendChild(elementAccountDiv);
-          console.log('elementAccountName:', elementAccountName);
+          pp_debugLog('elementAccountName:', elementAccountName);
         });
       }
     }
@@ -379,7 +390,7 @@ const updateGroupList = () => {
     const groupList = document.getElementById('group-list');
     groupList.innerHTML = '';
     if (accountDetails['groups']) {
-      Object.keys(accountDetails['groups']).forEach(group => {
+      Object.keys(accountDetails['groups']).forEach((group) => {
         const groupItem = document.createElement('div');
         groupItem.classList.add('group-item');
         groupItem.innerText = group;
@@ -391,7 +402,15 @@ const updateGroupList = () => {
 
 const getColorFromName = (name: string): string => {
   const colors = [
-    "blue", "turquoise", "green", "yellow", "orange", "red", "pink", "purple", "toolbar"
+    'blue',
+    'turquoise',
+    'green',
+    'yellow',
+    'orange',
+    'red',
+    'pink',
+    'purple',
+    'toolbar',
   ];
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
@@ -403,8 +422,19 @@ const getColorFromName = (name: string): string => {
 
 const getIconFromName = (name: string): string => {
   const icons = [
-    "fingerprint", "briefcase", "dollar", "cart", "circle", "gift", "vacation",
-    "food", "fruit", "pet", "tree", "chill", "fence"
+    'fingerprint',
+    'briefcase',
+    'dollar',
+    'cart',
+    'circle',
+    'gift',
+    'vacation',
+    'food',
+    'fruit',
+    'pet',
+    'tree',
+    'chill',
+    'fence',
   ];
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
@@ -419,16 +449,19 @@ const createContainer = (group: string): Promise<string> => {
     if (typeof browser !== 'undefined' && browser.contextualIdentities) {
       const color = getColorFromName(group);
       const icon = getIconFromName(group);
-      browser.contextualIdentities.create({
-        name: `${group}`,
-        color: color,
-        icon: icon
-      }).then((identity) => {
-        resolve(identity.cookieStoreId);
-      }).catch((error) => {
-        console.error('Error creating container:', error);
-        reject(error);
-      });
+      browser.contextualIdentities
+        .create({
+          name: `${group}`,
+          color: color,
+          icon: icon,
+        })
+        .then((identity) => {
+          resolve(identity.cookieStoreId);
+        })
+        .catch((error) => {
+          console.error('Error creating container:', error);
+          reject(error);
+        });
     } else {
       // Fallback for browsers that do not support contextualIdentities API
       console.error('contextualIdentities API is not supported');
@@ -436,23 +469,6 @@ const createContainer = (group: string): Promise<string> => {
     }
   });
 };
-
-cogIcon.addEventListener('click', function () {
-  if (accountConfigDiv.style.visibility === 'hidden') {
-    accountConfigDiv.style.visibility = 'unset';
-    urlAddDiv.style.visibility = 'unset';
-    urlAddDiv.style.height = '290px'; // Increased height
-    urlAddDiv.style.backgroundColor = 'orange';
-    (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'new';
-    // toggleVisibility(true);
-  } else {
-    accountConfigDiv.style.visibility = 'hidden';
-    urlAddDiv.style.visibility = 'hidden';
-    urlAddDiv.style.height = '0px';
-    hiddenBox.style.height = '0px';
-    // toggleVisibility(false);
-  }
-});
 
 // function toggleVisibility(visibility: boolean) {
 //   const removeUrls = document.getElementsByClassName('remove-url');
@@ -487,7 +503,10 @@ const showSingleAccount = (accountId) => {
 
     colorInput.addEventListener('change', function (event) {
       const selectedColor = (event.target as HTMLInputElement).value;
-      const accountId = (event.target as HTMLInputElement).parentNode.querySelector('label').textContent.split(':')[1].trim();
+      const accountId = (event.target as HTMLInputElement).parentNode
+        .querySelector('label')
+        .textContent.split(':')[1]
+        .trim();
       pp_getAllAccounts().then((data) => {
         data[accountId].color = selectedColor;
         colorInput.style.color = selectedColor;

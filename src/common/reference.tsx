@@ -23,6 +23,16 @@ const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigat
 export const cp_isChrome = isChrome;
 export const pp_isChrome = isChrome;
 
+const DEBUG = false; // Set this to false to disable debug logs
+
+function debugLog(message: string, ...optionalParams: any[]) {
+  if (DEBUG) {
+    console.log(message, ...optionalParams);
+  }
+}
+
+export const pp_debugLog = debugLog;
+
 const isElementLoaded = async (selector) => {
   while (document.querySelector(selector) === null) {
     await new Promise((resolve) => requestAnimationFrame(resolve));

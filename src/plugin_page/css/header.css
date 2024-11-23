@@ -1,18 +1,25 @@
 #awsso-header {
-    float: right;
-    font-size: 1em;
-    position: absolute;
-    background-color: darkred;
-    top: 0px;
-    left: 0px;
-    cursor: pointer;
+  float: right;
+  font-size: 1.2em;
+  position: absolute;
+  /* background-color: darkred; */
+  top: 0px;
+  left: 0px;
+  cursor: pointer;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
-  
-  #awsso-header:hover {
-    background-color: #dfbb6f;
+  to {
+    transform: rotate(360deg);
   }
-  
-  #awsso-header .svg-image {
-    height: 1.2em;
-    margin: 0px 0px 0px 4px;
-  }
+}
+#awsso-header:hover {
+  animation: spin 1s linear infinite;
+}
+
+#awsso-header .svg-image {
+  height: 1.2em;
+  margin: 0px 0px 0px 4px;
+}
