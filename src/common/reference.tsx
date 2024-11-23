@@ -90,6 +90,8 @@ async function getAdditionalLinks() {
 
 export const cp_getAdditionalLinks = getAdditionalLinks;
 export const pp_getAdditionalLinks = getAdditionalLinks;
+export const pg_getAdditionalLinks = getAdditionalLinks;
+
 
 async function saveAdditionalLinks(data) {
   return await new Promise((resolve, reject) => {
@@ -106,6 +108,7 @@ async function saveAdditionalLinks(data) {
 
 export const cp_saveAdditionalLinks = saveAdditionalLinks;
 export const pp_saveAdditionalLinks = saveAdditionalLinks;
+export const pg_saveAdditionalLinks = saveAdditionalLinks;
 
 async function saveAllAccounts(data) {
   return await new Promise((resolve, reject) => {

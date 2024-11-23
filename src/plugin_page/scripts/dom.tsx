@@ -23,3 +23,6 @@ export const ph_urlAddDiv = urlAddDiv;
 export const ph_urlForm = urlForm;
 export const ph_firefoxViewport = firefoxViewport;
 export const ph_editMode = editMode;
+
+
+export const pg_cogIcon = cogIcon;

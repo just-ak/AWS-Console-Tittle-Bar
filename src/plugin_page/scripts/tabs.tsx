@@ -5,12 +5,11 @@ export function initializeTabs() {
 
 tab.addEventListener('click', function (e) {
   if (!(e.target as HTMLElement).dataset.tabName) return;
-   openTab(e, (e.target as HTMLElement).dataset.tabName);
+   openTab((e.target as HTMLElement), (e.target as HTMLElement).dataset.tabName);
 });
 
 function openTab(event , tabName) {
-  console.log("openTab", event, tabName);
-    var i, tabcontent, tablinks;
+      var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
       (tabcontent[i] as HTMLElement).style.display = "none";
@@ -22,6 +21,5 @@ function openTab(event , tabName) {
     document.getElementById(tabName).style.display = "block";
     (event as HTMLElement).classList.add("active");
   }
-  // Open the first tab by default
   (document.getElementsByClassName('tablinks')[0] as HTMLElement).click();
 }

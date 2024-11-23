@@ -13,10 +13,12 @@ import '../css/preferences_form.css';
 const { initializeTabs } = require('./tabs');
 const { initializeHeader } = require('./header');
 const { initializeBody } = require('./body');
+const { initializeUrlForm } = require('./group_form');
 
 initializeHeader();
 initializeBody();
 initializeTabs();
+// initializeUrlForm();
 
 declare const InstallTrigger: any;
 
@@ -75,78 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
     (document.querySelector('label[for="use-container"]') as HTMLElement).style.display = 'none';
     document.getElementById('use-container').style.display = 'none';
   }
-
-  const urlList = document.getElementById('urlList');
-
-  urlList.addEventListener('click', async function (e) {
-    if ((e.target as HTMLElement).classList.contains('url-link')) {
-      const chosenPage = (e.target as HTMLElement).dataset.url;
-      const recordId = (e.target as HTMLElement).dataset.recordId;
-      const containerTitle = (e.target as HTMLElement).innerText;
-      const group = (e.target as HTMLElement).dataset.group;
-      if (pp_cogIcon.dataset.action === 'runMode' || pp_cogIcon.dataset.action === undefined) {
-       
-        try {
-          let containerId = null;
-          const useContainer = (document.querySelector(`option[value="${group}"]`) as HTMLOptionElement).dataset.useContainer === 'true';
-          if (useContainer) {
-            containerId = await createContainer(group);
-            browser.tabs.create({ url: chosenPage, cookieStoreId: containerId }).then(onUpdated, onError);
-          } else {
-            chrome.tabs.create({ url: chosenPage }).then(onUpdated, onError);
-          }
-        } catch (error) {
-          console.error('Failed to create container and open tab:', error);
-        }
-      } else {
-        (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'edit';
-        (document.getElementById('url-input') as HTMLInputElement).value = chosenPage;
-        (document.getElementById('url-input') as HTMLInputElement).dataset.recordId = recordId;
-        (document.getElementById('title-input') as HTMLInputElement).value = containerTitle;
-        (document.getElementById('group-select') as HTMLSelectElement).value = group;
-        (document.getElementById('new-group-input') as HTMLInputElement).value = '';
-        const sortUrlsSwitch = document.getElementById('sort-urls') as HTMLInputElement;
-        const useContainerCheckbox = document.getElementById('use-container') as HTMLInputElement;
-        pp_getAdditionalLinks().then((accountDetails) => {
-          if (accountDetails['groups'] && accountDetails['groups'][group]) {
-            sortUrlsSwitch.checked = accountDetails['groups'][group].sortUrls || false;
-            useContainerCheckbox.checked = accountDetails['groups'][group].useContainer || false;
-          }
-        });
-      }
-    }
-  });
-
-  urlList.addEventListener('dragstart', function (e) {
-    if ((e.target as HTMLElement).classList.contains('url-link')) {
-      e.dataTransfer.setData('text/plain', (e.target as HTMLElement).dataset.url);
-      e.dataTransfer.effectAllowed = 'move';
-    }
-  });
-
-  urlList.addEventListener('dragover', function (e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-  });
-
-  urlList.addEventListener('drop', function (e) {
-    e.preventDefault();
-    const draggedUrl = e.dataTransfer.getData('text/plain');
-    const target = e.target as HTMLElement;
-    if (target.classList.contains('url-link')) {
-      const targetUrl = target.dataset.url;
-      pp_getAdditionalLinks().then((accountDetails) => {
-        const urls = accountDetails['urls'];
-        const draggedIndex = urls.findIndex((item) => item.url === draggedUrl);
-        const targetIndex = urls.findIndex((item) => item.url === targetUrl);
-        if (draggedIndex !== -1 && targetIndex !== -1) {
-          const [draggedItem] = urls.splice(draggedIndex, 1);
-          urls.splice(targetIndex, 0, draggedItem);
-          pp_saveAdditionalLinks(accountDetails).then(updatePopupUrls);
-        }
-      });
-    }
-  });
 
   const groupSelect = document.getElementById('group-select') as HTMLSelectElement;
   const newGroupInput = document.getElementById('new-group-input') as HTMLInputElement;
@@ -227,108 +157,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.getElementById('help-button').addEventListener('click', openHelpPage);
-
-  const sortUrlsSwitch = document.getElementById('sort-urls') as HTMLInputElement;
-  const useContainerSwitch = document.getElementById('use-container') as HTMLInputElement;
-  sortUrlsSwitch.addEventListener('change', function () {
-    const selectedGroup = (document.getElementById('group-select') as HTMLSelectElement).value;
-    pp_getAdditionalLinks().then((accountDetails) => {
-      if (!accountDetails['groups']) {
-        accountDetails['groups'] = {};
-      }
-      if (!accountDetails['groups'][selectedGroup]) {
-        accountDetails['groups'][selectedGroup] = {};
-      }
-      accountDetails['groups'][selectedGroup].sortUrls = sortUrlsSwitch.checked;
-      accountDetails['groups'][selectedGroup].useContainer = useContainerSwitch.checked;
-      pp_saveAdditionalLinks(accountDetails).then(updatePopupUrls);
-    });
-  });
-
-  useContainerSwitch.addEventListener('change', function () {
-    const selectedGroup = (document.getElementById('group-select') as HTMLSelectElement).value;
-    pp_getAdditionalLinks().then((accountDetails) => {
-      if (!accountDetails['groups']) {
-        accountDetails['groups'] = {};
-      }
-      if (!accountDetails['groups'][selectedGroup]) {
-        accountDetails['groups'][selectedGroup] = {};
-      }
-      accountDetails['groups'][selectedGroup].sortUrls = sortUrlsSwitch.checked;
-      accountDetails['groups'][selectedGroup].useContainer = useContainerSwitch.checked;
-      pp_saveAdditionalLinks(accountDetails).then(updatePopupUrls);
-    });
-  });
-
-  sortUrlsSwitch.addEventListener('change', function () {
-    updatePopupUrls();
-  });
-
-  const groupForm = document.getElementById('group-form') as HTMLFormElement;
-
-  groupForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const newGroupInput = document.getElementById('new-group-input') as HTMLInputElement;
-    const groupName = newGroupInput.value;
-
-    pp_getAdditionalLinks().then((accountDetails) => {
-      if (!accountDetails['groups']) {
-        accountDetails['groups'] = {};
-      }
-      if (!accountDetails['groups'][groupName]) {
-        accountDetails['groups'][groupName] = { sortUrls: false, useContainer: false };
-      }
-
-      pp_saveAdditionalLinks(accountDetails).then(() => {
-        updatePopupUrls();
-        updateGroupList();
-        newGroupInput.value = '';
-      });
-    });
-  });
-
-  document.getElementById('delete-group-button').addEventListener('click', function () {
-    const groupSelect = document.getElementById('group-select') as HTMLSelectElement;
-    const selectedGroup = groupSelect.value;
-
-    pp_getAdditionalLinks().then((accountDetails) => {
-      if (accountDetails['groups'] && accountDetails['groups'][selectedGroup]) {
-        delete accountDetails['groups'][selectedGroup];
-        accountDetails['urls'] = accountDetails['urls'].filter((url) => url.group !== selectedGroup);
-
-        pp_saveAdditionalLinks(accountDetails).then(() => {
-          updatePopupUrls();
-          updateGroupList();
-        });
-      }
-    });
-  });
-
-  document.getElementById('save-group-button').addEventListener('click', function () {
-    const groupSelect = document.getElementById('group-select') as HTMLSelectElement;
-    const selectedGroup = groupSelect.value;
-    const sortUrlsSwitch = document.getElementById('sort-urls') as HTMLInputElement;
-    const useContainerSwitch = document.getElementById('use-container') as HTMLInputElement;
-
-    pp_getAdditionalLinks().then((accountDetails) => {
-      if (!accountDetails['groups']) {
-        accountDetails['groups'] = {};
-      }
-      if (!accountDetails['groups'][selectedGroup]) {
-        accountDetails['groups'][selectedGroup] = {};
-      }
-      accountDetails['groups'][selectedGroup].sortUrls = sortUrlsSwitch.checked;
-      accountDetails['groups'][selectedGroup].useContainer = useContainerSwitch.checked;
-
-      pp_saveAdditionalLinks(accountDetails).then(() => {
-        updatePopupUrls();
-        updateGroupList();
-      });
-    });
-  });
-
-  updateGroupList();
 });
 
 const updatePopupUrls = () => {
@@ -384,91 +212,7 @@ const updatePopupUrls = () => {
   });
 };
 
-const updateGroupList = () => {
-  pp_getAdditionalLinks().then((accountDetails) => {
-    const groupList = document.getElementById('group-list');
-    groupList.innerHTML = '';
-    if (accountDetails['groups']) {
-      Object.keys(accountDetails['groups']).forEach((group) => {
-        const groupItem = document.createElement('div');
-        groupItem.classList.add('group-item');
-        groupItem.innerText = group;
-        groupList.appendChild(groupItem);
-      });
-    }
-  });
-};
-
-const getColorFromName = (name: string): string => {
-  const colors = [
-    'blue',
-    'turquoise',
-    'green',
-    'yellow',
-    'orange',
-    'red',
-    'pink',
-    'purple',
-    'toolbar',
-  ];
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  const index = Math.abs(hash) % colors.length;
-  return colors[index];
-};
-
-const getIconFromName = (name: string): string => {
-  const icons = [
-    'fingerprint',
-    'briefcase',
-    'dollar',
-    'cart',
-    'circle',
-    'gift',
-    'vacation',
-    'food',
-    'fruit',
-    'pet',
-    'tree',
-    'chill',
-    'fence',
-  ];
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  const index = Math.abs(hash) % icons.length;
-  return icons[index];
-};
-
-const createContainer = (group: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    if (typeof browser !== 'undefined' && browser.contextualIdentities) {
-      const color = getColorFromName(group);
-      const icon = getIconFromName(group);
-      browser.contextualIdentities
-        .create({
-          name: `${group}`,
-          color: color,
-          icon: icon,
-        })
-        .then((identity) => {
-          resolve(identity.cookieStoreId);
-        })
-        .catch((error) => {
-          console.error('Error creating container:', error);
-          reject(error);
-        });
-    } else {
-      // Fallback for browsers that do not support contextualIdentities API
-      console.error('contextualIdentities API is not supported');
-      reject('contextualIdentities API is not supported');
-    }
-  });
-};
-
+export const pg_updatePopupUrls = updatePopupUrls;
 // function toggleVisibility(visibility: boolean) {
 //   const removeUrls = document.getElementsByClassName('remove-url');
 //   // Iterate through each remove-url element
