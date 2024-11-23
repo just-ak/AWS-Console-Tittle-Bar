@@ -7,11 +7,16 @@ import '../css/header.css';
 import '../css/url_form.css';
 import '../css/url_list.css';
 import '../css/account_config.css';
+import '../css/tabs.css';
+import '../css/preferences_form.css';
+
+const { initializeTabs } = require('./tabs');
 const { initializeHeader } = require('./header');
 const { initializeBody } = require('./body');
 
 initializeHeader();
 initializeBody();
+initializeTabs();
 
 declare const InstallTrigger: any;
 

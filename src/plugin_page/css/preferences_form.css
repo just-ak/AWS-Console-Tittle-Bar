@@ -1,8 +1,8 @@
-#account-management {
+#preferences-management {
     margin: 0px 10px 0px 10px;
 }
 
-#account-form {
+#preferences-form {
     height: 100%;
     width: 100%;
     display: flex;
@@ -12,15 +12,10 @@
     /* background-color: blueviolet; */
 }
 
-#account-form .buttons-container {
+#preferences-form .buttons-container {
     position: absolute;
     padding-bottom: 42px;
     bottom: 0;
     right: 15px;
     /* width: 100%; */
-}
-
-#accoutConfig {
-    background-color: black;
-    color: white ;
 }

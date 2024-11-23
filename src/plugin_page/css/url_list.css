@@ -1,8 +1,10 @@
 #urlListBoarder {
-    padding: 0px 10px 0px 10px;
-    /* border-bottom: 1px solid gray; */
+    margin: 0px 10px 0px 10px;
+    padding-left: 2px;
+    padding-right: 2px;
+    border: 1px solid rgb(247, 232, 232);
     text-align: center;
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
     /* overflow-x: hidden; */
 }
 
@@ -10,7 +12,7 @@
 #urlList {
     /* margin-bottom: 5px; */
     height: 250px;
-    background-color: cadetblue;
+    /* background-color: cadetblue; */
     overflow-y: auto;
     overflow-x: hidden;
 }

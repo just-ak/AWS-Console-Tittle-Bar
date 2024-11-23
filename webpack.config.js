@@ -85,6 +85,7 @@ module.exports = {
           groupForm: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/group_form.html'), 'utf8'),
           footer: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/footer.html'), 'utf8'),
           accountConfig: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/account_config.html'), 'utf8'),
+          preferences: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/preferences.html'), 'utf8'),
 
         };
       },

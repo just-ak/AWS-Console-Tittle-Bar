@@ -23,31 +23,15 @@ body {
 }
 
 #firefox-viewport {
-  background-color: rgb(136, 0, 255)  ;
-  padding-bottom:35px;
+  padding-bottom:40px;
 }
-
-/* #firefox-viewport .small {
-  height: 250px;
-  width: 340px;
-  background-color: rosybrown;
-  border: 4px solid rgb(255, 0, 0);
-  background-color: rgb(255, 170, 0);
-}
-
-#firefox-viewport .large {
-  height: 800px;
-  width: 600px;
-  background-color: lightseagreen;
-  border: 4px solid rgb(225, 255, 0);
-
-} */
-
-
 
 #edit-mode {
-  background-color: rgb(107, 73, 32);
-  padding: 50px;
+  margin: 10px;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  border: 1px solid rgb(68, 68, 68);
+  border-radius: 1%;
 }
 /* #hiddenBox {
   height: 0px;
@@ -63,7 +47,7 @@ body {
   cursor: pointer;
   font-weight: bold;
   color: white;
-  background-color: red;
+  /* background-color: red; */
 }
 
 
