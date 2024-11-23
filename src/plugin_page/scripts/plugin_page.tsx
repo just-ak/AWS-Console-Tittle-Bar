@@ -1,10 +1,11 @@
 import '../css/account_colour.css';
 import '../css/base.css';
 import '../css/footer.css';
+import '../css/form.css';
 import '../css/groups.css';
 import '../css/header.css';
 import '../css/url_form.css';
-
+import '../css/url_list.css';
 declare const InstallTrigger: any;
 
 const {
@@ -17,12 +18,12 @@ const {
 
 console.log('start:');
 const cogIcon = document.getElementById('awsso-header');
-const accountColorsDiv = document.getElementById('accountColors') as HTMLDivElement;
+const accountConfigDiv = document.getElementById('accountConfig') as HTMLDivElement;
 const urlAddDiv = document.getElementById('add-url-container');
 const hiddenBox = document.getElementById('hiddenBox');
 console.log('hiddenBox:', JSON.stringify(document, null, 2));
 
-accountColorsDiv.style.visibility = 'hidden';
+accountConfigDiv.style.visibility = 'hidden';
 hiddenBox.style.height = '0px';
 urlAddDiv.style.height = '0px';
 urlAddDiv.style.visibility = 'hidden';
@@ -74,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const recordId = (e.target as HTMLElement).dataset.recordId;
       const containerTitle = (e.target as HTMLElement).innerText;
       const group = (e.target as HTMLElement).dataset.group;
-      if (accountColorsDiv.classList.contains('hidden')) {
+      if (accountConfigDiv.classList.contains('hidden')) {
         try {
           let containerId = null;
           const useContainer = (document.querySelector(`option[value="${group}"]`) as HTMLOptionElement).dataset.useContainer === 'true';
@@ -358,7 +359,7 @@ const updatePopupUrls = () => {
           const elementAccountDiv = document.createElement('div');
           elementAccountDiv.classList.add('url-item'); // Add class for styling
           const elementAccountName = document.createElement('span');
-          elementAccountName.classList.add('page-choice-urls');
+          // elementAccountName.classList.add('page-choice-urls');
           elementAccountName.innerText = `${urlItem.title}`;
           elementAccountName.dataset.url = urlItem.url;
           elementAccountName.dataset.recordId = urlItem.id;
@@ -437,38 +438,38 @@ const createContainer = (group: string): Promise<string> => {
 };
 
 cogIcon.addEventListener('click', function () {
-  if (accountColorsDiv.style.visibility === 'hidden') {
-    accountColorsDiv.style.visibility = 'unset';
+  if (accountConfigDiv.style.visibility === 'hidden') {
+    accountConfigDiv.style.visibility = 'unset';
     urlAddDiv.style.visibility = 'unset';
     urlAddDiv.style.height = '290px'; // Increased height
     urlAddDiv.style.backgroundColor = 'orange';
     (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'new';
-    toggleVisibility(true);
+    // toggleVisibility(true);
   } else {
-    accountColorsDiv.style.visibility = 'hidden';
+    accountConfigDiv.style.visibility = 'hidden';
     urlAddDiv.style.visibility = 'hidden';
     urlAddDiv.style.height = '0px';
     hiddenBox.style.height = '0px';
-    toggleVisibility(false);
+    // toggleVisibility(false);
   }
 });
 
-function toggleVisibility(visibility: boolean) {
-  const removeUrls = document.getElementsByClassName('remove-url');
-  // Iterate through each remove-url element
-  for (let i = 0; i < removeUrls.length; i++) {
-    const removeUrl = removeUrls[i];
-    // Toggle the visibility by changing the style.display property
-    if (visibility) {
-      (removeUrl as HTMLElement).style.visibility = 'visible';
-    } else {
-      (removeUrl as HTMLElement).style.visibility = 'hidden';
-    }
-  }
-}
+// function toggleVisibility(visibility: boolean) {
+//   const removeUrls = document.getElementsByClassName('remove-url');
+//   // Iterate through each remove-url element
+//   for (let i = 0; i < removeUrls.length; i++) {
+//     const removeUrl = removeUrls[i];
+//     // Toggle the visibility by changing the style.display property
+//     if (visibility) {
+//       (removeUrl as HTMLElement).style.visibility = 'visible';
+//     } else {
+//       (removeUrl as HTMLElement).style.visibility = 'hidden';
+//     }
+//   }
+// }
 
 const showSingleAccount = (accountId) => {
-  const container = document.getElementById('accountColors');
+  const container = document.getElementById('accountConfig');
   pp_getAllAccounts().then((jsonData) => {
     const form = document.createElement('form');
     const account = jsonData[accountId];

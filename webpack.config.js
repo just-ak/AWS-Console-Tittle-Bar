@@ -80,9 +80,12 @@ module.exports = {
       templateParameters: () => {
         return {
           header: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/header.html'), 'utf8'),
-          url_form: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/url_form.html'), 'utf8'),
+          urlForm: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/url_form.html'), 'utf8'),
+          urlList: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/url_list.html'), 'utf8'),
           groups: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/groups.html'), 'utf8'),
           footer: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/footer.html'), 'utf8'),
+          accountConfig: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/account_config.html'), 'utf8'),
+
         };
       },
     }),

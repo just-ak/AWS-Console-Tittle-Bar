@@ -50,7 +50,7 @@ function restore_options() {
 
 // Retrieve JSON data from chrome.storage.local
 const showAccounts = (jsonData) => {
-  const container = document.getElementById('accountColors');
+  const container = document.getElementById('accountConfig');
   const form = document.createElement('form');
   for (const accountId in jsonData) {
     if (jsonData[accountId] !== undefined) {

@@ -1,0 +1,41 @@
+#urlListBoarder {
+    margin: 0px 20px 2px 20px;
+    border-bottom: 1px solid gray;
+    text-align: center;
+    background-color: antiquewhite;
+}
+
+
+#urlList {
+    margin-bottom: 5px;
+    height: 250px;
+    background-color: cadetblue;
+    overflow-y: auto;
+}
+
+#urlList .group-title {
+    cursor: pointer;
+}
+
+#urlList .group-title:hover {
+    background-color: #c257b7;
+}
+
+#urlList .url-item {
+    display: flex;
+    margin-left: 20px;
+    width: 100%;
+    font-size: 1em;
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+    user-select: none;
+}
+
+#urlList .url-item:hover {
+    background-color: #57c264;
+}
+
+#urlList .url-item:active {
+    opacity: 0.6;
+}
