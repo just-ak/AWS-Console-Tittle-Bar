@@ -10,54 +10,48 @@ import '../css/account_config.css';
 import '../css/tabs.css';
 import '../css/preferences_form.css';
 
-const { initializeTabs } = require('./tabs');
-const { initializeHeader } = require('./header');
-const { initializeBody } = require('./body');
-const { initializeUrlForm } = require('./group_form');
+import  { initializeTabs } from './tabs';
+import  { initializeHeader } from './header';
+import  { initializeBody } from './body';
+import  { initializeurlForm } from './url_form';
+import  { initializeGroupForm } from './group_form';
 
 initializeHeader();
 initializeBody();
 initializeTabs();
-// initializeUrlForm();
+initializeurlForm();
+initializeGroupForm();
 
 declare const InstallTrigger: any;
 
-const {
-  pp_getAllAccounts,
-  pp_saveAdditionalLinks,
-  pp_getAdditionalLinks,
-  pp_saveAllAccounts,
-  pp_isChrome,
-  pp_debugLog,
-} = require('../../common/reference');
+import {
+  getAllAccounts,
+  saveAdditionalLinks,
+  getAdditionalLinks,
+  saveAllAccounts,
+  isChrome,
+  debugLog,
+ 
+} from '../../common/reference';
 
-const {
-  pp_accountConfigDiv,
-  pp_urlAddDiv,
-  pp_cogIcon,
-  // pp_hiddenBox,
-} = require('./dom');
-
-pp_debugLog('start:');
-
-function onUpdated(tab) {
-  console.log(`Updated tab: ${tab.id}`);
+interface IGroupRecord {
+  id: string;
+  title: string;
+  sortUrlsSwitch: string;
+  useContainerSwitch: string;
 }
 
-function onError(error) {
-  console.log(`Error: ${error}`);
-}
+import  {
+  accountConfigDiv,
+  urlAddDiv,
+  cogIcon,
+  urlList,
+  groupSelect,
+  // hiddenBox,
+} from './dom';
 
-function openHelpPage() {
-  const helpUrl = 'https://aws-console-title-bar.akfdev.com/';
-  if (typeof browser !== 'undefined') {
-    browser.tabs.create({ url: helpUrl }).then(onUpdated, onError);
-  } else if (typeof chrome !== 'undefined') {
-    chrome.tabs.create({ url: helpUrl }, onUpdated);
-  } else {
-    console.error('Browser API not supported');
-  }
-}
+debugLog('start:');
+
 
 document.addEventListener('DOMContentLoaded', function () {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -77,12 +71,9 @@ document.addEventListener('DOMContentLoaded', function () {
     (document.querySelector('label[for="use-container"]') as HTMLElement).style.display = 'none';
     document.getElementById('use-container').style.display = 'none';
   }
-
-  const groupSelect = document.getElementById('group-select') as HTMLSelectElement;
-  const newGroupInput = document.getElementById('new-group-input') as HTMLInputElement;
-
+  
   // Populate group dropdown
-  pp_getAdditionalLinks().then((accountDetails) => {
+  getAdditionalLinks().then((accountDetails) => {
     const groups = new Set(accountDetails['urls'].map((url) => url.group || 'Default'));
     groups.forEach((group) => {
       const option = document.createElement('option') as HTMLOptionElement;
@@ -101,97 +92,116 @@ document.addEventListener('DOMContentLoaded', function () {
   const urlForm = document.getElementById('url-form');
   let sequenceNumber = 0;
 
-  pp_getAdditionalLinks().then((accountDetails) => {
+  getAdditionalLinks().then((accountDetails) => {
     if (accountDetails['urls'] && accountDetails['urls'].length > 0) {
       accountDetails['urls'].forEach((item, index) => {
         item.id = index.toString();
       });
-      pp_saveAdditionalLinks(accountDetails).then(() => {
+      saveAdditionalLinks(accountDetails).then(() => {
         const maxId = Math.max(...accountDetails['urls'].map((item) => parseInt(item.id, 10)));
         sequenceNumber = isNaN(maxId) ? 0 : maxId + 1;
         updatePopupUrls();
       });
     }
   });
-
-  urlForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const urlInput = document.getElementById('url-input') as HTMLInputElement;
-    const titleInput = document.getElementById('title-input') as HTMLInputElement;
-    const commitType = (event.submitter as HTMLButtonElement).dataset.commitType;
-    const url = urlInput.value;
-    const title = titleInput.value;
-    const group = newGroupInput.value || groupSelect.value;
-    const recordId = urlInput.dataset.recordId;
-
-    pp_getAdditionalLinks().then((accountDetails) => {
-      if (!accountDetails['urls']) {
-        accountDetails['urls'] = [];
-      }
-      if (commitType === 'save-as-new') {
-        const maxId = Math.max(...accountDetails['urls'].map((item) => parseInt(item.id, 10)));
-        accountDetails['urls'].push({ id: (maxId + 1).toString(), url: url, title: title, group: group });
-      } else if (commitType === 'save') {
-        const index = accountDetails['urls'].findIndex((item) => item.id === recordId);
-        if (index !== -1) {
-          accountDetails['urls'][index] = { id: recordId, url: url, title: title, group: group };
-        }
-      } else if (commitType === 'delete') {
-        accountDetails['urls'] = accountDetails['urls'].filter((item) => item.id !== recordId);
-      }
-
-      // Update groups if a new group has been created
-      if (newGroupInput.value && !accountDetails['groups'][newGroupInput.value]) {
-        accountDetails['groups'][newGroupInput.value] = { sortUrls: false, useContainer: false };
-      }
-
-      pp_saveAdditionalLinks(accountDetails);
-      updatePopupUrls();
-      urlInput.value = '';
-      titleInput.value = '';
-      newGroupInput.value = '';
-      groupSelect.value = 'Default';
-      delete urlInput.dataset.recordId;
-    });
-  });
-
-  document.getElementById('help-button').addEventListener('click', openHelpPage);
 });
 
-const updatePopupUrls = () => {
-  pp_debugLog('Updating popup urls');
-  pp_getAdditionalLinks().then((accountDetails) => {
-    const urlList = document.getElementById('urlList');
+export const updatePopupUrls = () => {
+  debugLog('Updating popup urls');
+  getAdditionalLinks().then((accountDetails) => {
+    
     urlList.innerHTML = '';
     if (accountDetails['urls']) {
-      const sortUrlsSwitch = document.getElementById('sort-urls') as HTMLInputElement;
-      const groupedUrls = accountDetails['urls'].reduce((acc, urlItem) => {
-        const group = urlItem.group || 'Default';
-        if (!acc[group as string]) acc[group as string] = [];
-        acc[group as string].push(urlItem);
-        return acc;
-      }, {});
 
-      const sortedGroups = Object.keys(groupedUrls).sort((a, b) => {
-        const comparison = a.localeCompare(b, 'en');
-        if (comparison === 0) return 0;
-        if (a[0] === a[0].toUpperCase() && b[0] === b[0].toLowerCase()) return 1;
-        if (a[0] === a[0].toLowerCase() && b[0] === b[0].toUpperCase()) return -1;
-        return comparison;
+      // Check for old system grouped urls.
+      if (accountDetails['groups'] === undefined) {
+        accountDetails['groups'] = [];
+      } else {
+        //make sure all groups have an id that already exist
+        accountDetails['groups'].forEach((group) => {
+          if (!group.id) {
+            group.id = (Math.max(...accountDetails['groups'].map((item) => parseInt(item.id, 10))) + 1).toString();
+          }
+        });
+      }
+
+      const uniqueValuesArray = [...new Set(accountDetails['urls'].map(obj => obj.group))];
+      if (uniqueValuesArray.length > 0 ) { 
+          let maxGroupIndex = accountDetails['groups'].length === 0 ? 0 : Math.max(...accountDetails['groups'].map((item: IGroupRecord) => parseInt(item.id, 10))) + 1;
+          uniqueValuesArray.forEach((group) => {
+            const groupIndex = accountDetails['groups'].findIndex((item) => item.title === group);
+            if (groupIndex === -1) {
+              accountDetails['groups'].push({ id: maxGroupIndex++, title: group, sortUrlsSwitch: 'false', useContainerSwitch: 'false' });
+            }
+
+          });
+      }
+
+      if (!accountDetails['groups'] || ( accountDetails['groups'] && accountDetails['groups'].length === 0)) {
+        console.log('Adding default group to accountDetails');
+        accountDetails['groups'].push({ id: 0, title: 'Default', sortUrlsSwitch: 'false', useContainerSwitch: 'false' });
+      }
+  
+
+      // find first group
+      const firstGroup = accountDetails['groups'][0]
+      // check all urls have a group id
+      accountDetails['urls'].map((urlItem) => {
+        if (!urlItem.groupId) {         
+          const groupIndex = accountDetails['groups'].findIndex((item) => item.title === urlItem.group);
+          if (groupIndex !== -1) {
+            urlItem.groupId = accountDetails['groups'][groupIndex].id;
+          } else {
+            urlItem.groupId = firstGroup.id;
+          }
+        }
       });
 
+      // remove all url group values that are now our of date
+      accountDetails['urls'].map((urlItem) => {
+        if (urlItem.group) {
+          delete urlItem.group;
+        }
+        if (urlItem.useContainer || urlItem.useContainer === false) {
+          delete urlItem.useContainer; 
+        }
+        if (urlItem.sortUrlsSwitch || urlItem.sortUrlsSwitch === false) {
+          delete urlItem.sortUrlsSwitch;
+        }
+      });
+
+      let sortedGroups = accountDetails['groups'];
+      if (sortedGroups.length > 2 ) {
+        sortedGroups = sortedGroups.sort((a: IGroupRecord, b: IGroupRecord) => {
+        const comparison = a.title.localeCompare(b.title, 'en');
+        if (comparison === 0) return 0;
+        if (a.title === a.title.toUpperCase() && b.title === b.title.toLowerCase()) return 1;
+        if (a.title === a.title.toLowerCase() && b.title === b.title.toUpperCase()) return -1;
+        return comparison;
+      });
+      }
+      
       for (const group of sortedGroups) {
         const groupDiv = document.createElement('div');
         groupDiv.classList.add('group-title');
-        groupDiv.innerText = group;
+        groupDiv.innerText = group.title;
+        groupDiv.dataset.recordId = group.id;
+        groupDiv.dataset.sortUrlsSwitch = group.sortUrlsSwitch;
+        groupDiv.dataset.useContainerSwitch = group.useContainerSwitch;
+
         urlList.appendChild(groupDiv);
 
-        let urls = groupedUrls[group as string];
-        const sortUrls = accountDetails['groups'] && accountDetails['groups'][group as string] && accountDetails['groups'][group as string].sortUrls;
-        if (sortUrls) {
-          urls = urls.sort((a, b) => a.title.localeCompare(b.title, 'en'));
+        let urls = accountDetails['urls'].filter((urlItem) => urlItem.groupId === group.id);
+        if (group.sortUrlsSwitch === 'true') {
+          urls = urls.sort((a: string, b: string) => {
+            const comparison = a.localeCompare(b, 'en');
+            if (comparison === 0) return 0;
+            if (a[0] === a[0].toUpperCase() && b[0] === b[0].toLowerCase()) return 1;
+            if (a[0] === a[0].toLowerCase() && b[0] === b[0].toUpperCase()) return -1;
+            return comparison;
+          });
         }
+
 
         urls.forEach((urlItem) => {
           const elementAccountDiv = document.createElement('div');
@@ -205,31 +215,17 @@ const updatePopupUrls = () => {
           elementAccountName.draggable = true;
           elementAccountDiv.appendChild(elementAccountName);
           urlList.appendChild(elementAccountDiv);
-          pp_debugLog('elementAccountName:', elementAccountName);
+          debugLog('elementAccountName:', elementAccountName);
         });
       }
     }
   });
 };
 
-export const pg_updatePopupUrls = updatePopupUrls;
-// function toggleVisibility(visibility: boolean) {
-//   const removeUrls = document.getElementsByClassName('remove-url');
-//   // Iterate through each remove-url element
-//   for (let i = 0; i < removeUrls.length; i++) {
-//     const removeUrl = removeUrls[i];
-//     // Toggle the visibility by changing the style.display property
-//     if (visibility) {
-//       (removeUrl as HTMLElement).style.visibility = 'visible';
-//     } else {
-//       (removeUrl as HTMLElement).style.visibility = 'hidden';
-//     }
-//   }
-// }
 
 const showSingleAccount = (accountId) => {
   const container = document.getElementById('accountConfig');
-  pp_getAllAccounts().then((jsonData) => {
+  getAllAccounts().then((jsonData) => {
     const form = document.createElement('form');
     const account = jsonData[accountId];
     const accountDiv = document.createElement('div');
@@ -250,11 +246,12 @@ const showSingleAccount = (accountId) => {
         .querySelector('label')
         .textContent.split(':')[1]
         .trim();
-      pp_getAllAccounts().then((data) => {
+      getAllAccounts().then((data) => {
         data[accountId].color = selectedColor;
         colorInput.style.color = selectedColor;
         colorInput.style.backgroundColor = selectedColor;
-        pp_saveAllAccounts(data).finally((update) => {
+        saveAllAccounts(data).finally(() => {
+          // console.log('update:', update);
           chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.tabs.sendMessage(tabs[0].id, `updateColour:${selectedColor}`, (response) => {
               return true;

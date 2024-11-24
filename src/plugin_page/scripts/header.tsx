@@ -1,41 +1,61 @@
 
-const {
-    ph_cogIcon,
-    ph_accountConfigDiv,
-    ph_urlAddDiv,
-    ph_hiddenBox,
-    ph_urlForm,
-    ph_firefoxViewport,
-    ph_editMode
-} = require('./dom');
+import {
+    cogIcon,
+    accountConfigDiv,
+    urlAddDiv,
+    // hiddenBox,
+    urlForm,
+    firefoxViewport,
+    editMode,
+    helpButton,
+   
+} from './dom';
 
-const { pp_debugLog } = require('../../common/reference');
-const { pb_resizeBody } = require('./body');
+import { debugLog, onError,
+  onUpdated } from '../../common/reference';
+import { resizeBody } from './body';
 
 export function initializeHeader() {
-    ph_editMode.style.display = 'none';
-    ph_cogIcon.addEventListener('click', function () {
-        if (ph_cogIcon.dataset.action === 'runMode' || ph_cogIcon.dataset.action === undefined) {
-            // ph_accountConfigDiv.style.visibility = 'unset';
-            // ph_urlAddDiv.style.visibility = 'unset';
-            // ph_urlAddDiv.style.backgroundColor = 'orange';
-            ph_urlForm.dataset.action = 'new';
-            // ph_urlAddDiv.style.height = '900px';
-            ph_cogIcon.dataset.action = 'editMode';
-            ph_editMode.style.display = 'block';
-            pp_debugLog('Edit Mode');
+    editMode.style.display = 'none';
+    cogIcon.addEventListener('click', function () {
+        if (cogIcon.dataset.action === 'runMode' || cogIcon.dataset.action === undefined) {
+            // accountConfigDiv.style.visibility = 'unset';
+            // urlAddDiv.style.visibility = 'unset';
+            // urlAddDiv.style.backgroundColor = 'orange';
+            urlForm.dataset.action = 'new';
+            // urlAddDiv.style.height = '900px';
+            cogIcon.dataset.action = 'editMode';
+            editMode.style.display = 'block';
+            debugLog('Edit Mode');
         } else {
-            // ph_accountConfigDiv.style.visibility = 'hidden';
-            // ph_urlAddDiv.style.visibility = 'hidden';
-            // ph_urlAddDiv.style.height = '0px';
-            // ph_hiddenBox.style.height = '0px';
-            ph_cogIcon.dataset.action = 'runMode';
-            ph_editMode.style.display = 'none';
-            // ph_body.style.height = '250px';
-            // ph_urlAddDiv.style.height = '280px';
-            pp_debugLog('Run Mode');
+            // accountConfigDiv.style.visibility = 'hidden';
+            // urlAddDiv.style.visibility = 'hidden';
+            // urlAddDiv.style.height = '0px';
+            // hiddenBox.style.height = '0px';
+            cogIcon.dataset.action = 'runMode';
+            editMode.style.display = 'none';
+            // body.style.height = '250px';
+            // urlAddDiv.style.height = '280px';
+            debugLog('Run Mode');
 
         }
-        pb_resizeBody();
+        resizeBody();
     });
+
+
+    function openHelpPage() {
+    const helpUrl = 'https://aws-console-title-bar.akfdev.com/';
+    if (typeof browser !== 'undefined') {
+      browser.tabs.create({ url: helpUrl }).then(onUpdated, onError);
+    } else if (typeof chrome !== 'undefined') {
+      chrome.tabs.create({ url: helpUrl }, onUpdated);
+    } else {
+      console.error('Browser API not supported');
+    }
+  }
+
+
+  helpButton.addEventListener('click', openHelpPage);
+
 }
+

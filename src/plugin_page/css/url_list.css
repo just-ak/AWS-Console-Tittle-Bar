@@ -1,4 +1,4 @@
-#urlListBoarder {
+#url-list-boarder {
     margin: 0px 10px 0px 10px;
     padding-left: 2px;
     padding-right: 2px;
@@ -9,7 +9,7 @@
 }
 
 
-#urlList {
+#url-list {
     /* margin-bottom: 5px; */
     height: 250px;
     /* background-color: cadetblue; */
@@ -17,15 +17,15 @@
     overflow-x: hidden;
 }
 
-#urlList .group-title {
+#url-list .group-title {
     cursor: pointer;
 }
 
-#urlList .group-title:hover {
+#url-list .group-title:hover {
     background-color: #c257b7;
 }
 
-#urlList .url-item {
+#url-list .url-item {
     display: flex;
     margin-left: 20px;
     width: 100%;
@@ -36,10 +36,10 @@
     user-select: none;
 }
 
-#urlList .url-item:hover {
+#url-list .url-item:hover {
     background-color: #57c264;
 }
 
-#urlList .url-item:active {
+#url-list .url-item:active {
     opacity: 0.6;
 }

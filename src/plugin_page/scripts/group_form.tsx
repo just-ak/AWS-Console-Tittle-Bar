@@ -1,128 +1,74 @@
 
-const {
-    pg_cogIcon,
-} = require('./dom');
+import {
+    cogIcon,
+    urlList,
+    groupForm,
+    sortUrlsSwitch,
+    groupTitle,
+    useContainerSwitch,
+} from './dom';
+// 
+import { updatePopupUrls } from './plugin_page';
 
-const { pg_updatePopupUrls } = require('./plugin_page');
-const { pg_getAdditionalLinks, pg_saveAdditionalLinks } = require('../../common/reference');
-const { pg_updateGroupList } = require('./url_form');
+import { getAdditionalLinks, saveAdditionalLinks } from '../../common/reference';
+import { updateGroupListInUrlsSetting } from './url_form';
+// import { updateGroupListInUrlsSetting } from './url_form';
 
 export function initializeGroupForm() {
     document.addEventListener('DOMContentLoaded', function () {
-        const urlList = document.getElementById('urlList');
+
         urlList.addEventListener('click', async function (e) {
             if ((e.target as HTMLElement).classList.contains('group-title')) {
-                const sortUrlsSwitch = (e.target as HTMLElement).dataset.url;
-                const useContainerSwitch = (e.target as HTMLElement).dataset.recordId;
-                const groupTitle = (e.target as HTMLElement).innerText;
+                const sortUrlsSwitchData = (e.target as HTMLElement).dataset.sortUrlsSwitch;
+                const useContainerSwitchData = (e.target as HTMLElement).dataset.useContainerSwitch;
+                const recordIdData = (e.target as HTMLElement).dataset.recordId;
+                const groupTitleData = (e.target as HTMLElement).innerText;
+                sortUrlsSwitch.value = sortUrlsSwitchData;
+                groupTitle.value = groupTitleData;
+                groupTitle.dataset.recordId = recordIdData;
+                useContainerSwitch.value = useContainerSwitchData;
 
-                (document.getElementById('sort-urls') as HTMLSelectElement).value = sortUrlsSwitch;
-                (document.getElementById('url-input') as HTMLSelectElement).value = groupTitle;
-                (document.getElementById('use-container') as HTMLSelectElement).value = useContainerSwitch;
+                console.log(`Group to Edit: ${groupTitleData} ${sortUrlsSwitchData} ${useContainerSwitchData} ${recordIdData}`);
             }
         });
-    });
 
+        groupForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const commitType = (event.submitter as HTMLButtonElement).dataset.commitType;
+            console.log('commitType:', commitType);
+            const dataSortUrlsSwitch = sortUrlsSwitch.value;
+            const dataGroupTitle = groupTitle.value;
+            const dataRecordId = groupTitle.dataset.recordId;
+            const dataUseContainerSwitch = useContainerSwitch.value;
+            console.log('sortUrlsSwitch:', sortUrlsSwitch);
+            getAdditionalLinks().then((accountDetails) => {
+                console.log('accountDetails:', accountDetails);
+                console.log('recordId:', dataRecordId);
+                if (!accountDetails['groups']) {
+                    accountDetails['groups'] = [];
+                }
+                if (commitType === 'save-as-new') {
+                    const maxId = Math.max(...accountDetails['groups'].map((item) => parseInt(item.id, 10)));
+                    accountDetails['groups'].push({ id: (maxId + 1).toString(), sortUrlsSwitch: dataSortUrlsSwitch, title: dataGroupTitle, useContainerSwitch: dataUseContainerSwitch });
+                } else if (commitType === 'save') {
+                    const index = accountDetails['groups'].findIndex((item) => item.id === dataRecordId);
+                    if (index !== -1) {
+                        accountDetails['groups'][index] = { id: dataRecordId, title: dataGroupTitle, sortUrlsSwitch: dataSortUrlsSwitch, useContainerSwitch: dataUseContainerSwitch };
+                    }
+                } else if (commitType === 'delete') {
+                    accountDetails['groups'] = accountDetails['groups'].filter((item) => item.id !== dataRecordId);
+                }
+                console.log('accountDetails:', accountDetails);
+                saveAdditionalLinks(accountDetails);
+                updatePopupUrls();
+                console.log('Group Form Submitted');
+                updateGroupListInUrlsSetting();
 
-    const sortUrlsSwitch = document.getElementById('sort-urls') as HTMLInputElement;
-    const useContainerSwitch = document.getElementById('use-container') as HTMLInputElement;
-    sortUrlsSwitch.addEventListener('change', function () {
-        const selectedGroup = (document.getElementById('group-select') as HTMLSelectElement).value;
-        pg_getAdditionalLinks().then((accountDetails) => {
-            if (!accountDetails['groups']) {
-                accountDetails['groups'] = {};
-            }
-            if (!accountDetails['groups'][selectedGroup]) {
-                accountDetails['groups'][selectedGroup] = {};
-            }
-            accountDetails['groups'][selectedGroup].sortUrls = sortUrlsSwitch.checked;
-            accountDetails['groups'][selectedGroup].useContainer = useContainerSwitch.checked;
-            pg_saveAdditionalLinks(accountDetails).then(pg_updatePopupUrls);
-        });
-    });
-
-    useContainerSwitch.addEventListener('change', function () {
-        const selectedGroup = (document.getElementById('group-select') as HTMLSelectElement).value;
-        pg_getAdditionalLinks().then((accountDetails) => {
-            if (!accountDetails['groups']) {
-                accountDetails['groups'] = {};
-            }
-            if (!accountDetails['groups'][selectedGroup]) {
-                accountDetails['groups'][selectedGroup] = {};
-            }
-            accountDetails['groups'][selectedGroup].sortUrls = sortUrlsSwitch.checked;
-            accountDetails['groups'][selectedGroup].useContainer = useContainerSwitch.checked;
-            pg_saveAdditionalLinks(accountDetails).then(pg_updatePopupUrls);
-        });
-    });
-
-    sortUrlsSwitch.addEventListener('change', function () {
-        pg_updatePopupUrls();
-    });
-
-    const groupForm = document.getElementById('group-form') as HTMLFormElement;
-
-    groupForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const newGroupInput = document.getElementById('new-group-input') as HTMLInputElement;
-        const groupName = newGroupInput.value;
-
-        pg_getAdditionalLinks().then((accountDetails) => {
-            if (!accountDetails['groups']) {
-                accountDetails['groups'] = {};
-            }
-            if (!accountDetails['groups'][groupName]) {
-                accountDetails['groups'][groupName] = { sortUrls: false, useContainer: false };
-            }
-
-            pg_saveAdditionalLinks(accountDetails).then(() => {
-                pg_updatePopupUrls();
-                pg_updateGroupList();
-                newGroupInput.value = '';
+                sortUrlsSwitch.value = '';
+                groupTitle.value = '';
+                useContainerSwitch.value = '';
+                delete groupTitle.dataset.recordId;
             });
         });
     });
-
-    document.getElementById('delete-group-button').addEventListener('click', function () {
-        const groupSelect = document.getElementById('group-select') as HTMLSelectElement;
-        const selectedGroup = groupSelect.value;
-
-        pg_getAdditionalLinks().then((accountDetails) => {
-            if (accountDetails['groups'] && accountDetails['groups'][selectedGroup]) {
-                delete accountDetails['groups'][selectedGroup];
-                accountDetails['urls'] = accountDetails['urls'].filter((url) => url.group !== selectedGroup);
-
-                pg_saveAdditionalLinks(accountDetails).then(() => {
-                    pg_updatePopupUrls();
-                    pg_updateGroupList();
-                });
-            }
-        });
-    });
-
-    document.getElementById('save-group-button').addEventListener('click', function () {
-        const groupSelect = document.getElementById('group-select') as HTMLSelectElement;
-        const selectedGroup = groupSelect.value;
-        const sortUrlsSwitch = document.getElementById('sort-urls') as HTMLInputElement;
-        const useContainerSwitch = document.getElementById('use-container') as HTMLInputElement;
-
-        pg_getAdditionalLinks().then((accountDetails) => {
-            if (!accountDetails['groups']) {
-                accountDetails['groups'] = {};
-            }
-            if (!accountDetails['groups'][selectedGroup]) {
-                accountDetails['groups'][selectedGroup] = {};
-            }
-            accountDetails['groups'][selectedGroup].sortUrls = sortUrlsSwitch.checked;
-            accountDetails['groups'][selectedGroup].useContainer = useContainerSwitch.checked;
-
-            pg_saveAdditionalLinks(accountDetails).then(() => {
-                pg_updatePopupUrls();
-                pg_updateGroupList();
-            });
-        });
-    });
-
-    pg_updateGroupList();
 };
