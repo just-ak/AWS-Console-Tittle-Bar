@@ -18,22 +18,47 @@ export interface cp_AccountDetails {
   headerColor: string;
 }
 
-const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
-export const cp_isChrome = isChrome;
-export const pp_isChrome = isChrome;
+export interface IGroupRecord {
+  id: string;
+  title: string;
+  sortUrlsSwitch: string;
+  useContainerSwitch: string;
+}
 
-const isElementLoaded = async (selector) => {
+
+export function onUpdated(tab) {
+  console.log(`Updated tab: ${tab.id}`);
+}
+
+export function onError(error) {
+  console.log(`Error: ${error}`);
+}
+
+
+
+export const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+
+
+const DEBUG = false; // Set this to false to disable debug logs
+
+export function debugLog(message: string, ...optionalParams: any[]) {
+  if (DEBUG) {
+    console.log(message, ...optionalParams);
+  }
+}
+
+
+export const isElementLoaded = async (selector) => {
   while (document.querySelector(selector) === null) {
     await new Promise((resolve) => requestAnimationFrame(resolve));
   }
   return document.querySelector(selector);
 };
 
-export const cp_isElementLoaded = isElementLoaded;
-export const pp_isElementLoaded = isElementLoaded;
 
-async function putPopupComms(data: PopupComms) {
+export async function putPopupComms(data: PopupComms) {
   return await new Promise((resolve, reject) => {
     if (data.accountId) {
       return chrome.storage.local.set({
@@ -45,10 +70,7 @@ async function putPopupComms(data: PopupComms) {
   });
 }
 
-export const cp_putPopupComms = putPopupComms;
-export const pp_putPopupComms = putPopupComms;
-
-async function getPopupComms() {
+export async function getPopupComms() {
   return await new Promise((resolve, reject) =>
     chrome.storage.local.get('popupcomms', (response) => {
       try {
@@ -60,10 +82,8 @@ async function getPopupComms() {
     })
   );
 }
-export const cp_getPopupComms = getPopupComms;
-export const pp_getPopupComms = getPopupComms;
 
-async function getAdditionalLinks() {
+export async function getAdditionalLinks() {
   return await new Promise(function (resolve, reject) {
     chrome.storage.local.get('jsoninfo', function (response) {
       try {
@@ -78,10 +98,9 @@ async function getAdditionalLinks() {
   });
 }
 
-export const cp_getAdditionalLinks = getAdditionalLinks;
-export const pp_getAdditionalLinks = getAdditionalLinks;
 
-async function saveAdditionalLinks(data) {
+
+export async function saveAdditionalLinks(data) {
   return await new Promise((resolve, reject) => {
     try {
       chrome.storage.local.set({
@@ -94,10 +113,7 @@ async function saveAdditionalLinks(data) {
   });
 }
 
-export const cp_saveAdditionalLinks = saveAdditionalLinks;
-export const pp_saveAdditionalLinks = saveAdditionalLinks;
-
-async function saveAllAccounts(data) {
+export async function saveAllAccounts(data) {
   return await new Promise((resolve, reject) => {
     try {
       chrome.storage.local.set({
@@ -109,11 +125,7 @@ async function saveAllAccounts(data) {
     }
   });
 }
-export const cp_saveAllAccounts = saveAllAccounts;
-export const pp_saveAllAccounts = saveAllAccounts;
-export const pr_saveAllAccounts = saveAllAccounts;
-
-async function getAccount(accountId) {
+export async function getAccount(accountId) {
   return await new Promise((resolve, reject) =>
     chrome.storage.local.get('jsonaccounts', (response) => {
       try {
@@ -129,10 +141,9 @@ async function getAccount(accountId) {
     })
   );
 }
-export const cp_getAccount = getAccount;
-export const pp_getAccount = getAccount;
 
-async function getAllAccounts() {
+
+export async function getAllAccounts() {
   return await new Promise((resolve, reject) =>
     chrome.storage.local.get('jsonaccounts', (response) => {
       if (response) {
@@ -148,6 +159,3 @@ async function getAllAccounts() {
     })
   );
 }
-export const cp_getAllAccounts = getAllAccounts;
-export const pp_getAllAccounts = getAllAccounts;
-export const pr_getAllAccounts = getAllAccounts;

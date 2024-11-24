@@ -1,4 +1,7 @@
-const { pr_getAllAccounts, pr_saveAllAccounts } = require('./reference');
+import '../css/preferences.css';
+
+import  { getAllAccounts, saveAllAccounts }
+  from '../../common/reference';
 
 const jsonElementID = 'jsoninfo';
 const jsonAccElementID = 'jsonaccounts';
@@ -40,14 +43,14 @@ function restore_options() {
     }
   );
 
-  pr_getAllAccounts().then((data) => {
+  getAllAccounts().then((data) => {
     showAccounts(data);
   });
 }
 
 // Retrieve JSON data from chrome.storage.local
 const showAccounts = (jsonData) => {
-  const container = document.getElementById('accountColors');
+  const container = document.getElementById('accountConfig');
   const form = document.createElement('form');
   for (const accountId in jsonData) {
     if (jsonData[accountId] !== undefined) {
@@ -67,9 +70,9 @@ const showAccounts = (jsonData) => {
         // console.log(`Color : ${selectedColor}`);
         const accountId = (event.target as HTMLInputElement).parentNode.querySelector('label').textContent.split(':')[1].trim();
         // console.log(`Acc : ${accountId}`);
-        const curList = pr_getAllAccounts().then((data) => {
+        const curList = getAllAccounts().then((data) => {
           data[accountId].color = selectedColor;
-          pr_saveAllAccounts(data);
+          saveAllAccounts(data);
         });
       });
 

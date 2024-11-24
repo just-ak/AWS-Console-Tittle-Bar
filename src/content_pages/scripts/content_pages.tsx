@@ -1,13 +1,22 @@
+
+console.log('Content Script Loaded');
 const {
+  
   cp_getAccount,
   cp_putPopupComms,
   cp_isElementLoaded,
   cp_saveAllAccounts,
   cp_AccountDetails,
   cp_getAllAccounts,
-} = require('./reference');
+} = require('../../common/reference');
 
-
+export interface AccountDetails {
+  id: string;
+  color: string;
+  background: string;
+  headerBackground: string;
+  headerColor: string;
+}
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // console.log(`Message : ${JSON.stringify(message)}`);
   // console.log(`Message : ${JSON.stringify(sender)}`);
@@ -40,6 +49,45 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 //                                                                                                                           |  $$$$$$/
 //                                                                                                                            \______/
 //       
+
+
+function disablePaddingBlockEndStyles() {
+  console.log('Disabling padding-block-end styles');
+  // Iterate through all stylesheets
+  for (let i = 0; i < document.styleSheets.length; i++) {
+    const styleSheet = document.styleSheets[i] as CSSStyleSheet;
+
+    try {
+      // Iterate through all CSS rules in the stylesheet
+      for (let j = 0; j < styleSheet.cssRules.length; j++) {
+        const rule = styleSheet.cssRules[j] as CSSStyleRule;
+
+        // Check if the rule has a style property and contains "padding-block-end"
+        if (rule.style && rule.style.paddingBlockEnd) {
+          // Disable the padding-block-end style
+          rule.style.paddingBlockEnd = '0';
+          console.log('Disabled padding-block-end in stylesheet');
+        }
+      }
+    } catch (e) {
+      if (e.name === 'SecurityError') {
+        //console.warn(`Could not access stylesheet: ${styleSheet.href} due to cross-origin restrictions`);
+      } else {
+        console.error(`Could not access stylesheet: ${styleSheet.href}`, e);
+      }
+    }
+  }
+   // Disable padding-block-end in inline styles
+   const allElements = document.querySelectorAll('*');
+   allElements.forEach((element) => {
+     const el = element as HTMLElement;
+     if (el.style.paddingBlockEnd) {
+       el.style.paddingBlockEnd = '0';
+       console.log('Disabled padding-block-end in inline styles');
+     }
+   });
+   console.log('Disabled padding-block-end styles');
+}
 
 function addAccountDetailsToPage(accountId: string) {
   if (accountId) {
@@ -143,8 +191,50 @@ if (!window.location.href.includes('awsapps.com/start')) {
   cp_isElementLoaded('[data-testid="awsc-nav-regions-menu-button"]').then((selector) => {
     const accountNumber = getAWSUserInfoAccountNumber();
     addAccountDetailsToPage(accountNumber);
+    
+    
+    
   });
 }
+function waitForPageComplete(): Promise<void> {
+  return new Promise<void>(resolve => {
+      let timeout;
+      const observer = new MutationObserver(() => {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => {
+              observer.disconnect();
+              resolve();
+          }, 1000);
+      });
+
+      observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          characterData: true
+      });
+  });
+}
+
+async function afterPageProcessing() {
+  await waitForPageComplete();
+  disablePaddingBlockEndStyles();
+}
+
+afterPageProcessing();
+// Usage
+// async function yourFunction() {
+//   try {
+//       await waitForAllProcesses();
+//       // Now safe to perform your DOM updates
+//       console.log('All processes complete, updating DOM...');
+//       disablePaddingBlockEndStyles();
+//   } catch (error) {
+//       console.error('Error waiting for processes:', error);
+//   }
+// }
+
+
 
 //   /$$$$$$  /$$      /$$  /$$$$$$         /$$$$$$                                          /$$                  /$$$$$$   /$$$$$$   /$$$$$$        /$$$$$$$
 //  /$$__  $$| $$  /$ | $$ /$$__  $$       /$$__  $$                                        | $$                 /$$__  $$ /$$__  $$ /$$__  $$      | $$__  $$

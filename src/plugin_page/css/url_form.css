@@ -1,0 +1,40 @@
+#url-management {
+  margin: 0px 10px 0px 10px;
+}
+
+#add-url-container {
+  font-size: 1em;
+  text-align: center;
+  line-height: 1.2em;
+  height: 100%;
+  /* height: 0px; */
+  /* overflow: hidden; */
+}
+
+#add-url-container input {
+  width: 70%;
+  margin: 2px;
+}
+
+#url-form {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  /* padding-bottom: 80px; */
+  /* background-color: blueviolet; */
+}
+
+#url-form .buttons-container {
+  position: absolute;
+  padding-bottom: 42px;
+  bottom: 0;
+  right: 15px;
+  /* width: 100%; */
+}
+
+/* #url-form .buttons {
+  text-align: center;
+  padding-bottom: 25px;
+} */

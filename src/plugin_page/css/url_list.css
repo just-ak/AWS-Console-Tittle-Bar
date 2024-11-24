@@ -1,0 +1,45 @@
+#url-list-boarder {
+    margin: 0px 10px 0px 10px;
+    padding-left: 2px;
+    padding-right: 2px;
+    border: 1px solid rgb(247, 232, 232);
+    text-align: center;
+    /* background-color: antiquewhite; */
+    /* overflow-x: hidden; */
+}
+
+
+#url-list {
+    /* margin-bottom: 5px; */
+    height: 250px;
+    /* background-color: cadetblue; */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#url-list .group-title {
+    cursor: pointer;
+}
+
+#url-list .group-title:hover {
+    background-color: #c257b7;
+}
+
+#url-list .url-item {
+    display: flex;
+    margin-left: 20px;
+    width: 100%;
+    font-size: 1em;
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+    user-select: none;
+}
+
+#url-list .url-item:hover {
+    background-color: #57c264;
+}
+
+#url-list .url-item:active {
+    opacity: 0.6;
+}

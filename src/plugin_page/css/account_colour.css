@@ -1,0 +1,19 @@
+.color-input {
+  color: inherit;
+  background-color: inherit;
+}
+
+#accountConfig input[type='color' i] {
+  appearance: auto;
+  width: 50px;
+  height: 1.2em;
+  cursor: default;
+  box-sizing: unset;
+  background-color: buttonface;
+  color: buttontext;
+  border-width: 0px;
+  border-style: none;
+  border-color: transparent;
+  border-image: none;
+  padding: 0px;
+}
