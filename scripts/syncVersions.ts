@@ -7,6 +7,8 @@ const manifestJsonPath = path.join(__dirname, '../src/manifest.json');
 const pluginPageHtmlPath = path.join(__dirname, '../src/plugin_page/index.ejs');
 const preferencesPageHtmlPath = path.join(__dirname, '../src/preferences/index.html');
 
+const referencesPath = path.join(__dirname, '../src/common/reference.tsx');
+
 const updateVersion = (filePath: string, version: string) => {
   const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   fileContent.version = version;
@@ -19,6 +21,15 @@ const updateHtmlVersion = (filePath: string, version: string) => {
   fs.writeFileSync(filePath, fileContent, 'utf8');
 };
 
+const updateDataVersion = (filePath: string, version: string) => {
+  let fileContent = fs.readFileSync(filePath, 'utf8');
+
+  //  data.version = '1.0';
+  fileContent = fileContent.replace(/data\.version\s*=\s*'[^']*';/, `data.version = '${version}';`);
+  fs.writeFileSync(filePath, fileContent, 'utf8');
+};
+
+updateDataVersion(referencesPath, rootPackageJson.version);
 updateVersion(websitePackageJsonPath, rootPackageJson.version);
 updateVersion(manifestJsonPath, rootPackageJson.version);
 updateHtmlVersion(pluginPageHtmlPath, rootPackageJson.version);

@@ -10,11 +10,11 @@ import '../css/account_config.css';
 import '../css/tabs.css';
 import '../css/preferences_form.css';
 
-import  { initializeTabs } from './tabs';
-import  { initializeHeader } from './header';
-import  { initializeBody } from './body';
-import  { initializeurlForm } from './url_form';
-import  { initializeGroupForm } from './group_form';
+import { initializeTabs } from './tabs';
+import { initializeHeader } from './header';
+import { initializeBody } from './body';
+import { initializeurlForm } from './url_form';
+import { initializeGroupForm } from './group_form';
 
 initializeHeader();
 initializeBody();
@@ -31,7 +31,7 @@ import {
   saveAllAccounts,
   isChrome,
   debugLog,
- 
+
 } from '../../common/reference';
 
 interface IGroupRecord {
@@ -41,7 +41,7 @@ interface IGroupRecord {
   useContainerSwitch: string;
 }
 
-import  {
+import {
   accountConfigDiv,
   urlAddDiv,
   cogIcon,
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
     (document.querySelector('label[for="use-container"]') as HTMLElement).style.display = 'none';
     document.getElementById('use-container').style.display = 'none';
   }
-  
+
   // Populate group dropdown
   getAdditionalLinks().then((accountDetails) => {
     const groups = new Set(accountDetails['urls'].map((url) => url.group || 'Default'));
@@ -109,8 +109,21 @@ document.addEventListener('DOMContentLoaded', function () {
 export const updatePopupUrls = () => {
   debugLog('Updating popup urls');
   getAdditionalLinks().then((accountDetails) => {
-    
+    let updateRquired = false;
+    let oldSystem = false;
     urlList.innerHTML = '';
+
+    // Check if any old system urls contains the old group value
+    if (accountDetails['urls']) {
+      accountDetails['urls'].forEach((urlItem) => {
+        if (urlItem.group) {
+          oldSystem = true;
+        }
+      });
+    }
+
+
+
     if (accountDetails['urls']) {
 
       // Check for old system grouped urls.
@@ -121,39 +134,43 @@ export const updatePopupUrls = () => {
         accountDetails['groups'].forEach((group) => {
           if (!group.id) {
             group.id = (Math.max(...accountDetails['groups'].map((item) => parseInt(item.id, 10))) + 1).toString();
+            updateRquired = true;
           }
         });
       }
 
       const uniqueValuesArray = [...new Set(accountDetails['urls'].map(obj => obj.group))];
-      if (uniqueValuesArray.length > 0 ) { 
-          let maxGroupIndex = accountDetails['groups'].length === 0 ? 0 : Math.max(...accountDetails['groups'].map((item: IGroupRecord) => parseInt(item.id, 10))) + 1;
-          uniqueValuesArray.forEach((group) => {
-            const groupIndex = accountDetails['groups'].findIndex((item) => item.title === group);
-            if (groupIndex === -1) {
-              accountDetails['groups'].push({ id: maxGroupIndex++, title: group, sortUrlsSwitch: 'false', useContainerSwitch: 'false' });
-            }
+      if (uniqueValuesArray.length > 0) {
+        let maxGroupIndex = accountDetails['groups'].length === 0 ? 0 : Math.max(...accountDetails['groups'].map((item: IGroupRecord) => parseInt(item.id, 10))) + 1;
+        uniqueValuesArray.forEach((group) => {
+          const groupIndex = accountDetails['groups'].findIndex((item) => item.title === group);
+          if (groupIndex === -1) {
+            accountDetails['groups'].push({ id: maxGroupIndex++, title: group, sortUrlsSwitch: 'false', useContainerSwitch: 'false' });
+            updateRquired = true;
+          }
 
-          });
+        });
       }
 
-      if (!accountDetails['groups'] || ( accountDetails['groups'] && accountDetails['groups'].length === 0)) {
+      if (!accountDetails['groups'] || (accountDetails['groups'] && accountDetails['groups'].length === 0)) {
         console.log('Adding default group to accountDetails');
         accountDetails['groups'].push({ id: 0, title: 'Default', sortUrlsSwitch: 'false', useContainerSwitch: 'false' });
+        updateRquired = true;
       }
-  
+
 
       // find first group
       const firstGroup = accountDetails['groups'][0]
       // check all urls have a group id
       accountDetails['urls'].map((urlItem) => {
-        if (!urlItem.groupId) {         
+        if (!urlItem.groupId) {
           const groupIndex = accountDetails['groups'].findIndex((item) => item.title === urlItem.group);
           if (groupIndex !== -1) {
             urlItem.groupId = accountDetails['groups'][groupIndex].id;
           } else {
             urlItem.groupId = firstGroup.id;
           }
+          updateRquired = true;
         }
       });
 
@@ -161,43 +178,52 @@ export const updatePopupUrls = () => {
       accountDetails['urls'].map((urlItem) => {
         if (urlItem.group) {
           delete urlItem.group;
+          updateRquired = true;
         }
         if (urlItem.useContainer || urlItem.useContainer === false) {
-          delete urlItem.useContainer; 
+          delete urlItem.useContainer;
+          updateRquired = true;
         }
         if (urlItem.sortUrlsSwitch || urlItem.sortUrlsSwitch === false) {
           delete urlItem.sortUrlsSwitch;
+          updateRquired = true;
         }
       });
 
-      let sortedGroups = accountDetails['groups'];
-      if (sortedGroups.length > 2 ) {
-        sortedGroups = sortedGroups.sort((a: IGroupRecord, b: IGroupRecord) => {
-        const comparison = a.title.localeCompare(b.title, 'en');
-        if (comparison === 0) return 0;
-        if (a.title === a.title.toUpperCase() && b.title === b.title.toLowerCase()) return 1;
-        if (a.title === a.title.toLowerCase() && b.title === b.title.toUpperCase()) return -1;
-        return comparison;
-      });
+      if (updateRquired && oldSystem) {
+        saveAdditionalLinks(accountDetails);
       }
-      
+
+      let sortedGroups = accountDetails['groups'];
+      if (sortedGroups.length > 2) {
+        sortedGroups = sortedGroups.sort((a: IGroupRecord, b: IGroupRecord) => {
+          const comparison = a.title.localeCompare(b.title, 'en');
+          if (comparison === 0) return 0;
+          if (a.title === a.title.toUpperCase() && b.title === b.title.toLowerCase()) return 1;
+          if (a.title === a.title.toLowerCase() && b.title === b.title.toUpperCase()) return -1;
+          return comparison;
+        });
+      }
+
       for (const group of sortedGroups) {
-        const groupDiv = document.createElement('div');
-        groupDiv.classList.add('group-title');
-        groupDiv.innerText = group.title;
-        groupDiv.dataset.recordId = group.id;
-        groupDiv.dataset.sortUrlsSwitch = group.sortUrlsSwitch;
-        groupDiv.dataset.useContainerSwitch = group.useContainerSwitch;
+        console.log('-->>>>>>>>group:', JSON.stringify(group, null, 2));
+        if (group.title) {
+          const groupDiv = document.createElement('div');
+          groupDiv.classList.add('group-title');
+          groupDiv.innerText = group.title;
+          groupDiv.dataset.recordId = group.id;
+          groupDiv.dataset.sortUrlsSwitch = group.sortUrlsSwitch;
+          groupDiv.dataset.useContainerSwitch = group.useContainerSwitch;
 
-        urlList.appendChild(groupDiv);
-
-        let urls = accountDetails['urls'].filter((urlItem) => urlItem.groupId === group.id);
+          urlList.appendChild(groupDiv);
+        }
+        let urls = accountDetails['urls'].filter((urlItem) => `${urlItem.groupId}` === `${group.id}`);
         if (group.sortUrlsSwitch === 'true') {
-          urls = urls.sort((a: string, b: string) => {
-            const comparison = a.localeCompare(b, 'en');
+          urls = urls.sort((a, b) => {
+            const comparison = a.title.localeCompare(b.title, 'en');
             if (comparison === 0) return 0;
-            if (a[0] === a[0].toUpperCase() && b[0] === b[0].toLowerCase()) return 1;
-            if (a[0] === a[0].toLowerCase() && b[0] === b[0].toUpperCase()) return -1;
+            if (a.title[0] === a.title[0].toUpperCase() && b.title[0] === b.title[0].toLowerCase()) return 1;
+            if (a.title[0] === a.title[0].toLowerCase() && b.title[0] === b.title[0].toUpperCase()) return -1;
             return comparison;
           });
         }
@@ -211,7 +237,10 @@ export const updatePopupUrls = () => {
           elementAccountName.innerText = `${urlItem.title}`;
           elementAccountName.dataset.url = urlItem.url;
           elementAccountName.dataset.recordId = urlItem.id;
-          elementAccountName.dataset.group = group;
+          elementAccountName.dataset.groupId = group.id;
+          elementAccountName.dataset.useContainerSwitch = group.sortUrlsSwitch;
+          elementAccountName.dataset.containerTitle = group.title;
+
           elementAccountName.draggable = true;
           elementAccountDiv.appendChild(elementAccountName);
           urlList.appendChild(elementAccountDiv);

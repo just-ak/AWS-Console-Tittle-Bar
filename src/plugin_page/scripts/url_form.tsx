@@ -1,11 +1,10 @@
 import { getAdditionalLinks, saveAdditionalLinks, onUpdated, onError,  } from '../../common/reference';
-import { urlList, accountConfigDiv, urlForm, groupSelect,newGroupInput} from './dom';
+import { urlList, cogIcon, accountConfigDiv, urlForm, groupSelect,newGroupInput} from './dom';
 import { createContainer } from './firefox';
 import { updatePopupUrls } from './plugin_page';
 
 export function initializeurlForm() {
     document.addEventListener('DOMContentLoaded', function () {
-
         urlList.addEventListener('click', async function (e) {
             if ((e.target as HTMLElement).classList.contains('url-link')) {
                 const chosenPage = (e.target as HTMLElement).dataset.url;
@@ -13,10 +12,10 @@ export function initializeurlForm() {
                 const containerTitle = (e.target as HTMLElement).innerText;
                 const groupId = (e.target as HTMLElement).dataset.groupId;
                 const groupDetails = await getAdditionalLinks().then((accountDetails) => {
-                    const group = accountDetails['groups'].find((group) => group.id === groupId);
+                    const group = accountDetails['groups'].find((group) => `${group.id}` === `${groupId}`);
                     return group;
                 });
-                if (accountConfigDiv.classList.contains('hidden')) {
+                if (cogIcon.dataset.action === 'runMode' || cogIcon.dataset.action === undefined) {
                     try {
                         let containerId = null;
                         await createContainer(containerTitle).then((id) => {
@@ -51,7 +50,10 @@ export function initializeurlForm() {
             const title = titleInput.value;
             const group = newGroupInput.value || groupSelect.value;
             const recordId = urlInput.dataset.recordId;
-        
+            if (title === '') {
+              // alert('Group Title is required');
+              return;
+          }
             getAdditionalLinks().then((accountDetails) => {
               if (!accountDetails['urls']) {
                 accountDetails['urls'] = [];
@@ -75,11 +77,11 @@ export function initializeurlForm() {
         
               saveAdditionalLinks(accountDetails);
               updatePopupUrls();
-              urlInput.value = '';
-              titleInput.value = '';
-              newGroupInput.value = '';
-              groupSelect.value = 'Default';
-              delete urlInput.dataset.recordId;
+              // urlInput.value = '';
+              // titleInput.value = '';
+              // newGroupInput.value = '';
+              // groupSelect.value = 'Default';
+              // delete urlInput.dataset.recordId;
             });
           });
         // urlList.addEventListener('dragstart', function (e) {

@@ -103,6 +103,7 @@ export async function getAdditionalLinks() {
 export async function saveAdditionalLinks(data) {
   return await new Promise((resolve, reject) => {
     try {
+      data.version = '5.5.1.1';
       chrome.storage.local.set({
         jsoninfo: JSON.stringify(data),
       });
