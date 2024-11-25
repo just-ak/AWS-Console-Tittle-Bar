@@ -18,12 +18,30 @@ export interface cp_AccountDetails {
   headerColor: string;
 }
 
-
-export interface IGroupRecord {
+ interface IGroupRecord {
   id: string;
   title: string;
   sortUrlsSwitch: string;
   useContainerSwitch: string;
+}
+
+ interface IUrlRecord {
+  id: string;
+  title: string;
+  url: string;
+  group?: string;
+  groupId?: string;
+}
+
+export interface IAdditionalLinks {
+  urls: IUrlRecord[];
+  groups: IGroupRecord[];
+  preferences?: {
+    awsConsole: {
+    compressMode: boolean;
+    }
+  };
+  version: string;
 }
 
 

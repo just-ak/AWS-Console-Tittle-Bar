@@ -15,12 +15,14 @@ import { initializeHeader } from './header';
 import { initializeBody } from './body';
 import { initializeurlForm } from './url_form';
 import { initializeGroupForm } from './group_form';
+import { initializePreferencesForm } from './preferences';
 
 initializeHeader();
 initializeBody();
 initializeTabs();
 initializeurlForm();
 initializeGroupForm();
+initializePreferencesForm();
 
 declare const InstallTrigger: any;
 
@@ -153,7 +155,7 @@ export const updatePopupUrls = () => {
       }
 
       if (!accountDetails['groups'] || (accountDetails['groups'] && accountDetails['groups'].length === 0)) {
-        console.log('Adding default group to accountDetails');
+        
         accountDetails['groups'].push({ id: 0, title: 'Default', sortUrlsSwitch: 'false', useContainerSwitch: 'false' });
         updateRquired = true;
       }
@@ -206,7 +208,7 @@ export const updatePopupUrls = () => {
       }
 
       for (const group of sortedGroups) {
-        console.log('-->>>>>>>>group:', JSON.stringify(group, null, 2));
+        
         if (group.title) {
           const groupDiv = document.createElement('div');
           groupDiv.classList.add('group-title');
@@ -280,7 +282,7 @@ const showSingleAccount = (accountId) => {
         colorInput.style.color = selectedColor;
         colorInput.style.backgroundColor = selectedColor;
         saveAllAccounts(data).finally(() => {
-          // console.log('update:', update);
+          
           chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.tabs.sendMessage(tabs[0].id, `updateColour:${selectedColor}`, (response) => {
               return true;
