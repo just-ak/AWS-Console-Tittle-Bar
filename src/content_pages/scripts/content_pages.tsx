@@ -1,14 +1,4 @@
-
-console.log('Content Script Loaded');
-const {
-  
-  cp_getAccount,
-  cp_putPopupComms,
-  cp_isElementLoaded,
-  cp_saveAllAccounts,
-  cp_AccountDetails,
-  cp_getAllAccounts,
-} = require('../../common/reference');
+import { debugLog, getAccount, getAdditionalLinks, getAllAccounts, IAdditionalLinks, isElementLoaded, saveAllAccounts } from "../../common/reference";
 
 export interface AccountDetails {
   id: string;
@@ -18,10 +8,7 @@ export interface AccountDetails {
   headerColor: string;
 }
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  // console.log(`Message : ${JSON.stringify(message)}`);
-  // console.log(`Message : ${JSON.stringify(sender)}`);
   if (message == 'popupcomms') {
-    // console.log(`Popup Comms  A1`);
     const accountNumber = getAWSUserInfoAccountNumber();
     if (accountNumber) {
       sendResponse({ title: document.title, accountId: accountNumber });
@@ -52,7 +39,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 
 function disablePaddingBlockEndStyles() {
-  console.log('Disabling padding-block-end styles');
   // Iterate through all stylesheets
   for (let i = 0; i < document.styleSheets.length; i++) {
     const styleSheet = document.styleSheets[i] as CSSStyleSheet;
@@ -66,7 +52,7 @@ function disablePaddingBlockEndStyles() {
         if (rule.style && rule.style.paddingBlockEnd) {
           // Disable the padding-block-end style
           rule.style.paddingBlockEnd = '0';
-          console.log('Disabled padding-block-end in stylesheet');
+          debugLog('Disabled padding-block-end in stylesheet');
         }
       }
     } catch (e) {
@@ -77,22 +63,22 @@ function disablePaddingBlockEndStyles() {
       }
     }
   }
-   // Disable padding-block-end in inline styles
-   const allElements = document.querySelectorAll('*');
-   allElements.forEach((element) => {
-     const el = element as HTMLElement;
-     if (el.style.paddingBlockEnd) {
-       el.style.paddingBlockEnd = '0';
-       console.log('Disabled padding-block-end in inline styles');
-     }
-   });
-   console.log('Disabled padding-block-end styles');
+  // Disable padding-block-end in inline styles
+  const allElements = document.querySelectorAll('*');
+  allElements.forEach((element) => {
+    const el = element as HTMLElement;
+    if (el.style.paddingBlockEnd) {
+      el.style.paddingBlockEnd = '0';
+      debugLog('Disabled padding-block-end in inline styles');
+    }
+  });
+  debugLog('Disabled padding-block-end styles');
 }
 
 function addAccountDetailsToPage(accountId: string) {
   if (accountId) {
     console.log(`Account No Found on New Page ${accountId}`);
-    cp_getAccount(accountId)
+    getAccount(accountId)
       .then((accountDetails: AccountDetails) => {
         let elementAWSConsoleTables: HTMLElement;
         if (document.getElementById('awsconsolelables')) {
@@ -188,53 +174,44 @@ function getAWSUserInfoAccountNumber(): string | null {
 }
 
 if (!window.location.href.includes('awsapps.com/start')) {
-  cp_isElementLoaded('[data-testid="awsc-nav-regions-menu-button"]').then((selector) => {
+  isElementLoaded('[data-testid="awsc-nav-regions-menu-button"]').then((selector) => {
     const accountNumber = getAWSUserInfoAccountNumber();
     addAccountDetailsToPage(accountNumber);
-    
-    
-    
+
+
+
   });
 }
 function waitForPageComplete(): Promise<void> {
   return new Promise<void>(resolve => {
-      let timeout;
-      const observer = new MutationObserver(() => {
-          clearTimeout(timeout);
-          timeout = setTimeout(() => {
-              observer.disconnect();
-              resolve();
-          }, 1000);
-      });
+    let timeout;
+    const observer = new MutationObserver(() => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        observer.disconnect();
+        resolve();
+      }, 1000);
+    });
 
-      observer.observe(document.body, {
-          childList: true,
-          subtree: true,
-          attributes: true,
-          characterData: true
-      });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      characterData: true
+    });
   });
 }
 
 async function afterPageProcessing() {
   await waitForPageComplete();
-  disablePaddingBlockEndStyles();
+  getAdditionalLinks().then((accountDetails: IAdditionalLinks) => {
+    if (accountDetails.preferences.awsConsole.compressMode) {
+      disablePaddingBlockEndStyles();
+    }
+  });
 }
 
 afterPageProcessing();
-// Usage
-// async function yourFunction() {
-//   try {
-//       await waitForAllProcesses();
-//       // Now safe to perform your DOM updates
-//       console.log('All processes complete, updating DOM...');
-//       disablePaddingBlockEndStyles();
-//   } catch (error) {
-//       console.error('Error waiting for processes:', error);
-//   }
-// }
-
-
 
 //   /$$$$$$  /$$      /$$  /$$$$$$         /$$$$$$                                          /$$                  /$$$$$$   /$$$$$$   /$$$$$$        /$$$$$$$
 //  /$$__  $$| $$  /$ | $$ /$$__  $$       /$$__  $$                                        | $$                 /$$__  $$ /$$__  $$ /$$__  $$      | $$__  $$
@@ -258,7 +235,6 @@ if (window.location.href.includes('awsapps.com/start')) {
       let accountNumber = 'Unknown Account Number';
       element.querySelectorAll('div').forEach((divElement) => {
         if (divElement.textContent.includes(' | ')) {
-          // console.log(`Found div with " | ": ${divElement.textContent}`);
           const accountInfoParts = divElement.textContent.split(' | ');
           accountNumber = accountInfoParts.length > 0 ? accountInfoParts[0] : 'Unknown Account Number';
           accountNumber = accountNumber.trim();
@@ -270,9 +246,9 @@ if (window.location.href.includes('awsapps.com/start')) {
         color: '#57f104',
       };
     });
-    cp_getAllAccounts().then((jsonData) => {
-      cp_saveAllAccounts({ ...jsonData, ...newJsonData });
-      cp_getAllAccounts();
+    getAllAccounts().then((jsonData: any) => {
+      saveAllAccounts({ ...jsonData, ...newJsonData });
+      getAllAccounts();
     });
   }
 

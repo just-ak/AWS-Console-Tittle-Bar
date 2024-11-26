@@ -17,6 +17,25 @@ import { initializeurlForm } from './url_form';
 import { initializeGroupForm } from './group_form';
 import { initializePreferencesForm } from './preferences';
 
+import {
+  getAdditionalLinks,
+  debugLog,
+  IAdditionalLinks,
+
+} from '../../common/reference';
+
+import {
+  urlList,
+  // hiddenBox,
+} from './dom';
+import { upgradeManagement } from './upgrades';
+import { initializePopupComs } from './popupcomms';
+import { initializeUrlList } from './urlList';
+
+
+
+initializePopupComs();
+initializeUrlList();
 initializeHeader();
 initializeBody();
 initializeTabs();
@@ -24,191 +43,22 @@ initializeurlForm();
 initializeGroupForm();
 initializePreferencesForm();
 
-declare const InstallTrigger: any;
-
-import {
-  getAllAccounts,
-  saveAdditionalLinks,
-  getAdditionalLinks,
-  saveAllAccounts,
-  isChrome,
-  debugLog,
-
-} from '../../common/reference';
-
-interface IGroupRecord {
-  id: string;
-  title: string;
-  sortUrlsSwitch: string;
-  useContainerSwitch: string;
-}
-
-import {
-  accountConfigDiv,
-  urlAddDiv,
-  cogIcon,
-  urlList,
-  groupSelect,
-  // hiddenBox,
-} from './dom';
-
-debugLog('start:');
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, 'popupcomms', (response) => {
-      if (response) {
-        if (response.accountId) {
-          showSingleAccount(response.accountId);
-        } else {
-          console.error('accountId is undefined in response:', response);
-        }
-      }
-    });
-  });
-
-  const isFirefox = typeof InstallTrigger !== 'undefined';
-  if (!isFirefox) {
-    (document.querySelector('label[for="use-container"]') as HTMLElement).style.display = 'none';
-    document.getElementById('use-container').style.display = 'none';
-  }
-
-  // Populate group dropdown
-  getAdditionalLinks().then((accountDetails) => {
-    const groups = new Set(accountDetails['urls'].map((url) => url.group || 'Default'));
-    groups.forEach((group) => {
-      const option = document.createElement('option') as HTMLOptionElement;
-      option.value = group as string;
-      option.text = group as string;
-      option.dataset.useContainer =
-        accountDetails['groups'] && accountDetails['groups'][group as string]
-          ? accountDetails['groups'][group as string].useContainer
-          : 'false';
-      groupSelect.add(option);
-    });
-  });
-
-  updatePopupUrls();
-
-  const urlForm = document.getElementById('url-form');
-  let sequenceNumber = 0;
-
-  getAdditionalLinks().then((accountDetails) => {
-    if (accountDetails['urls'] && accountDetails['urls'].length > 0) {
-      accountDetails['urls'].forEach((item, index) => {
-        item.id = index.toString();
-      });
-      saveAdditionalLinks(accountDetails).then(() => {
-        const maxId = Math.max(...accountDetails['urls'].map((item) => parseInt(item.id, 10)));
-        sequenceNumber = isNaN(maxId) ? 0 : maxId + 1;
-        updatePopupUrls();
-      });
-    }
-  });
-});
+let isUpdating = false;
 
 export const updatePopupUrls = () => {
-  debugLog('Updating popup urls');
-  getAdditionalLinks().then((accountDetails) => {
-    let updateRquired = false;
-    let oldSystem = false;
+  if (isUpdating) return;
+  isUpdating = true;
+
+  getAdditionalLinks().then((additionalLinks) => {
+    const accountDetails: IAdditionalLinks = upgradeManagement(additionalLinks);
+    const timestamp = new Date().getTime();
     urlList.innerHTML = '';
-
-    // Check if any old system urls contains the old group value
     if (accountDetails['urls']) {
-      accountDetails['urls'].forEach((urlItem) => {
-        if (urlItem.group) {
-          oldSystem = true;
-        }
-      });
-    }
-
-
-
-    if (accountDetails['urls']) {
-
-      // Check for old system grouped urls.
-      if (accountDetails['groups'] === undefined) {
-        accountDetails['groups'] = [];
-      } else {
-        //make sure all groups have an id that already exist
-        accountDetails['groups'].forEach((group) => {
-          if (!group.id) {
-            group.id = (Math.max(...accountDetails['groups'].map((item) => parseInt(item.id, 10))) + 1).toString();
-            updateRquired = true;
-          }
-        });
-      }
-
-      const uniqueValuesArray = [...new Set(accountDetails['urls'].map(obj => obj.group))];
-      if (uniqueValuesArray.length > 0) {
-        let maxGroupIndex = accountDetails['groups'].length === 0 ? 0 : Math.max(...accountDetails['groups'].map((item: IGroupRecord) => parseInt(item.id, 10))) + 1;
-        uniqueValuesArray.forEach((group) => {
-          const groupIndex = accountDetails['groups'].findIndex((item) => item.title === group);
-          if (groupIndex === -1) {
-            accountDetails['groups'].push({ id: maxGroupIndex++, title: group, sortUrlsSwitch: 'false', useContainerSwitch: 'false' });
-            updateRquired = true;
-          }
-
-        });
-      }
-
-      if (!accountDetails['groups'] || (accountDetails['groups'] && accountDetails['groups'].length === 0)) {
-        
-        accountDetails['groups'].push({ id: 0, title: 'Default', sortUrlsSwitch: 'false', useContainerSwitch: 'false' });
-        updateRquired = true;
-      }
-
-
-      // find first group
-      const firstGroup = accountDetails['groups'][0]
-      // check all urls have a group id
-      accountDetails['urls'].map((urlItem) => {
-        if (!urlItem.groupId) {
-          const groupIndex = accountDetails['groups'].findIndex((item) => item.title === urlItem.group);
-          if (groupIndex !== -1) {
-            urlItem.groupId = accountDetails['groups'][groupIndex].id;
-          } else {
-            urlItem.groupId = firstGroup.id;
-          }
-          updateRquired = true;
-        }
-      });
-
-      // remove all url group values that are now our of date
-      accountDetails['urls'].map((urlItem) => {
-        if (urlItem.group) {
-          delete urlItem.group;
-          updateRquired = true;
-        }
-        if (urlItem.useContainer || urlItem.useContainer === false) {
-          delete urlItem.useContainer;
-          updateRquired = true;
-        }
-        if (urlItem.sortUrlsSwitch || urlItem.sortUrlsSwitch === false) {
-          delete urlItem.sortUrlsSwitch;
-          updateRquired = true;
-        }
-      });
-
-      if (updateRquired && oldSystem) {
-        saveAdditionalLinks(accountDetails);
-      }
-
       let sortedGroups = accountDetails['groups'];
       if (sortedGroups.length > 2) {
-        sortedGroups = sortedGroups.sort((a: IGroupRecord, b: IGroupRecord) => {
-          const comparison = a.title.localeCompare(b.title, 'en');
-          if (comparison === 0) return 0;
-          if (a.title === a.title.toUpperCase() && b.title === b.title.toLowerCase()) return 1;
-          if (a.title === a.title.toLowerCase() && b.title === b.title.toUpperCase()) return -1;
-          return comparison;
-        });
+        sortedGroups = sortedGroups.sort((a, b) => a.title.localeCompare(b.title, 'en'));
       }
-
       for (const group of sortedGroups) {
-        
         if (group.title) {
           const groupDiv = document.createElement('div');
           groupDiv.classList.add('group-title');
@@ -221,15 +71,8 @@ export const updatePopupUrls = () => {
         }
         let urls = accountDetails['urls'].filter((urlItem) => `${urlItem.groupId}` === `${group.id}`);
         if (group.sortUrlsSwitch === 'true') {
-          urls = urls.sort((a, b) => {
-            const comparison = a.title.localeCompare(b.title, 'en');
-            if (comparison === 0) return 0;
-            if (a.title[0] === a.title[0].toUpperCase() && b.title[0] === b.title[0].toLowerCase()) return 1;
-            if (a.title[0] === a.title[0].toLowerCase() && b.title[0] === b.title[0].toUpperCase()) return -1;
-            return comparison;
-          });
+          urls = urls.sort((a, b) => a.title.localeCompare(b.title, 'en'));
         }
-
 
         urls.forEach((urlItem) => {
           const elementAccountDiv = document.createElement('div');
@@ -250,50 +93,9 @@ export const updatePopupUrls = () => {
         });
       }
     }
-  });
-};
-
-
-const showSingleAccount = (accountId) => {
-  const container = document.getElementById('accountConfig');
-  getAllAccounts().then((jsonData) => {
-    const form = document.createElement('form');
-    const account = jsonData[accountId];
-    const accountDiv = document.createElement('div');
-    const nameLabel = document.createElement('label');
-    nameLabel.textContent = account.id + ': ' + accountId;
-    accountDiv.appendChild(nameLabel);
-    const colorInput = document.createElement('input');
-    colorInput.classList.add('color-input'); // Add class for styling
-    colorInput.value = account.color;
-
-    // colorInput.addEventListener('focus', function () {
-    //   hiddenBox.style.height = '150px';
-    // });
-
-    colorInput.addEventListener('change', function (event) {
-      const selectedColor = (event.target as HTMLInputElement).value;
-      const accountId = (event.target as HTMLInputElement).parentNode
-        .querySelector('label')
-        .textContent.split(':')[1]
-        .trim();
-      getAllAccounts().then((data) => {
-        data[accountId].color = selectedColor;
-        colorInput.style.color = selectedColor;
-        colorInput.style.backgroundColor = selectedColor;
-        saveAllAccounts(data).finally(() => {
-          
-          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            chrome.tabs.sendMessage(tabs[0].id, `updateColour:${selectedColor}`, (response) => {
-              return true;
-            });
-          });
-        });
-      });
-    });
-
-    accountDiv.appendChild(colorInput);
-    form.appendChild(accountDiv);
-    container.appendChild(form);
+    isUpdating = false;
+  }).catch((error) => {
+    // console.error('Error updating popup URLs:', error);
+    isUpdating = false;
   });
 };

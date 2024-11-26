@@ -28,8 +28,7 @@ export function initializePreferencesForm() {
                 accountDetails.preferences.awsConsole.compressMode = settingValue.toLowerCase() === 'true'? true : false;   
 
                 saveAdditionalLinks(accountDetails).then(() => {
-                    console.log('Preferences saved:', JSON.stringify(accountDetails.preferences, null, 2));
-                    debugLog('Preferences saved:', accountDetails.preferences);
+                    debugLog('Preferences saved:',  JSON.stringify(accountDetails.preferences, null, 2));
                 });
             });
         });

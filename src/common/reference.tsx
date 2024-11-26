@@ -1,3 +1,7 @@
+export interface PopupComms {
+  accountId: string;
+}
+
 export interface AccountDetails {
   id: string;
   color: string;
@@ -6,19 +10,7 @@ export interface AccountDetails {
   headerColor: string;
 }
 
-export interface PopupComms {
-  accountId: string;
-}
-
-export interface cp_AccountDetails {
-  id: string;
-  color: string;
-  background: string;
-  headerBackground: string;
-  headerColor: string;
-}
-
- interface IGroupRecord {
+export interface IGroupRecord {
   id: string;
   title: string;
   sortUrlsSwitch: string;
@@ -36,7 +28,7 @@ export interface cp_AccountDetails {
 export interface IAdditionalLinks {
   urls: IUrlRecord[];
   groups: IGroupRecord[];
-  preferences?: {
+  preferences: {
     awsConsole: {
     compressMode: boolean;
     }
@@ -46,11 +38,11 @@ export interface IAdditionalLinks {
 
 
 export function onUpdated(tab) {
-  console.log(`Updated tab: ${tab.id}`);
+  debugLog(`Updated tab: ${tab.id}`);
 }
 
 export function onError(error) {
-  console.log(`Error: ${error}`);
+  debugLog(`Error: ${error}`);
 }
 
 
@@ -121,7 +113,6 @@ export async function getAdditionalLinks() {
 export async function saveAdditionalLinks(data) {
   return await new Promise((resolve, reject) => {
     try {
-      data.version = '5.5.1.1';
       chrome.storage.local.set({
         jsoninfo: JSON.stringify(data),
       });

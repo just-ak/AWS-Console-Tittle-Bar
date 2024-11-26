@@ -5,6 +5,7 @@ import { updatePopupUrls } from './plugin_page';
 
 export function initializeurlForm() {
     document.addEventListener('DOMContentLoaded', function () {
+      updateGroupListInUrlsSetting();
         urlList.addEventListener('click', async function (e) {
             if ((e.target as HTMLElement).classList.contains('url-link')) {
                 const chosenPage = (e.target as HTMLElement).dataset.url;
@@ -77,11 +78,6 @@ export function initializeurlForm() {
         
               saveAdditionalLinks(accountDetails);
               updatePopupUrls();
-              // urlInput.value = '';
-              // titleInput.value = '';
-              // newGroupInput.value = '';
-              // groupSelect.value = 'Default';
-              // delete urlInput.dataset.recordId;
             });
           });
         // urlList.addEventListener('dragstart', function (e) {
