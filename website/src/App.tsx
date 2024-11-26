@@ -11,6 +11,10 @@ import featureIcon1 from './assets/feature-icon1.png'
 import featureIcon2 from './assets/feature-icon2.png'
 import featureIcon3 from './assets/feature-icon3.png'
 
+import compressModeSetting from './docs/compressModeSetting.png'
+import compressModeOff from './docs/compressModeOff.png'
+import compressModeOn from './docs/compressModeOn.png'
+
 function App() {
   return (
     <>
@@ -77,6 +81,16 @@ function App() {
             </ul>
             <img src={plugPermission} alt="Permissions" className="permissions-img-small"/><br/>
             <img src={plugPermission2} alt="Permissions" className="permissions-img-medium"/>
+          </div>
+        </section>
+        <section className="compressMode-settings">
+          <div className="container">
+            <h2>AWS Console Compressed Mode</h2>
+            <p>A little setting to remove some of the space around AWS Console data forms.</p>
+            <img src={compressModeSetting} alt="Compress Mode Settings" className="backup-img"/>
+            <img src={compressModeOff} alt="Compress Mode Off" className="backup-img"/>
+            <img src={compressModeOn} alt="Compress Mode On" className="backup-img"/>
+
           </div>
         </section>
         <section className="backup-settings">
