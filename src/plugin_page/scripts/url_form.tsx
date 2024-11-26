@@ -80,45 +80,43 @@ export function initializeurlForm() {
               updatePopupUrls();
             });
           });
-        // urlList.addEventListener('dragstart', function (e) {
-        //     if ((e.target as HTMLElement).classList.contains('url-link')) {
-        //         console.log('dragstart');
-        //         e.dataTransfer.setData('text/plain', (e.target as HTMLElement).dataset.recordId);
-        //         e.dataTransfer.effectAllowed = 'move';
-        //     }
-        // });
 
-        // urlList.addEventListener('dragover', function (e) {
-        //     console.log('dragover');
-        //     e.preventDefault();
-        //     e.dataTransfer.dropEffect = 'move';
-        // });
+        urlList.addEventListener('dragstart', function (e) {
+            if ((e.target as HTMLElement).classList.contains('url-link')) {
+                e.dataTransfer.setData('text/plain', (e.target as HTMLElement).dataset.recordId);
+                e.dataTransfer.effectAllowed = 'move';
+            }
+        });
 
-        // urlList.addEventListener('drop', function (e) {
-        //     e.preventDefault();
-        //     const draggedRecordId = e.dataTransfer.getData('text/plain');
-        //     const target = e.target as HTMLElement;
-        //     if (target.classList.contains('url-link')) {
-        //         console.log('drop');
-        //         const targetRecordId = target.dataset.recordId;
-        //         getAdditionalLinks().then((accountDetails) => {
-        //             const urls = accountDetails['urls'];
-        //             const draggedIndex = urls.findIndex(item => item.recordId === draggedRecordId);
-        //             const targetIndex = urls.findIndex(item => item.recordId === targetRecordId);
-        //             if (draggedIndex !== -1 && targetIndex !== -1) {
-        //                 const [draggedItem] = urls.splice(draggedIndex, 1);
-        //                 urls.splice(targetIndex, 0, draggedItem);
-        //                 saveAdditionalLinks(accountDetails).then(updatePopupUrls);
-        //             }
-        //         });
-        //     }
-        // });
+        urlList.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        });
+
+        urlList.addEventListener('drop', function (e) {
+            e.preventDefault();
+            const draggedRecordId = e.dataTransfer.getData('text/plain');
+            const target = e.target as HTMLElement;
+            if (target.classList.contains('url-link')) {
+                const targetRecordId = target.dataset.recordId;
+                getAdditionalLinks().then((accountDetails) => {
+                    const urls = accountDetails['urls'];
+                    const draggedIndex = urls.findIndex(item => `${item.id}` === `${draggedRecordId}`);
+                    const targetIndex = urls.findIndex(item => `${item.id}` === `${targetRecordId}`);
+                    if (draggedIndex !== -1 && targetIndex !== -1) {
+                        const [draggedItem] = urls.splice(draggedIndex, 1);
+                        urls.splice(targetIndex, 0, draggedItem);
+                        accountDetails['urls'] = urls;
+                        saveAdditionalLinks(accountDetails).then(() => { updatePopupUrls()});
+                    }
+                });
+            }
+        });
     });
 }
 
 export function updateGroupListInUrlsSetting() {
     getAdditionalLinks().then((accountDetails) => {
-        // const groupSelect = document.getElementById('group-select') as HTMLSelectElement;
         groupSelect.innerHTML = '';
         for (const group of accountDetails['groups']) {
             const option = document.createElement('option');

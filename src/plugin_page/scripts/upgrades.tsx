@@ -19,7 +19,12 @@ function upgradeToVersion5_5_5_1(accountDetails) {
     if (accountDetails['groups'] === undefined) {
         accountDetails['groups'] = [];
     }
-
+    let maxUrls = (Math.max(...accountDetails['urls'].map((item) => parseInt(item.id, 10))) + 1) || 0;
+    accountDetails['urls'].forEach((url) => {
+        if (!url.id) {
+            url.id = (maxUrls++).toString();
+        }
+    });
     accountDetails['groups'].forEach((group) => {
         if (!group.id) {
             group.id = (Math.max(...accountDetails['groups'].map((item) => parseInt(item.id, 10))) + 1).toString();
