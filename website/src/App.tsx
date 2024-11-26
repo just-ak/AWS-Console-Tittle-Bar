@@ -11,9 +11,9 @@ import featureIcon1 from './assets/feature-icon1.png'
 import featureIcon2 from './assets/feature-icon2.png'
 import featureIcon3 from './assets/feature-icon3.png'
 
-import compressModeSetting from './docs/compressModeSetting.png'
-import compressModeOff from './docs/compressModeOff.png'
-import compressModeOn from './docs/compressModeOn.png'
+import compressModeSetting from './assets/compressModeSetting.png'
+import compressModeOff from './assets/compressModeOff.png'
+import compressModeOn from './assets/compressModeOn.png'
 
 function App() {
   return (

@@ -1,5 +1,5 @@
 import { getAdditionalLinks, saveAdditionalLinks, onUpdated, onError,  } from '../../common/reference';
-import { urlList, cogIcon, accountConfigDiv, urlForm, groupSelect,newGroupInput} from './dom';
+import { urlList, cogIcon, urlForm, groupSelect,newGroupInput} from './dom';
 import { createContainer } from './firefox';
 import { updatePopupUrls } from './plugin_page';
 

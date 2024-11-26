@@ -33,27 +33,4 @@ body {
   border: 1px solid rgb(68, 68, 68);
   border-radius: 1%;
 }
-/* #hiddenBox {
-  height: 0px;
-} */
-
-#accountConfig {
-  margin-top: 10px;
-  visibility: hidden;
-  text-align: center;
-}
-
-.remove-url {
-  cursor: pointer;
-  font-weight: bold;
-  color: white;
-  /* background-color: red; */
-}
-
-
-
-/* .hidden {
-  visibility: hidden;
-}
- */
 
