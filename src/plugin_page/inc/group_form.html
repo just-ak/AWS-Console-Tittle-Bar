@@ -1,0 +1,28 @@
+<form id="group-form">
+  <div id="group-management">
+    <h2>Group Management</h2>
+    <!-- <div id="group-list-container">
+      <div id="group-list"></div>
+    </div> -->
+    <label for="url-input">Group: </label>
+    <input type="text" id="new-group-input" data-record-id="">
+    <br>
+    <label for="use-container">Use Containers for Group: </label>
+    <label class="switch">
+      <input type="checkbox" id="use-container">
+      <span class="slider round"></span>
+    </label>
+    <br>
+    <label for="sort-urls-switch">Sort A-Z: </label>
+    <label class="switch">
+      <input type="checkbox" id="sort-urls-switch">
+      <span class="slider round"></span>
+    </label>
+    <br>
+    <div class="buttons-container">
+      <button type="submit" data-commit-type="save-as-new" class="modern-button">Save as New</button>
+      <button type="submit" data-commit-type="save" class="modern-button">Save</button>
+      <button type="submit" data-commit-type="delete" class="modern-button">Delete</button>
+    </div>
+  </div>
+</form>

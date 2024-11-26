@@ -1,0 +1,112 @@
+{
+    "urls": [
+        {
+            "group": "myCompany",
+            "title": "AWS Console : myCompany",
+            "url": "https://d-0000000a.awsapps.com/start "
+        },
+        {
+            "group": "myCompany",
+            "title": "myCompany",
+            "url": "https://myCompany.co.uk"
+        },
+        {
+            "group": "myCompany",
+            "title": "DataDog",
+            "url": "https://app.datadoghq.eu/"
+        },
+        {
+            "group": "myCompany",
+            "title": "GitHub - just-ak",
+            "url": "https://github.com/just-ak"
+        },
+        {
+            "group": "friends",
+            "title": "MyApps",
+            "url": "https://myapplications.microsoft.com/"
+           
+        },
+        {
+            "group": "friends",
+            "title": "Azure Portal",
+            "url": "https://portal.azure.com/"
+           
+        },
+        {
+            "group": "friends",
+            "title": "Azure Portal",
+            "url": "https://portal.azure.com/"
+           
+        },
+        {
+            "group": "friends",
+            "title": "friends 1Password",
+            "url": "https://somthing.1password.eu/profile"
+        },
+        {
+            "group": "friends",
+            "title": "AAD Azure Portal",
+            "url": "https://aad.portal.azure.com"
+           
+        },
+        {
+            "group": "myCompany",
+            "title": "Azure Devops",
+            "url": "https://aex.dev.azure.com/me?mkt=en-GB"
+        },
+        {
+            "group": "friends",
+            "title": "Azure Devops",
+            "url": "https://aex.dev.azure.com/me?mkt=en-GB"
+           
+        },
+        {
+            "group": "friends",
+            "title": "friends Azure DevOps",
+            "url": "https://dev.azure.com/friendsgroup/"
+           
+        },
+        {
+            "group": "friends",
+            "title": "friends AWS",
+            "url": "https://friends-sso.awsapps.com/start#/"
+        },
+        {
+            "group": "Contract",
+            "title": "Contract AWS",
+            "url": "https://d-333333333.awsapps.com/start#/"
+        },
+        {
+            "group": "Contract",
+            "title": "Contract OKTA",
+            "url": "https://Contract.okta.com/app/UserHome?type_hint=ACTIVATION&session_hint=AUTHENTICATED"
+        },
+        {
+            "group": "myCompany",
+            "title": "myCompany 1Password",
+            "url": "https://myCompany.1password.eu/profile"
+        },
+        {
+            "group": "myCompany",
+            "title": "BackStage",
+            "url": "https://docs.dev.api.myCompany.co.uk"
+        },
+        {
+            "group": "myCompany",
+            "title": "AWS Console myCompany Labs Test",
+            "url": "https://d-444444444.awsapps.com/start",
+            "useContainer": false
+        },
+        {
+            "group": "myCompany",
+            "title": "MyApps",
+            "url": "https://myapplications.microsoft.com/",
+            "useContainer": false
+        },
+        {
+            "group": "friends",
+            "title": "friends Service Desk",
+            "url": "https://friends.service-now.com/sp"
+        }
+    ]
+}

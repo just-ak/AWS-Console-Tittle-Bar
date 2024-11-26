@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="../coloris/coloris.css" />
+  <link rel="stylesheet" href="css/tabs.css" />
+  <script src="../coloris/coloris.js"></script>
+</head>
+
+<body>
+  <div id="firefox-viewport">
+    <%= header %>
+    <%= urlList %>
+    <div id="edit-mode">
+      <div id="tab" class="tab">
+        <button class="tablinks" data-tab-name="URLForm">URL </button>
+        <button class="tablinks" data-tab-name="GroupForm">URL Groups</button>
+        <button class="tablinks" data-tab-name="Preferences">Preferences</button>
+        <button class="tablinks" data-tab-name="AccountConfig">AWS Account</button>
+      </div>
+      <div id="URLForm" class="tabcontent">
+        <%= urlForm %>
+      </div>
+    
+      <div id="GroupForm" class="tabcontent">
+        <%= groupForm %>
+      </div>
+    
+      <div id="Preferences" class="tabcontent">
+        <%= preferences %>
+      </div>
+
+      <div id="AccountConfig" class="tabcontent">
+        <%= accountConfig %>
+      </div>
+
+    <!-- <div id="hiddenBox">&nbsp;</div> -->
+    <div id="add-url-container">
+     
+    </div>
+  </div>
+    <%= footer %>
+  </div>
+</body>
+
+</html>

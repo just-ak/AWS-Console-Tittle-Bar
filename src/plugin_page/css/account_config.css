@@ -1,0 +1,26 @@
+#account-management {
+    margin: 0px 10px 0px 10px;
+}
+
+#account-form {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+    /* padding-bottom: 80px; */
+    /* background-color: blueviolet; */
+}
+
+#account-form .buttons-container {
+    position: absolute;
+    padding-bottom: 42px;
+    bottom: 0;
+    right: 15px;
+    /* width: 100%; */
+}
+
+#accoutConfig {
+    background-color: black;
+    color: white ;
+}

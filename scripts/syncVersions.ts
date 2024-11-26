@@ -4,8 +4,10 @@ import path from 'path';
 const rootPackageJson = require('../package.json');
 const websitePackageJsonPath = path.join(__dirname, '../website/package.json');
 const manifestJsonPath = path.join(__dirname, '../src/manifest.json');
-const pluginPageHtmlPath = path.join(__dirname, '../src/content/plugin_page.html');
-const preferencesPageHtmlPath = path.join(__dirname, '../src/content/preferences.html');
+const pluginPageHtmlPath = path.join(__dirname, '../src/plugin_page/index.ejs');
+const preferencesPageHtmlPath = path.join(__dirname, '../src/preferences/index.html');
+
+const referencesPath = path.join(__dirname, '../src/common/reference.tsx');
 
 const updateVersion = (filePath: string, version: string) => {
   const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -19,6 +21,15 @@ const updateHtmlVersion = (filePath: string, version: string) => {
   fs.writeFileSync(filePath, fileContent, 'utf8');
 };
 
+const updateDataVersion = (filePath: string, version: string) => {
+  let fileContent = fs.readFileSync(filePath, 'utf8');
+
+  //  data.version = '1.0';
+  fileContent = fileContent.replace(/data\.version\s*=\s*'[^']*';/, `data.version = '${version}';`);
+  fs.writeFileSync(filePath, fileContent, 'utf8');
+};
+
+updateDataVersion(referencesPath, rootPackageJson.version);
 updateVersion(websitePackageJsonPath, rootPackageJson.version);
 updateVersion(manifestJsonPath, rootPackageJson.version);
 updateHtmlVersion(pluginPageHtmlPath, rootPackageJson.version);
