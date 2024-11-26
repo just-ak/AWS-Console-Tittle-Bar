@@ -1,0 +1,172 @@
+{
+    "urls": [
+      {
+        "group": "myCompany",
+        "title": "AWS Console : myCompany",
+        "url": "https://d-0000000a.awsapps.com/start ",
+        "id": "0",
+        "groupId": 0
+      },
+      {
+        "group": "myCompany",
+        "title": "myCompany",
+        "url": "https://myCompany.co.uk",
+        "id": "1",
+        "groupId": 0
+      },
+      {
+        "group": "myCompany",
+        "title": "DataDog",
+        "url": "https://app.datadoghq.eu/",
+        "id": "2",
+        "groupId": 0
+      },
+      {
+        "group": "myCompany",
+        "title": "GitHub - just-ak",
+        "url": "https://github.com/just-ak",
+        "id": "3",
+        "groupId": 0
+      },
+      {
+        "group": "friends",
+        "title": "MyApps",
+        "url": "https://myapplications.microsoft.com/",
+        "id": "4",
+        "groupId": 1
+      },
+      {
+        "group": "friends",
+        "title": "Azure Portal",
+        "url": "https://portal.azure.com/",
+        "id": "5",
+        "groupId": 1
+      },
+      {
+        "group": "friends",
+        "title": "Azure Portal",
+        "url": "https://portal.azure.com/",
+        "id": "6",
+        "groupId": 1
+      },
+      {
+        "group": "friends",
+        "title": "friends 1Password",
+        "url": "https://somthing.1password.eu/profile",
+        "id": "7",
+        "groupId": 1
+      },
+      {
+        "group": "friends",
+        "title": "AAD Azure Portal",
+        "url": "https://aad.portal.azure.com",
+        "id": "8",
+        "groupId": 1
+      },
+      {
+        "group": "myCompany",
+        "title": "Azure Devops",
+        "url": "https://aex.dev.azure.com/me?mkt=en-GB",
+        "id": "9",
+        "groupId": 0
+      },
+      {
+        "group": "friends",
+        "title": "Azure Devops",
+        "url": "https://aex.dev.azure.com/me?mkt=en-GB",
+        "id": "10",
+        "groupId": 1
+      },
+      {
+        "group": "friends",
+        "title": "friends Azure DevOps",
+        "url": "https://dev.azure.com/friendsgroup/",
+        "id": "11",
+        "groupId": 1
+      },
+      {
+        "group": "friends",
+        "title": "friends AWS",
+        "url": "https://friends-sso.awsapps.com/start#/",
+        "id": "12",
+        "groupId": 1
+      },
+      {
+        "group": "Contract",
+        "title": "Contract AWS",
+        "url": "https://d-333333333.awsapps.com/start#/",
+        "id": "13",
+        "groupId": 2
+      },
+      {
+        "group": "Contract",
+        "title": "Contract OKTA",
+        "url": "https://Contract.okta.com/app/UserHome?type_hint=ACTIVATION&session_hint=AUTHENTICATED",
+        "id": "14",
+        "groupId": 2
+      },
+      {
+        "group": "myCompany",
+        "title": "myCompany 1Password",
+        "url": "https://myCompany.1password.eu/profile",
+        "id": "15",
+        "groupId": 0
+      },
+      {
+        "group": "myCompany",
+        "title": "BackStage",
+        "url": "https://docs.dev.api.myCompany.co.uk",
+        "id": "16",
+        "groupId": 0
+      },
+      {
+        "group": "myCompany",
+        "title": "AWS Console myCompany Labs Test",
+        "url": "https://d-444444444.awsapps.com/start",
+        "useContainer": false,
+        "id": "17",
+        "groupId": 0
+      },
+      {
+        "group": "myCompany",
+        "title": "MyApps",
+        "url": "https://myapplications.microsoft.com/",
+        "useContainer": false,
+        "id": "18",
+        "groupId": 0
+      },
+      {
+        "group": "friends",
+        "title": "friends Service Desk",
+        "url": "https://friends.service-now.com/sp",
+        "id": "19",
+        "groupId": 1
+      }
+    ],
+    "groups": [
+      {
+        "id": 0,
+        "title": "myCompany",
+        "sortUrlsSwitch": "false",
+        "useContainerSwitch": "false"
+      },
+      {
+        "id": 1,
+        "title": "friends",
+        "sortUrlsSwitch": "false",
+        "useContainerSwitch": "false"
+      },
+      {
+        "id": 2,
+        "title": "Contract",
+        "sortUrlsSwitch": "false",
+        "useContainerSwitch": "false"
+      }
+    ],
+    "version": "5.5.5.1",
+    "preferences": {
+      "awsConsole": {
+        "compressMode": false
+      }
+    }
+  }
