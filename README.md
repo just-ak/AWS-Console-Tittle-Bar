@@ -100,11 +100,6 @@ To set up your development environment with oh-my-zsh, powerlevel10k, npm, and n
 To submit the extension to Firefox, visit [https://addons.mozilla.org/en-US/developers/addons](https://addons.mozilla.org/en-US/developers/addons).
 
 For debugging, access [about:debugging#/runtime/this-firefox](about:debugging#/runtime/this-firefox) and use the Inspect option within the plugins section. Here's an example screenshot of how to access it:
-### Firefox
-
-To submit the extension to Firefox, visit [https://addons.mozilla.org/en-US/developers/addons](https://addons.mozilla.org/en-US/developers/addons).
-
-For debugging, access [about:debugging#/runtime/this-firefox](about:debugging#/runtime/this-firefox) and use the Inspect option within the plugins section. Here's an example screenshot of how to access it:
 
 ![Inspect](./docs/FirefoxDebug.png)
 
