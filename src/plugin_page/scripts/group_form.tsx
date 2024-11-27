@@ -5,6 +5,7 @@ import {
     sortUrlsSwitch,
     groupTitle,
     useContainerSwitch,
+    groupWarning,
 } from './dom';
 // 
 import { updatePopupUrls } from './plugin_page';
@@ -26,6 +27,7 @@ export function initializeGroupForm() {
                 groupTitle.value = groupTitleData;
                 groupTitle.dataset.recordId = recordIdData;
                 useContainerSwitch.checked = useContainerSwitchData === 'true';
+                
             }
         });
 
@@ -53,6 +55,13 @@ export function initializeGroupForm() {
                         accountDetails['groups'][index] = { id: dataRecordId, title: dataGroupTitle, sortUrlsSwitch: dataSortUrlsSwitch, useContainerSwitch: dataUseContainerSwitch };
                     }
                 } else if (commitType === 'delete') {
+                    if (accountDetails['urls'].filter((item) => `${item.groupId}` === `${dataRecordId}`).length > 0) {
+                        groupWarning.innerHTML = 'Group cannot be deleted until all urls are removed';
+                        setTimeout(() => {
+                            groupWarning.innerHTML = '';
+                        }, 2000);
+                        return;
+                    }
                     accountDetails['groups'] = accountDetails['groups'].filter((item) => `${item.id}` !== `${dataRecordId}`);
                 }
                 saveAdditionalLinks(accountDetails);

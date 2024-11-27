@@ -18,10 +18,7 @@ jobs:
           node-version: '18'
 
       - name: Install Dependencies
-        run: yarn install
-
-      - name: Build
-        run: yarn build
+        run: npm install
 
       - name: Release
         env:
@@ -29,8 +26,8 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
 
-      - name: Build Extension
-        run: yarn archive
+      # - name: Build Extension
+      #   run: yarn archive
 
       # https://github.com/marketplace/actions/browser-platform-publisher
       # - name: Submit Extension

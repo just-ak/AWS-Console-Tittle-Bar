@@ -19,32 +19,44 @@ function upgradeToVersion5_5_5_1(accountDetails) {
     if (accountDetails['groups'] === undefined) {
         accountDetails['groups'] = [];
     }
+    // identify if groups contains an array or objects, if objects then convert to array
+    if (!Array.isArray(accountDetails['groups'])) {
+        accountDetails['groups'] = [];
+    }
+    console.log('Upgraded to version - A');
+
     let maxUrls = (Math.max(...accountDetails['urls'].map((item) => parseInt(item.id, 10))) + 1) || 0;
     accountDetails['urls'].forEach((url) => {
         if (!url.id) {
             url.id = (maxUrls++).toString();
         }
     });
+    console.log('Upgraded to version - B');
+
     accountDetails['groups'].forEach((group) => {
         if (!group.id) {
             group.id = (Math.max(...accountDetails['groups'].map((item) => parseInt(item.id, 10))) + 1).toString();
         }
     });
-
+    console.log('Upgraded to version - C');
     const uniqueValuesArray = [...new Set(accountDetails['urls'].map(obj => obj.group))];
     if (uniqueValuesArray.length > 0) {
         let maxGroupIndex = accountDetails['groups'].length === 0 ? 0 : Math.max(...accountDetails['groups'].map((item: IGroupRecord) => parseInt(item.id, 10))) + 1;
         uniqueValuesArray.forEach((group) => {
-            const groupIndex = accountDetails['groups'].findIndex((item) => item.title === group);
+            const tempGroup = group.toString().trim().length === 0 ? 'Default' : group;
+            const groupIndex = accountDetails['groups'].findIndex((item) => item.title === tempGroup);
             if (groupIndex === -1) {
-                accountDetails['groups'].push({ id: maxGroupIndex++, title: group, sortUrlsSwitch: 'false', useContainerSwitch: 'false' });
+                accountDetails['groups'].push({ id: maxGroupIndex++, title: tempGroup, sortUrlsSwitch: 'false', useContainerSwitch: 'false' });
             }
         });
     }
+    console.log('Upgraded to version - D');
+
     if (!accountDetails['groups'] ||
         (accountDetails['groups'] && accountDetails['groups'].length === 0)) {
         accountDetails['groups'].push({ id: 0, title: 'Default', sortUrlsSwitch: 'false', useContainerSwitch: 'false' });
     }
+    console.log('Upgraded to version - E');
 
     accountDetails['urls'].map((urlItem) => {
         if (!urlItem.groupId) {
