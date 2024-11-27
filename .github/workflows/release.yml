@@ -1,9 +1,9 @@
 name: Upload Release Assets
 
 on:
-    release:
-      types:
-        - published
+  release:
+    types:
+      - published
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
       - name: Build Project
         run: npm run build        
 
-      - name: Build Project
+      - name: Create Archive
         run: npm run archive        
 
       - name: Release
