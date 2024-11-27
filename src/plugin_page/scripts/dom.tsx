@@ -14,3 +14,4 @@ export const newGroupInput = document.getElementById('new-group-input') as HTMLI
 export const sortUrlsSwitch = (document.getElementById('sort-urls-switch') as HTMLInputElement);
 export const groupTitle = (document.getElementById('new-group-input') as HTMLInputElement);
 export const useContainerSwitch = (document.getElementById('use-container') as HTMLInputElement);
+export const groupWarning = (document.getElementById('group-warning') as HTMLInputElement);

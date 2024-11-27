@@ -96,3 +96,9 @@
 .group-item:hover {
     background-color: #f0f0f0;
 }
+
+#group-warning {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}

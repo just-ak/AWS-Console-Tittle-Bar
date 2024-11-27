@@ -1,11 +1,11 @@
-import { getAdditionalLinks, saveAdditionalLinks, onUpdated, onError,  } from '../../common/reference';
-import { urlList, cogIcon, urlForm, groupSelect,newGroupInput} from './dom';
+import { getAdditionalLinks, saveAdditionalLinks, onUpdated, onError, } from '../../common/reference';
+import { urlList, cogIcon, urlForm, groupSelect, newGroupInput } from './dom';
 import { createContainer } from './firefox';
 import { updatePopupUrls } from './plugin_page';
 
 export function initializeurlForm() {
     document.addEventListener('DOMContentLoaded', function () {
-      updateGroupListInUrlsSetting();
+        updateGroupListInUrlsSetting();
         urlList.addEventListener('click', async function (e) {
             if ((e.target as HTMLElement).classList.contains('url-link')) {
                 const chosenPage = (e.target as HTMLElement).dataset.url;
@@ -43,7 +43,7 @@ export function initializeurlForm() {
 
         urlForm.addEventListener('submit', function (event) {
             event.preventDefault();
-        
+
             const urlInput = document.getElementById('url-input') as HTMLInputElement;
             const titleInput = document.getElementById('title-input') as HTMLInputElement;
             const commitType = (event.submitter as HTMLButtonElement).dataset.commitType;
@@ -52,34 +52,34 @@ export function initializeurlForm() {
             const group = newGroupInput.value || groupSelect.value;
             const recordId = urlInput.dataset.recordId;
             if (title === '') {
-              // alert('Group Title is required');
-              return;
-          }
+                // alert('Group Title is required');
+                return;
+            }
             getAdditionalLinks().then((accountDetails) => {
-              if (!accountDetails['urls']) {
-                accountDetails['urls'] = [];
-              }
-              if (commitType === 'save-as-new') {
-                const maxId = Math.max(...accountDetails['urls'].map((item) => parseInt(item.id, 10)));
-                accountDetails['urls'].push({ id: (maxId + 1).toString(), url: url, title: title, group: group });
-              } else if (commitType === 'save') {
-                const index = accountDetails['urls'].findIndex((item) => item.id === recordId);
-                if (index !== -1) {
-                  accountDetails['urls'][index] = { id: recordId, url: url, title: title, group: group };
+                if (!accountDetails['urls']) {
+                    accountDetails['urls'] = [];
                 }
-              } else if (commitType === 'delete') {
-                accountDetails['urls'] = accountDetails['urls'].filter((item) => item.id !== recordId);
-              }
-        
-              // Update groups if a new group has been created
-              if (newGroupInput.value && !accountDetails['groups'][newGroupInput.value]) {
-                accountDetails['groups'][newGroupInput.value] = { sortUrls: false, useContainer: false };
-              }
-        
-              saveAdditionalLinks(accountDetails);
-              updatePopupUrls();
+                if (commitType === 'save-as-new') {
+                    const maxId = Math.max(...accountDetails['urls'].map((item) => parseInt(item.id, 10)));
+                    accountDetails['urls'].push({ id: (maxId + 1).toString(), url: url, title: title, group: group });
+                } else if (commitType === 'save') {
+                    const index = accountDetails['urls'].findIndex((item) => item.id === recordId);
+                    if (index !== -1) {
+                        accountDetails['urls'][index] = { id: recordId, url: url, title: title, group: group };
+                    }
+                } else if (commitType === 'delete') {
+                    accountDetails['urls'] = accountDetails['urls'].filter((item) => item.id !== recordId);
+                }
+
+                // Update groups if a new group has been created
+                if (newGroupInput.value && !accountDetails['groups'][newGroupInput.value]) {
+                    accountDetails['groups'][newGroupInput.value] = { sortUrls: false, useContainer: false };
+                }
+
+                saveAdditionalLinks(accountDetails);
+                updatePopupUrls();
             });
-          });
+        });
 
         urlList.addEventListener('dragstart', function (e) {
             if ((e.target as HTMLElement).classList.contains('url-link')) {
@@ -107,7 +107,7 @@ export function initializeurlForm() {
                         const [draggedItem] = urls.splice(draggedIndex, 1);
                         urls.splice(targetIndex, 0, draggedItem);
                         accountDetails['urls'] = urls;
-                        saveAdditionalLinks(accountDetails).then(() => { updatePopupUrls()});
+                        saveAdditionalLinks(accountDetails).then(() => { updatePopupUrls() });
                     }
                 });
             }
@@ -118,11 +118,13 @@ export function initializeurlForm() {
 export function updateGroupListInUrlsSetting() {
     getAdditionalLinks().then((accountDetails) => {
         groupSelect.innerHTML = '';
-        for (const group of accountDetails['groups']) {
-            const option = document.createElement('option');
-            option.value = group.id;
-            option.textContent = group.title;
-            groupSelect.appendChild(option);
+        if (accountDetails['groups'] && Array.isArray(accountDetails['groups'])) {
+            for (const group of accountDetails['groups']) {
+                const option = document.createElement('option');
+                option.value = group.id;
+                option.textContent = group.title;
+                groupSelect.appendChild(option);
+            }
         }
     });
 };
