@@ -49,7 +49,7 @@ export function initializeurlForm() {
             const commitType = (event.submitter as HTMLButtonElement).dataset.commitType;
             const url = urlInput.value;
             const title = titleInput.value;
-            const group = newGroupInput.value || groupSelect.value;
+            const groupId = newGroupInput.value || groupSelect.value;
             const recordId = urlInput.dataset.recordId;
             if (title === '') {
                 // alert('Group Title is required');
@@ -61,12 +61,12 @@ export function initializeurlForm() {
                 }
                 if (commitType === 'save-as-new') {
                     const maxId = Math.max(...accountDetails['urls'].map((item) => parseInt(item.id, 10)));
-                    accountDetails['urls'].push({ id: (maxId + 1).toString(), url: url, title: title, group: group });
+                    accountDetails['urls'].push({ id: (maxId + 1).toString(), url: url, title: title, groupId: groupId });
                 } else if (commitType === 'save') {
                     const index = accountDetails['urls'].findIndex((item) => item.id === recordId);
-                    if (index !== -1) {
-                        accountDetails['urls'][index] = { id: recordId, url: url, title: title, group: group };
-                    }
+                    // if (index !== -1) {
+                    //     accountDetails['urls'][index] = { id: recordId, url: url, title: title, groupId: groupId };
+                    // }
                 } else if (commitType === 'delete') {
                     accountDetails['urls'] = accountDetails['urls'].filter((item) => item.id !== recordId);
                 }
