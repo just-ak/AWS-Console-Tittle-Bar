@@ -1,4 +1,4 @@
-name: Submit Extension
+name: Main Semantic Release
 
 on:
   push:
