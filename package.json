@@ -52,5 +52,5 @@
     "webPreview": "npm run sync-versions && cd website && npm run preview",
     "websiteBuild": "cd website && npm run build"
   },
-  "version": "5.9.0"
+  "version": "5.8.0"
 }
