@@ -17,6 +17,9 @@ export function initializePopupComs() {
 
         const showSingleAccount = (accountId) => {
             const container = document.getElementById('accountConfig');
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
             getAllAccounts().then((jsonData) => {
                 const form = document.createElement('form');
                 const account = jsonData[accountId];
@@ -26,12 +29,8 @@ export function initializePopupComs() {
                 accountDiv.appendChild(nameLabel);
                 const colorInput = document.createElement('input');
                 colorInput.classList.add('color-input'); // Add class for styling
+                colorInput.dataset.coloris = '';
                 colorInput.value = account.color;
-
-                // colorInput.addEventListener('focus', function () {
-                //   hiddenBox.style.height = '150px';
-                // });
-
                 colorInput.addEventListener('change', function (event) {
                     const selectedColor = (event.target as HTMLInputElement).value;
                     const accountId = (event.target as HTMLInputElement).parentNode
