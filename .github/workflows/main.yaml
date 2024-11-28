@@ -26,11 +26,11 @@ jobs:
       - name: Install Dependencies
         run: npm install    
 
-      - name: Build Project
-        run: npm run build        
+      # - name: Build Project
+      #   run: npm run build        
 
-      - name: Create Archive
-        run: npm run archive       
+      # - name: Create Archive
+      #   run: npm run archive       
 
       - name: Run release
         id: release
@@ -44,51 +44,37 @@ jobs:
         run: |
           npm config set registry https://npm.pkg.github.com/
           npm config set //npm.pkg.github.com/:_authToken $GH_TOKEN
-          npx semantic-release
+          npx semantic-release --dry-run
 
-      # Step 5: Update package.json with the new version
       - name: Update package.json
         if: steps.release.outputs.new-release-published == 'true'
         run: |
           echo "::set-output name=version::$(node -p "require('./package.json').version")"
         id: update_package
 
-      # Step 6: Build the product
       - name: Build product
         run: npm run build # Replace with your build command
 
       - name: Build Archive
         run: npm run archive # Replace with your build command
-      # Step 7: Archive the build artifact
 
-      - name: Debug upload_url
-        run: | 
-          echo "Upload URL: ${{ steps.semantic_release.outputs.upload_url }}"
-
-
-      - name: Fetch release upload URL
-        id: fetch_release
-        run: |
-          TAG_NAME=$(jq -r ".tag_name" <<< $(curl -s \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.ref_name }}))
-          UPLOAD_URL=$(jq -r ".upload_url" <<< $(curl -s \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/releases/tags/$TAG_NAME))
-          echo "UPLOAD_URL=$UPLOAD_URL" >> $GITHUB_ENV
-
-      - name: Debug upload_url
-        run: | 
-          echo "Upload URL: ${{ steps.fetch_release.outputs.UPLOAD_URL  }}"
-  
-
-      # Step 8: Upload the artifact as a GitHub release asset
-      - name: Upload asset
-        uses: actions/upload-release-asset@v1
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.fetch_release.outputs.UPLOAD_URL }}
+          tag_name: ${{ steps.update_package.outputs.version }}
+          release_name: Release ${{ steps.update_package.outputs.version }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./archive/archive.zip
           asset_name: archive.zip
           asset_content_type: application/zip
+
