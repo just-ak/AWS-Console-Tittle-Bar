@@ -20,9 +20,15 @@ jobs:
       - name: Install Dependencies
         run: npm install    
 
-      - name: Release
+      - name: Run release
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-          NPM_TOKEN: ${{ github.token }}
-          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+          GH_TOKEN: ${{ secrets.GHP_TOKEN }}
+          NPM_TOKEN: ${{ secrets.GHP_TOKEN }}
+          GIT_AUTHOR_NAME: semantic-release-akfdev-com
+          GIT_AUTHOR_EMAIL: semantic-release-bot@akfdev.com
+          GIT_COMMITTER_NAME: semantic-release-bot-akfedv-com
+          GIT_COMMITTER_EMAIL: semantic-release-bot@akfdev.com
+        run: |
+          npm config set registry https://npm.pkg.github.com/
+          npm config set //npm.pkg.github.com/:_authToken $GH_TOKEN
+          npx semantic-release
