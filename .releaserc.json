@@ -48,7 +48,7 @@
       "npmPublish": false
     }],
     ["@semantic-release/github", {
-      "draft": true
+      "draft": false
     }],
     [
       "@semantic-release/git",

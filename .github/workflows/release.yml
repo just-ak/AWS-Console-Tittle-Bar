@@ -1,8 +1,7 @@
 name: Upload Release Assets
 on:
-  push:
-    tags:
-      - 'v*'
+  release:
+    types: [published]
   workflow_dispatch: # added manual trigger
 
 jobs:
