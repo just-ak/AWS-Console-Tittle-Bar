@@ -2,7 +2,7 @@ name: Upload Release Assets
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*.*.*'
   release:
     types: 
       - published
