@@ -22,8 +22,8 @@ jobs:
 
       - name: Run release
         env:
-          GH_TOKEN: ${{ secrets.GHP_TOKEN }}
-          NPM_TOKEN: ${{ secrets.GHP_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          NPM_TOKEN: ${{ github.token }}
           GIT_AUTHOR_NAME: semantic-release-akfdev-com
           GIT_AUTHOR_EMAIL: semantic-release-bot@akfdev.com
           GIT_COMMITTER_NAME: semantic-release-bot-akfedv-com
