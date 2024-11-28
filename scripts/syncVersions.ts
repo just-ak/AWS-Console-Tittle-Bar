@@ -35,6 +35,5 @@ updateVersion(manifestJsonPath, rootPackageJson.version);
 updateHtmlVersion(pluginPageHtmlPath, rootPackageJson.version);
 updateHtmlVersion(preferencesPageHtmlPath, rootPackageJson.version);
 
-
 console.log(`Synchronized version to ${rootPackageJson.version}`);
 console.log(`Updated HTML version to ${rootPackageJson.version}`);
