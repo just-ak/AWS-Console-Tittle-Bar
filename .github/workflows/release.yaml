@@ -4,7 +4,8 @@ on:
     tags:
       - 'v*'
   release:
-    types: [published]
+    types: 
+      - published
   workflow_dispatch: # added manual trigger
   # pull_request: # added pull request event for testing
 
