@@ -5,7 +5,7 @@ on:
       - published
 
 jobs:
-  uplaod_archive:
+  upload_archive:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
