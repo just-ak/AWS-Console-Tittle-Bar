@@ -55,6 +55,11 @@ module.exports = {
     ],
     [
       "@semantic-release/github",
+      {
+        assets: [
+          { path: "archive/archive.zip", label: "Distribution ZIP" },
+        ],
+      },
     ],
     [
       "@semantic-release/git",

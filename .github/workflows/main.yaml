@@ -33,6 +33,26 @@ jobs:
       #   run: npm run archive       
 
       - name: Run release
+        id: release_dry
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NPM_TOKEN: ${{ github.token }}
+          GIT_AUTHOR_NAME: semantic-release-akfdev-com
+          GIT_AUTHOR_EMAIL: semantic-release-bot@akfdev.com
+          GIT_COMMITTER_NAME: semantic-release-bot-akfedv-com
+          GIT_COMMITTER_EMAIL: semantic-release-bot@akfdev.com
+        run: |
+          npm config set registry https://npm.pkg.github.com/
+          npm config set //npm.pkg.github.com/:_authToken $GH_TOKEN
+          npx semantic-release --dry-run
+          
+      - name: Build product
+        run: npm run build # Replace with your build command
+
+      - name: Build Archive
+        run: npm run archive # Replace with your build command
+
+      - name: Run release
         id: release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -45,37 +65,5 @@ jobs:
           npm config set registry https://npm.pkg.github.com/
           npm config set //npm.pkg.github.com/:_authToken $GH_TOKEN
           npx semantic-release
-          # npx semantic-release --dry-run
 
-      # - name: Update package.json
-      #   if: steps.release.outputs.new-release-published == 'true'
-      #   run: |
-      #     echo "::set-output name=version::$(node -p "require('./package.json').version")"
-      #   id: update_package
-
-      # - name: Build product
-      #   run: npm run build # Replace with your build command
-
-      # - name: Build Archive
-      #   run: npm run archive # Replace with your build command
-
-      # - name: Create Release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: ${{ steps.update_package.outputs.version }}
-      #     release_name: Release ${{ steps.update_package.outputs.version }}
-      #     draft: false
-      #     prerelease: false
-
-      # - name: Upload Release Asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: ./archive/archive.zip
-      #     asset_name: archive.zip
-      #     asset_content_type: application/zip
 
