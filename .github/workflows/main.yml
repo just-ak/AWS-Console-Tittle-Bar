@@ -18,7 +18,8 @@ jobs:
           node-version-file: '.nvmrc'
 
       - name: Install Dependencies
-        run: npm install     
+        run: npm install    
+         
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
