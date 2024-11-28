@@ -1,5 +1,4 @@
 name: Upload Release Assets
-
 on:
   release:
     types:
