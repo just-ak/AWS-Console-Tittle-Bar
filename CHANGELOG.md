@@ -1,3 +1,9 @@
+## [5.16.15](https://github.com/just-ak/AWS-Console-Tittle-Bar/compare/v5.16.14...v5.16.15) (2024-11-28)
+
+### Bug Fixes
+
+* Release is not working correctly ([13afbf7](https://github.com/just-ak/AWS-Console-Tittle-Bar/commit/13afbf7d722d616bab75ca178ecd6103eb534bc1))
+
 ## [5.16.14](https://github.com/just-ak/AWS-Console-Tittle-Bar/compare/v5.16.13...v5.16.14) (2024-11-28)
 
 ### Bug Fixes
