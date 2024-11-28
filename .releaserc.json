@@ -40,7 +40,8 @@
         },
         "writerOpts": {
           "commitsSort": ["subject", "scope"]
-        }
+        },
+        "outputFile": "RELEASE_NOTES.md"
       }
     ],
     "@semantic-release/changelog",
