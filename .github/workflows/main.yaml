@@ -66,15 +66,18 @@ jobs:
           echo "Upload URL: ${{ steps.semantic_release.outputs.upload_url }}"
 
 
-      - name: Fetch release details
+      - name: Fetch release upload URL
         id: fetch_release
-        uses: octokit/request-action@v2
-        with:
-          route: GET /repos/:owner/:repo/releases/tags/:tag
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.event.repository.name }}
-          tag: ${{ github.ref_name }}
-          headers: '{"authorization": "token ${{ secrets.GITHUB_TOKEN }}"}'
+        run: |
+          TAG_NAME=$(jq -r ".tag_name" <<< $(curl -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.ref_name }}))
+          UPLOAD_URL=$(jq -r ".upload_url" <<< $(curl -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/releases/tags/$TAG_NAME))
+          echo "UPLOAD_URL=$UPLOAD_URL" >> $GITHUB_ENV
 
       # Step 8: Upload the artifact as a GitHub release asset
       - name: Upload asset
