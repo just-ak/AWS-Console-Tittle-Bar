@@ -40,24 +40,26 @@
         },
         "writerOpts": {
           "commitsSort": ["subject", "scope"]
-        },
-        "outputFile": "RELEASE_NOTES.md"
+        }
       }
     ],
-    "@semantic-release/changelog",
     ["@semantic-release/npm", {
       "npmPublish": false
     }],
     [
-      "@semantic-release/github"
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
     ],
     [
       "@semantic-release/git",
       {
-        "assets": [
-          "package.json"
-        ]
+        "assets": ["package.json", "CHANGELOG.md"],
       }
+    ],
+    [
+      "@semantic-release/github"
     ]
   ]
 }
