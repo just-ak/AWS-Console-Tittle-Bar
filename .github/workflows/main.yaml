@@ -61,15 +61,26 @@ jobs:
         run: npm run archive # Replace with your build command
       # Step 7: Archive the build artifact
 
-      # - name: Release
-      #   uses: softprops/action-gh-release@v2
-      #   with:
-      #     files: ./archive/archive.zip      
+      - name: Debug upload_url
+        run: | 
+          echo "Upload URL: ${{ steps.semantic_release.outputs.upload_url }}"
+
+
+      - name: Fetch release details
+        id: fetch_release
+        uses: octokit/request-action@v2
+        with:
+          route: GET /repos/:owner/:repo/releases/tags/:tag
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          tag: ${{ github.ref_name }}
+          headers: '{"authorization": "token ${{ secrets.GITHUB_TOKEN }}"}'
+
       # Step 8: Upload the artifact as a GitHub release asset
       - name: Upload asset
         uses: actions/upload-release-asset@v1
         with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
+          upload_url: ${{ steps.fetch_release.outputs.upload_url }}
           asset_path: ./archive/archive.zip
           asset_name: archive.zip
           asset_content_type: application/zip
