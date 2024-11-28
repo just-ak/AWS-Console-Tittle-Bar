@@ -83,14 +83,21 @@ function App() {
             <img src={plugPermission2} alt="Permissions" className="permissions-img-medium"/>
           </div>
         </section>
-        <section className="compressMode-settings">
+        <section className="compress-mode-settings">
           <div className="container">
             <h2>AWS Console Compressed Mode</h2>
             <p>A little setting to remove some of the space around AWS Console data forms.</p>
-            <img src={compressModeSetting} alt="Compress Mode Settings" className="backup-img"/>
-            <img src={compressModeOff} alt="Compress Mode Off" className="backup-img"/>
-            <img src={compressModeOn} alt="Compress Mode On" className="backup-img"/>
-
+            <br/>
+            <h3>Preference</h3>
+            <img src={compressModeSetting} alt="Compress Mode Settings" className="compress-mode-img-small"/>
+            <br/>
+            <h3>Normal AWS Console Layout</h3>
+            <img src={compressModeOn} alt="Compress Mode On" className="compress-mode-img"/>
+            <br/>
+            <h3>Compressed AWS Console Layout</h3>
+            <img src={compressModeOff} alt="Compress Mode Off" className="compress-mode-img"/>
+            <br/>
+            
           </div>
         </section>
         <section className="backup-settings">

@@ -146,7 +146,7 @@ body {
   color: #666;
 }
 
-.how-it-works, .screenshots, .permissions, .backup-settings, .description, .grouped-urls, .cta, .github, .readme {
+.how-it-works, .screenshots, .permissions, .compress-mode-settings, .backup-settings, .description, .grouped-urls, .cta, .github, .readme {
   margin-bottom: 2rem;
   padding: 2rem;
   background-color: white;
@@ -157,23 +157,41 @@ body {
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-.how-it-works h2, .screenshots h2, .permissions h2, .backup-settings h2, .description h2, .grouped-urls h2, .cta h2, .github h2, .readme h2 {
+.how-it-works h2, .screenshots h2, .compress-mode-settings h2, .permissions h2, .backup-settings h2, .description h2, .grouped-urls h2, .cta h2, .github h2, .readme h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
 
-.how-it-works ol, .permissions ul, .backup-settings ol {
+.how-it-works ol, .compress-mode-settings ol, .permissions ul, .backup-settings ol {
   padding-left: 1.5rem;
   text-align: left;
 }
 
-.how-it-works li, .permissions li, .backup-settings li {
+.how-it-works li, .compress-mode-settings ul,.permissions li, .backup-settings li {
   margin-bottom: 0.5rem;
   font-size: 1.1rem;
 }
 
-.screenshot, .permissions-img, .backup-img, .grouped-urls-img {
+.screenshot, .permissions-img, .backup-img{
   max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
+}
+
+.grouped-urls-img {
+  max-width: 40%;
+  height: auto;
+  margin-top: 1rem;
+}
+
+.compress-mode-img {
+  max-width: 60%;
+  height: auto;
+  margin-top: 1rem;
+}
+
+.compress-mode-img-small {
+  max-width: 30%;
   height: auto;
   margin-top: 1rem;
 }
@@ -315,7 +333,7 @@ button {
   }
 }
 
-.features, .how-it-works, .description, .cta, .screenshots, .permissions, .backup-settings, .github, .readme, .grouped-urls {
+.features, .how-it-works, .description, .cta, .screenshots, .permissions, .compress-mode-settings, .backup-settings, .github, .readme, .grouped-urls {
   animation: slide-in 0.6s ease-out forwards;
 }
 
@@ -340,6 +358,10 @@ button {
 }
 
 .backup-settings {
+  animation-delay: 1.2s;
+}
+
+.compress-mode-settings{
   animation-delay: 1.2s;
 }
 

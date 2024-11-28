@@ -19,7 +19,7 @@ export function initializeurlForm() {
                 if (cogIcon.dataset.action === 'runMode' || cogIcon.dataset.action === undefined) {
                     try {
                         let containerId = null;
-                        await createContainer(containerTitle).then((id) => {
+                        await createContainer(groupDetails.title).then((id) => {
                             containerId = id;
                         });
                         if (groupDetails.useContainerSwitch) {
@@ -64,9 +64,9 @@ export function initializeurlForm() {
                     accountDetails['urls'].push({ id: (maxId + 1).toString(), url: url, title: title, groupId: groupId });
                 } else if (commitType === 'save') {
                     const index = accountDetails['urls'].findIndex((item) => item.id === recordId);
-                    // if (index !== -1) {
-                    //     accountDetails['urls'][index] = { id: recordId, url: url, title: title, groupId: groupId };
-                    // }
+                    if (index !== -1) {
+                        accountDetails['urls'][index] = { id: recordId, url: url, title: title, groupId: groupId };
+                    }
                 } else if (commitType === 'delete') {
                     accountDetails['urls'] = accountDetails['urls'].filter((item) => item.id !== recordId);
                 }

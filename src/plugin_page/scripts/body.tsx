@@ -14,21 +14,14 @@ export function resizeBody() {
     body.style.width = `${Math.min(newWidth, maxWidth)}px`;
     body.style.height = `${Math.min(newHeight, maxHeight)}px`;
     debugLog(`Resized popup to ${body.style.width} x ${body.style.height}`);
-
   }
-  
-
   export function initializeBody() {
-
   // Use MutationObserver to detect changes in the DOM
 const observer = new MutationObserver(() => {
     resizeBody(); // Call resizeBody whenever the DOM changes
   });
-  
   // Configure the observer to monitor child changes and content updates
   observer.observe(firefoxViewport, { childList: true, subtree: true, characterData: true });
-  
   // Initial resize based on content size
   resizeBody();
-
 };
