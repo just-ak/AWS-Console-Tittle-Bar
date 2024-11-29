@@ -53,10 +53,10 @@ module.exports = {
         changelogFile: "CHANGELOG.md"
       }
     ],
-    // ["@semantic-release/exec", {
-    //   // "verifyConditionsCmd": "./verify.sh",
-    //   "publishCmd": "./publish.sh ${nextRelease.version} ${branch.name} ${commits.length} ${Date.now()}"
-    // }],
+    ["@semantic-release/exec", {
+      // "verifyConditionsCmd": "./verify.sh",
+      "publishCmd": "npm run archive ${nextRelease.version}"
+    }],
     [
       "@semantic-release/github",
       {
