@@ -1,4 +1,4 @@
-titiesimport './App.css'
+import './App.css'
 import AKFDEV_Logo from './assets/AKFDEV_Logo.png'
 import packageJson from '../package.json'
 import screenshot2 from './docs/screenshot2.png'
