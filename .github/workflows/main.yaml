@@ -44,10 +44,10 @@ jobs:
       # - name: Create Archive
       #   run: npm run archive       
 
-      - name: Run release
+      - name: Run Pre Release
         id: release_dry
         env:
-          # GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
           # NPM_TOKEN: ${{ github.token }}
           GIT_AUTHOR_NAME: semantic-release-akfdev-com
           GIT_AUTHOR_EMAIL: semantic-release-bot@akfdev.com
