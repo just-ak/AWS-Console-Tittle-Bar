@@ -18,11 +18,12 @@ export function initializeurlForm() {
                 });
                 if (cogIcon.dataset.action === 'runMode' || cogIcon.dataset.action === undefined) {
                     try {
-                        let containerId = null;
-                        await createContainer(groupDetails.title).then((id) => {
-                            containerId = id;
-                        });
-                        if (groupDetails.useContainerSwitch) {
+
+                        if (groupDetails.useContainerSwitch === true) {
+                            let containerId = null;
+                            await createContainer(groupDetails.title).then((id) => {
+                                containerId = id;
+                            });
                             browser.tabs.create({ url: chosenPage, cookieStoreId: containerId }).then(onUpdated, onError);
                         } else {
                             chrome.tabs.create({ url: chosenPage }).then(onUpdated, onError);
