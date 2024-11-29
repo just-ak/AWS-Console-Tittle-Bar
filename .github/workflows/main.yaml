@@ -4,12 +4,6 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - "README.md"
-      - ".github/workflows/codeql.yml"
-  pull_request:
-    branches:
-      - main
 
 jobs:
   release_semantic:
@@ -25,9 +19,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
           fetch-depth: 0
-          token: ${{ github.token }}
+          # token: ${{ github.token }}
           # persist-credentials: false
 
       - name: Setup Node.js
