@@ -56,7 +56,7 @@ jobs:
         run: |
           # npm config set registry https://npm.pkg.github.com/
           # npm config set //npm.pkg.github.com/:_authToken $GH_TOKEN
-          npx semantic-release --dry-run  --no-ci  > release_log.txt
+          npx semantic-release --dry-run  --branch main  > release_log.txt
 
       - name: Extract version from dry run log
         id: extract_version
