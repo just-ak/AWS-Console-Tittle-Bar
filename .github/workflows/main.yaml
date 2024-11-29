@@ -43,6 +43,7 @@ jobs:
       - name: Extract version from dry run log
         id: extract_version
         run: |
+          cat release_log.txt
           VERSION=$(grep -oP 'Release note for version \K[0-9]+\.[0-9]+\.[0-9]+' release_log.txt)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
