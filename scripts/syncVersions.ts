@@ -6,8 +6,14 @@ const websitePackageJsonPath = path.join(__dirname, '../website/package.json');
 const manifestJsonPath = path.join(__dirname, '../src/manifest.json');
 const pluginPageHtmlPath = path.join(__dirname, '../src/plugin_page/inc/footer.html');
 const preferencesPageHtmlPath = path.join(__dirname, '../src/preferences/index.html');
-
 const referencesPath = path.join(__dirname, '../src/common/reference.tsx');
+
+// if version number passwed then use that version number
+if (process.argv.length > 2) {
+  rootPackageJson.version = process.argv[2];
+  console.log(`Using version number passed as argument ${rootPackageJson.version}`);
+
+}
 
 const updateVersion = (filePath: string, version: string) => {
   const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf8'));
