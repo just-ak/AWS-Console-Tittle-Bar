@@ -1,4 +1,4 @@
-import './App.css'
+titiesimport './App.css'
 import AKFDEV_Logo from './assets/AKFDEV_Logo.png'
 import packageJson from '../package.json'
 import screenshot2 from './docs/screenshot2.png'
@@ -115,7 +115,7 @@ function App() {
         <section className="description">
           <div className="container">
             <h2>Product Description</h2>
-            <p>The AWS Console Title Bar plugin is designed to help users manage multiple AWS accounts with ease. By displaying the account name prominently on the AWS Console menu bar, users can quickly identify which account they are working in, reducing the risk of errors and improving workflow efficiency. The plugin supports multiple accounts with Single Sign-On (SSO) and is easy to install and configure. Whether you are using Chrome or Firefox, the AWS Console Title Bar plugin is the perfect tool to streamline your AWS account management.</p>
+            <p>The AWS Console Title Bar plugin is designed to help users manage multiple Identities and AWS accounts with ease. By displaying the account name prominently on the AWS Console menu bar, users can quickly identify which account they are working in, reducing the risk of errors and improving workflow efficiency. The plugin supports multiple accounts with Single Sign-On (SSO) and is easy to install and configure. Whether you are using Chrome or Firefox, the AWS Console Title Bar plugin is the perfect tool to streamline your AWS account management.</p>
           </div>
         </section>
         <section className="grouped-urls">
