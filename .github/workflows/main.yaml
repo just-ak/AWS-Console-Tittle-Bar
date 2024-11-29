@@ -57,12 +57,12 @@ jobs:
       # - name: Build Archive
       #   run: npm run archive
 
-      - name: Commit changes
-        run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git add package.json
-          git commit -m "chore(release): update package.json version to $VERSION"
+      # - name: Commit changes
+      #   run: |
+      #     git config --global user.name "${{ github.actor }}"
+      #     git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+      #     git add package.json
+      #     git commit -m "chore(release): update package.json version to $VERSION"
 
       - name: Run release
         id: release
