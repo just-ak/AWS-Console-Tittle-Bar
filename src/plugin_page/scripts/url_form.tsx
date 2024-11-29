@@ -18,7 +18,6 @@ export function initializeurlForm() {
                 });
                 if (cogIcon.dataset.action === 'runMode' || cogIcon.dataset.action === undefined) {
                     try {
-
                         if (groupDetails.useContainerSwitch === true) {
                             let containerId = null;
                             await createContainer(groupDetails.title).then((id) => {
