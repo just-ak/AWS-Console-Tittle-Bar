@@ -12,7 +12,6 @@ const referencesPath = path.join(__dirname, '../src/common/reference.tsx');
 if (process.argv.length > 2) {
   rootPackageJson.version = process.argv[2];
   console.log(`Using version number passed as argument ${rootPackageJson.version}`);
-
 }
 
 const updateVersion = (filePath: string, version: string) => {
