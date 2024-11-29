@@ -51,10 +51,10 @@ jobs:
           jq --arg version "$VERSION" '.version = $version' package.json > tmp.$$.json && mv tmp.$$.json package.json
           
       - name: Build product
-        run: npm run build # Replace with your build command
+        run: npm run build
 
       - name: Build Archive
-        run: npm run archive # Replace with your build command
+        run: npm run archive
 
       - name: Commit changes
         run: |
