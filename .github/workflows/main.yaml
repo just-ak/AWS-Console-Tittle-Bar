@@ -28,7 +28,7 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
           token: ${{ github.token }}
-          persist-credentials: false
+          # persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
