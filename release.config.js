@@ -69,7 +69,7 @@ module.exports = {
           },
           { 
             // path: 'archive',
-            path: 'archive/chromePlugin.${nextRelease.version}.zip', 
+            name: 'archive/chromePlugin.${nextRelease.version}.zip', 
             label: 'Chrome Plugin (${nextRelease.version})' 
           }
           // [{path: 'dist/MyLibrary.js', name: 'MyLibrary-${nextRelease.gitTag}.js', label: 'MyLibrary JS (${nextRelease.gitTag}) distribution'}]
