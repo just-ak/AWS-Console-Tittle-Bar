@@ -10,5 +10,5 @@ cd dist
 zip -r ../archive/archive.zip . 
 cd .. 
 npx addons-linter archive/archive.zip
-cp archive/archive.zip archive/firefoxPlugin.${1}.zip
-cp archive/archive.zip archive/chromePlugin.${1}.zip
+cp archive/archive.zip archive/firefoxPlugin.zip
+cp archive/archive.zip archive/chromePlugin.zip

@@ -62,12 +62,12 @@ module.exports = {
       {
         assets: [
           { 
-            path: 'archive/firefoxPlugin.${nextRelease.version}.zip', 
+            path: 'archive/firefoxPlugin.zip', 
             name: 'firefoxPlugin.${nextRelease.version}.zip',
             label: 'FireFox Plugin (${nextRelease.version})' 
           },
           { 
-            path: 'archive/chromePlugin.${nextRelease.version}.zip', 
+            path: 'archive/chromePlugin.zip', 
             name: 'chromePlugin.${nextRelease.version}.zip',
             label: 'Chrome Plugin (${nextRelease.version})' 
           }
