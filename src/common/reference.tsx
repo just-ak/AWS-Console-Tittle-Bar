@@ -100,7 +100,7 @@ export async function getAdditionalLinks() {
         const accountDetails = JSON.parse(response.jsoninfo);
         resolve(accountDetails);
       } catch (e) {
-        console.error(`Error in getAdditionalLinks: ${e}`);
+        console.error(`Error in getAdditionalLinks: ${e} \n ${response}`);
         const accountDetails ={urls:[]};
         resolve(accountDetails);
       }
