@@ -63,14 +63,14 @@ module.exports = {
         assets: [
 
           { 
-            path: 'archive',
-            name: 'firefoxPlugin.${nextRelease.version}.zip', 
-            label: 'FireFox Plugin (${nextRelease.version}) zip' 
+            // path: 'archive',
+            name: 'archive/firefoxPlugin.${nextRelease.version}.zip', 
+            label: 'FireFox Plugin (${nextRelease.version})' 
           },
           { 
-            path: 'archive',
-            path: 'chomePlugin.${nextRelease.version}.zip', 
-            label: 'Chrome Plugin (${nextRelease.version})  zip' 
+            // path: 'archive',
+            path: 'archive/chromePlugin.${nextRelease.version}.zip', 
+            label: 'Chrome Plugin (${nextRelease.version})' 
           }
           // [{path: 'dist/MyLibrary.js', name: 'MyLibrary-${nextRelease.gitTag}.js', label: 'MyLibrary JS (${nextRelease.gitTag}) distribution'}]
         ],
