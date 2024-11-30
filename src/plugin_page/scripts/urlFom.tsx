@@ -153,7 +153,6 @@ export function updateGroupListInUrlsSetting() {
                 groupSelect.add(option);
             }
         }
-        console.log('groupSelect', JSON.stringify(groupSelect, null, 2));
     });
 };
 

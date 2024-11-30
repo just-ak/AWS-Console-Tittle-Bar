@@ -2,6 +2,10 @@ import { IAdditionalLinks, IGroupRecord, saveAdditionalLinks } from "../../commo
 
 export function upgradeManagement(accountDetails) {
     let newAccountDetails: IAdditionalLinks; // = accountDetails;
+    if (accountDetails.length === 0) {
+        newAccountDetails = accountDetails;
+        return newAccountDetails;
+    }
     switch (accountDetails['version']) {
         case undefined:
             // Upgrade to version 5.5.5.1
