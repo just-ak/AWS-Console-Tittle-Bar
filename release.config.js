@@ -55,14 +55,14 @@ module.exports = {
     ],
     ["@semantic-release/exec", {
       // "verifyConditionsCmd": "./verify.sh",
-      "publishCmd": "npm run archive ${nextRelease.version} && cp archive/archive.zip archive/firefoxPlugin${nextRelease.version}.zip  && cp archive/archive.zip archive/chomePlugin${nextRelease.version}.zip"
+      "publishCmd": "npm run archive ${nextRelease.version}"
     }],
     [
       "@semantic-release/github",
       {
         assets: [
-          { path: "archive/firefoxPlugin${nextRelease.version}.zip", label: "FireFox Plugin ${nextRelease.version}" },
-          { path: "archive/chomePlugin${nextRelease.version}.zip", label: "Chrome Plugin ${nextRelease.version}" },
+          { path: "archive/firefoxPlugin.${nextRelease.version}.zip", label: "FireFox Plugin ${nextRelease.version}" },
+          { path: "archive/chomePlugin.${nextRelease.version}.zip", label: "Chrome Plugin ${nextRelease.version}" },
         ],
       },
     ],
