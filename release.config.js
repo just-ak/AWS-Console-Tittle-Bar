@@ -65,12 +65,12 @@ module.exports = {
           { 
             path: 'archive',
             name: 'firefoxPlugin.${nextRelease.version}.zip', 
-            label: `FireFox Plugin zip` 
+            label: 'FireFox Plugin (${nextRelease.version}) zip' 
           },
           { 
             path: 'archive',
             path: 'chomePlugin.${nextRelease.version}.zip', 
-            label: `Chrome Plugin zip` 
+            label: 'Chrome Plugin (${nextRelease.version})  zip' 
           }
           // [{path: 'dist/MyLibrary.js', name: 'MyLibrary-${nextRelease.gitTag}.js', label: 'MyLibrary JS (${nextRelease.gitTag}) distribution'}]
         ],
