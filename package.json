@@ -46,7 +46,7 @@
   "private": false,
   "repository": "git@github.com:just-ak/AWS-Console-Tittle-Bar.git",
   "scripts": {
-    "archive": "npm run sync-versions && rm -rf ./dist && rm -rf ./archive && yarn build && tsc && mkdir -p archive && cd dist && zip -r ../archive/archive*.zip . && cd .. && npx addons-linter archive/archive.zip  ",
+    "archive": "./scripts/archive.sh",
     "OldArchive": "npm run sync-versions && rm -rf ./dist && rm -rf ./archive && yarn build && tsc && rm -rf ./dist/index.html && rm -rf ./dist/content_pages.js && rm -rf ./dist/content/plugin_page.js && rm -rf ./dist/content/preferences.js  && mkdir -p archive && cd dist && zip -r ../archive/archive.zip . && cd .. && npx addons-linter archive/archive.zip  ",
     "build": "rm -rf dist && npm run sync-versions && webpack --mode production",
     "buildZ": "tsc",
