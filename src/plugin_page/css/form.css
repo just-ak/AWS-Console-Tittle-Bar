@@ -14,12 +14,36 @@
     border-radius: 12px;
   }
   
+ 
+
   .modern-button:hover {
     background-color: white;
     color: black;
     border: 2px solid #4CAF50;
   }
+
+  .modern-button-warning {
+    background-color: #af5b4c;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+  }
   
+
+  .modern-button-warning:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+  }
+
   .switch {
     position: relative;
     display: inline-block;

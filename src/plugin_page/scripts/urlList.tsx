@@ -1,4 +1,4 @@
-import { updatePopupUrls } from "./plugin_page";
+import { updatePopupUrls } from "./pluginPage";
 
 export function initializeUrlList() {
     document.addEventListener('DOMContentLoaded', function () {

@@ -9,7 +9,7 @@ module.exports = {
   mode: 'production',
   entry: {
     preferences: './src/preferences/scripts/preferences.tsx',
-    plugin_page: './src/plugin_page/scripts/plugin_page.tsx',
+    plugin_page: './src/plugin_page/scripts/pluginPage.tsx',
     content_pages: './src/content_pages/scripts/content_pages.tsx',
   },
   output: {
@@ -80,12 +80,13 @@ module.exports = {
       templateParameters: () => {
         return {
           header: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/header.html'), 'utf8'),
-          urlForm: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/url_form.html'), 'utf8'),
-          urlList: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/url_list.html'), 'utf8'),
-          groupForm: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/group_form.html'), 'utf8'),
+          urlForm: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/urlForm.html'), 'utf8'),
+          urlList: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/urlList.html'), 'utf8'),
+          groupForm: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/groupForm.html'), 'utf8'),
           footer: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/footer.html'), 'utf8'),
-          accountConfig: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/account_config.html'), 'utf8'),
+          accountConfig: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/accountConfig.html'), 'utf8'),
           preferences: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/preferences.html'), 'utf8'),
+          containers: fs.readFileSync(path.resolve(__dirname, 'src/plugin_page/inc/containers.html'), 'utf8'),
 
         };
       },

@@ -8,10 +8,10 @@ import {
     groupWarning,
 } from './dom';
 // 
-import { updatePopupUrls } from './plugin_page';
+import { updatePopupUrls } from './pluginPage';
 
 import { getAdditionalLinks, saveAdditionalLinks } from '../../common/reference';
-import { updateGroupListInUrlsSetting } from './url_form';
+import { updateGroupListInUrlsSetting } from './urlFom';
 // import { updateGroupListInUrlsSetting } from './url_form';
 
 export function initializeGroupForm() {
