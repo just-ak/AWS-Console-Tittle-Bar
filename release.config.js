@@ -61,8 +61,15 @@ module.exports = {
       "@semantic-release/github",
       {
         assets: [
-          { path: "archive/firefoxPlugin.${nextRelease.version}.zip", label: "FireFox Plugin ${nextRelease.version}" },
-          { path: "archive/chomePlugin.${nextRelease.version}.zip", label: "Chrome Plugin ${nextRelease.version}" },
+
+          { 
+            path: (context) => `archive/firefoxPlugin.${context.nextRelease.version}.zip`, 
+            label: (context) => `FireFox Plugin ${context.nextRelease.version}` 
+          },
+          { 
+            path: (context) => `archive/chomePlugin.${context.nextRelease.version}.zip`, 
+            label: (context) => `Chrome Plugin ${context.nextRelease.version}` 
+          }
         ],
       },
     ],
