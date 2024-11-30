@@ -31,10 +31,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GIT_AUTHOR_NAME: semantic-release-akfdev-com
-          GIT_AUTHOR_EMAIL: semantic-release-bot@akfdev.com
-          GIT_COMMITTER_NAME: semantic-release-bot-akfedv-com
-          GIT_COMMITTER_EMAIL: semantic-release-bot@akfdev.com
+          GIT_AUTHOR_NAME: akfdev-sr
+          GIT_AUTHOR_EMAIL: andrew@akfdev.com
+          GIT_COMMITTER_NAME: akfedv-sr
+          GIT_COMMITTER_EMAIL: andrew@akfdev.com
         run: |
           npm config set registry https://npm.pkg.github.com/
           npm config set //npm.pkg.github.com/:_authToken $GH_TOKEN
