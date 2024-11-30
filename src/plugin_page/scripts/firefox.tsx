@@ -77,10 +77,10 @@ export const createContainer = (group: string): Promise<string> => {
 };
 
 
-declare const InstallTrigger: any;
-debugLog('start:');
-const isFirefox = typeof InstallTrigger !== 'undefined';
-if (!isFirefox) {
-  (document.querySelector('label[for="use-container"]') as HTMLElement).style.display = 'none';
-  document.getElementById('use-container').style.display = 'none';
-}
+// declare const InstallTrigger: any;
+// debugLog('start:');
+// const isFirefox = typeof InstallTrigger !== 'undefined';
+// if (!isFirefox) {
+//   (document.querySelector('label[for="use-container"]') as HTMLElement).style.display = 'none';
+//   document.getElementById('use-container').style.display = 'none';
+// }

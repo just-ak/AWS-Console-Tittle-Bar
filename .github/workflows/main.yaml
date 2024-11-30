@@ -26,44 +26,6 @@ jobs:
       - name: Install Dependencies
         run: npm install    
 
-      # - name: Run release
-      #   id: release_dry
-      #   env:
-      #     GH_TOKEN: ${{ github.token }}
-      #     NPM_TOKEN: ${{ github.token }}
-      #     GIT_AUTHOR_NAME: semantic-release-akfdev-com
-      #     GIT_AUTHOR_EMAIL: semantic-release-bot@akfdev.com
-      #     GIT_COMMITTER_NAME: semantic-release-bot-akfedv-com
-      #     GIT_COMMITTER_EMAIL: semantic-release-bot@akfdev.com
-      #   run: |
-      #     npm config set registry https://npm.pkg.github.com/
-      #     npm config set //npm.pkg.github.com/:_authToken $GH_TOKEN
-      #     npx semantic-release --dry-run > release_log.txt
-
-      # - name: Extract version from dry run log
-      #   id: extract_version
-      #   run: |
-      #     cat release_log.txt
-      #     VERSION=$(grep -oP 'Release note for version \K[0-9]+\.[0-9]+\.[0-9]+' release_log.txt)
-      #     echo "VERSION=$VERSION" >> $GITHUB_ENV
-
-      # - name: Update package.json version
-      #   run: |
-      #     jq --arg version "$VERSION" '.version = $version' package.json > tmp.$$.json && mv tmp.$$.json package.json
-          
-      # - name: Build product
-      #   run: npm run build
-
-      # - name: Build Archive
-      #   run: npm run archive
-
-      # - name: Commit changes
-      #   run: |
-      #     git config --global user.name "${{ github.actor }}"
-      #     git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-      #     git add package.json
-      #     git commit -m "chore(release): update package.json version to $VERSION"
-
       - name: Run release
         id: release
         env:

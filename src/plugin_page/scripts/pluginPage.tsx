@@ -1,20 +1,19 @@
-import '../css/account_colour.css';
 import '../css/base.css';
 import '../css/footer.css';
 import '../css/form.css';
 import '../css/groups.css';
 import '../css/header.css';
-import '../css/url_form.css';
-import '../css/url_list.css';
-import '../css/account_config.css';
+import '../css/urlForm.css';
+import '../css/urlList.css';
+import '../css/accountConfig.css';
 import '../css/tabs.css';
 import '../css/preferences_form.css';
 
 import { initializeTabs } from './tabs';
 import { initializeHeader } from './header';
 import { initializeBody } from './body';
-import { initializeurlForm } from './url_form';
-import { initializeGroupForm } from './group_form';
+import { initializeurlForm } from './urlFom';
+import { initializeGroupForm } from './groupForm';
 import { initializePreferencesForm } from './preferences';
 
 import {
@@ -31,6 +30,7 @@ import {
 import { upgradeManagement } from './upgrades';
 import { initializePopupComs } from './popupcomms';
 import { initializeUrlList } from './urlList';
+import { initializeurlContainers } from './containers';
 
 
 
@@ -42,6 +42,7 @@ initializeTabs();
 initializeurlForm();
 initializeGroupForm();
 initializePreferencesForm();
+initializeurlContainers();
 
 let isUpdating = false;
 

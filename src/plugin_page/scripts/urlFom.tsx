@@ -1,7 +1,7 @@
-import { getAdditionalLinks, saveAdditionalLinks, onUpdated, onError, } from '../../common/reference';
+import { getAdditionalLinks, saveAdditionalLinks, onUpdated, onError, debugLog, } from '../../common/reference';
 import { urlList, cogIcon, urlForm, groupSelect, newGroupInput } from './dom';
 import { createContainer } from './firefox';
-import { updatePopupUrls } from './plugin_page';
+import { updatePopupUrls } from './pluginPage';
 
 export function initializeurlForm() {
     document.addEventListener('DOMContentLoaded', function () {
@@ -18,17 +18,42 @@ export function initializeurlForm() {
                 });
                 if (cogIcon.dataset.action === 'runMode' || cogIcon.dataset.action === undefined) {
                     try {
-                        if (groupDetails.useContainerSwitch === true) {
-                            let containerId = null;
-                            await createContainer(groupDetails.title).then((id) => {
-                                containerId = id;
+                        browser.contextualIdentities
+                        if (groupDetails.useContainerSwitch === "true") {
+                            browser.contextualIdentities.query({})
+                                .then((identities) => {
+                                if (!identities.length) {
+                                    createContainer(groupDetails.title).then((id) => {
+                                        browser.tabs.create({ url: chosenPage, cookieStoreId: id }).then(onUpdated, onError);
+                                    }).catch((error) => {
+                                        debugLog('Error creating container:', error);
+                                        browser.tabs.create({ url: chosenPage }).then(onUpdated, onError);
+                                    });
+                                } else {
+                                    const identity = identities.filter((i) => i.name === groupDetails.title )[0];
+                                    if (identity !== undefined && identity.cookieStoreId !== undefined) {
+                                    browser.tabs.create({
+                                        url: chosenPage,
+                                        cookieStoreId: identity.cookieStoreId,
+                                      });
+                                    } else {
+                                        debugLog('No cookie store id found');
+                                        createContainer(groupDetails.title).then((id) => {
+                                            browser.tabs.create({ url: chosenPage, cookieStoreId: id }).then(onUpdated, onError);
+                                        }).catch((error) => {
+                                            debugLog('Error creating container:', error);
+                                            browser.tabs.create({ url: chosenPage }).then(onUpdated, onError);
+                                        });
+                                    }
+                                }
+                            }).catch((error) => {
+                                debugLog('Error querying containers (B):', error);
                             });
-                            browser.tabs.create({ url: chosenPage, cookieStoreId: containerId }).then(onUpdated, onError);
                         } else {
                             chrome.tabs.create({ url: chosenPage }).then(onUpdated, onError);
                         }
                     } catch (error) {
-                        console.error('Failed to create container and open tab:', error);
+                        debugLog('Failed to create container and open tab (C):', error);
                     }
                 } else {
                     (document.getElementById('url-form') as HTMLFormElement).dataset.action = 'edit';

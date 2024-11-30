@@ -15,3 +15,5 @@ export const urlAddDiv = document.getElementById('add-url-container')  as HTMLDi
 export const urlForm = document.getElementById('url-form') as HTMLFormElement;
 export const urlList = document.getElementById('url-list') as HTMLDivElement;
 export const useContainerSwitch = (document.getElementById('use-container') as HTMLInputElement);
+
+export const clearContainersButton = (document.getElementById('clear-containers-button') as HTMLInputElement);

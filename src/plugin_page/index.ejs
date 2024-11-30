@@ -14,9 +14,10 @@
     <div id="edit-mode">
       <div id="tab" class="tab">
         <button class="tablinks" data-tab-name="URLForm">URL </button>
-        <button class="tablinks" data-tab-name="GroupForm">URL Groups</button>
-        <button class="tablinks" data-tab-name="Preferences">Preferences</button>
+        <button class="tablinks" data-tab-name="GroupForm">Groups</button>
+        <button class="tablinks" data-tab-name="Preferences">AWS Settings</button>
         <button class="tablinks" data-tab-name="AccountConfig">AWS Account</button>
+        <button class="tablinks" data-tab-name="Containers">Containers</button>
       </div>
       <div id="URLForm" class="tabcontent">
         <%= urlForm %>
@@ -32,6 +33,9 @@
 
       <div id="AccountConfig" class="tabcontent">
         <%= accountConfig %>
+      </div>
+      <div id="Containers" class="tabcontent">
+        <%= containers %>
       </div>
 
     <!-- <div id="hiddenBox">&nbsp;</div> -->
