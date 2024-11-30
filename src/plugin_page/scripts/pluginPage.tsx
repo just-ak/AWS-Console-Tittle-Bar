@@ -90,13 +90,13 @@ export const updatePopupUrls = () => {
           elementAccountName.draggable = true;
           elementAccountDiv.appendChild(elementAccountName);
           urlList.appendChild(elementAccountDiv);
-          debugLog('elementAccountName:', elementAccountName);
+          
         });
       }
     }
     isUpdating = false;
   }).catch((error) => {
-    // console.error('Error updating popup URLs:', error);
+    debugLog('Error updating popup URLs:', error);
     isUpdating = false;
   });
 };

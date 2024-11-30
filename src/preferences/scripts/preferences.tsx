@@ -1,6 +1,6 @@
 import '../css/preferences.css';
 
-import  { getAllAccounts, saveAllAccounts }
+import { defaultJson, getAllAccounts, saveAllAccounts }
   from '../../common/reference';
 
 const jsonElementID = 'jsoninfo';
@@ -32,13 +32,21 @@ function save_options() {
 }
 
 function restore_options() {
+  
   chrome.storage.local.get(
     {
-      jsoninfo: '{"urls":[{"url":"https://example.com","title":"Example.con"}]}',
+      jsoninfo: JSON.stringify(defaultJson),
     },
     function (options) {
       const jsonTextArea = document.getElementById(jsonElementID) as HTMLTextAreaElement;
-      jsonTextArea.value = JSON.stringify(JSON.parse(options.jsoninfo), null, 2);
+      try {
+        jsonTextArea.value = JSON.stringify(JSON.parse(options.jsoninfo), null, 2);
+      } catch (e) {
+        if (e.message.indexOf('Unexpected end of JSON input') !== -1) {
+        console.log(`Error parsing JSON: ${e} DataError: ${options.jsoninfo}`);
+        }
+        jsonTextArea.value = JSON.stringify(defaultJson, null, 2);
+      }
       jsonTextArea.style.height = `${jsonTextArea.scrollHeight}px`;
     }
   );

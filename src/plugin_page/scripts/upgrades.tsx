@@ -1,11 +1,9 @@
-import { IAdditionalLinks, IGroupRecord, saveAdditionalLinks } from "../../common/reference";
+import { defaultJson, IAdditionalLinks, IGroupRecord, saveAdditionalLinks } from "../../common/reference";
+import { updatePopupUrls } from "./pluginPage";
+import { updateGroupListInUrlsSetting } from "./urlFom";
 
 export function upgradeManagement(accountDetails) {
     let newAccountDetails: IAdditionalLinks; // = accountDetails;
-    if (accountDetails.length === 0) {
-        newAccountDetails = accountDetails;
-        return newAccountDetails;
-    }
     switch (accountDetails['version']) {
         case undefined:
             // Upgrade to version 5.5.5.1
@@ -19,30 +17,30 @@ export function upgradeManagement(accountDetails) {
 };
 
 function upgradeToVersion5_5_5_1(accountDetails) {
-    console.log('Upgrading to version: 5.5.5.1');
+    console.log('Upgrading JSON to version: 5.5.5.1');
+    console.log('accountDetails: ', JSON.stringify(accountDetails, null, 2));
+    
+    if (accountDetails['urls'] === undefined && accountDetails['groups'] === undefined) {
+        console.log('putting default json');
+        accountDetails = defaultJson;
+    }
     if (accountDetails['groups'] === undefined) {
         accountDetails['groups'] = [];
     }
-    // identify if groups contains an array or objects, if objects then convert to array
     if (!Array.isArray(accountDetails['groups'])) {
         accountDetails['groups'] = [];
     }
-    console.log('Upgraded to version - A');
-
     let maxUrls = (Math.max(...accountDetails['urls'].map((item) => parseInt(item.id, 10))) + 1) || 0;
     accountDetails['urls'].forEach((url) => {
         if (!url.id) {
             url.id = (maxUrls++).toString();
         }
     });
-    console.log('Upgraded to version - B');
-
     accountDetails['groups'].forEach((group) => {
         if (!group.id) {
             group.id = (Math.max(...accountDetails['groups'].map((item) => parseInt(item.id, 10))) + 1).toString();
         }
     });
-    console.log('Upgraded to version - C');
     const uniqueValuesArray = [...new Set(accountDetails['urls'].map(obj => obj.group))];
     if (uniqueValuesArray.length > 0) {
         let maxGroupIndex = accountDetails['groups'].length === 0 ? 0 : Math.max(...accountDetails['groups'].map((item: IGroupRecord) => parseInt(item.id, 10))) + 1;
@@ -54,14 +52,10 @@ function upgradeToVersion5_5_5_1(accountDetails) {
             }
         });
     }
-    console.log('Upgraded to version - D');
-
     if (!accountDetails['groups'] ||
         (accountDetails['groups'] && accountDetails['groups'].length === 0)) {
         accountDetails['groups'].push({ id: 0, title: 'Default', sortUrlsSwitch: 'false', useContainerSwitch: 'false' });
     }
-    console.log('Upgraded to version - E');
-
     accountDetails['urls'].map((urlItem) => {
         if (!urlItem.groupId) {
             const groupIndex = accountDetails['groups'].findIndex((item) => item.title === urlItem.group);
@@ -79,6 +73,7 @@ function upgradeToVersion5_5_5_1(accountDetails) {
         }
     };
     saveAdditionalLinks(accountDetails);
+    updateGroupListInUrlsSetting();
     return accountDetails;
 }
 

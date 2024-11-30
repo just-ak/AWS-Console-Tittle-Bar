@@ -17,3 +17,5 @@ export const urlList = document.getElementById('url-list') as HTMLDivElement;
 export const useContainerSwitch = (document.getElementById('use-container') as HTMLInputElement);
 
 export const clearContainersButton = (document.getElementById('clear-containers-button') as HTMLInputElement);
+export const clearContainersHidden = (document.getElementById('clear-containers-hidden') as HTMLInputElement);
+

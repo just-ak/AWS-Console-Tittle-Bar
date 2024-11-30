@@ -17,7 +17,7 @@ export interface IGroupRecord {
   useContainerSwitch: string;
 }
 
- interface IUrlRecord {
+interface IUrlRecord {
   id: string;
   title: string;
   url: string;
@@ -30,7 +30,7 @@ export interface IAdditionalLinks {
   groups: IGroupRecord[];
   preferences: {
     awsConsole: {
-    compressMode: boolean;
+      compressMode: boolean;
     }
   };
   version: string;
@@ -45,20 +45,28 @@ export function onError(error) {
   debugLog(`Error: ${error}`);
 }
 
-
-
 export const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
-
-
-const DEBUG = false; // Set this to false to disable debug logs
-
-export function debugLog(message: string, ...optionalParams: any[]) {
-  if (DEBUG) {
-    console.log(message, ...optionalParams);
-  }
+export function setDebug() {
+  getAdditionalLinks().then((data) => {
+    if (data['DEBUG'] && data['DEBUG'] === true) {
+      data['DEBUG'] = false;
+      debugLog('Debugging Disabled');
+    } else {
+      data['DEBUG'] = true;
+      debugLog('Debugging Enabled');
+    }
+    saveAdditionalLinks(data);
+  });
 }
 
+export function debugLog(message: string, ...optionalParams: any[]) {
+  getAdditionalLinks().then((data) => {
+    if (data['DEBUG'] && data['DEBUG'] === true) {
+      console.log(message, ...optionalParams);
+    }
+  });
+}
 
 export const isElementLoaded = async (selector) => {
   while (document.querySelector(selector) === null) {
@@ -100,9 +108,13 @@ export async function getAdditionalLinks() {
         const accountDetails = JSON.parse(response.jsoninfo);
         resolve(accountDetails);
       } catch (e) {
-        console.error(`Error in getAdditionalLinks: ${e} \n ${JSON.stringify(response, null, 2)}`);
-        const accountDetails ={urls:[]};
-        resolve(accountDetails);
+        if (e.message.indexOf('unexpected end of data at line 1 column 1') !== -1) {
+          debugLog(`Error Empty JSON: ${e} DataError: ${response.jsoninfo}`);
+        } else {
+          debugLog(`Error in getAdditionalLinks: ${e} \n ${JSON.stringify(response, null, 2)} `);
+        }
+        resolve(defaultJson);
+
       }
     });
   });
@@ -169,3 +181,34 @@ export async function getAllAccounts() {
     })
   );
 }
+
+export const defaultJson = {
+  urls: [
+    {
+      "title": "Google",
+      "url": "https://google.com",
+      "id": "0",
+      "groupId": 0
+    },
+    {
+      "title": "Microsoft",
+      "url": "https://microsoft.com",
+      "id": "1",
+      "groupId": 0
+    }
+  ],
+  groups: [
+    {
+      "id": 0,
+      "title": "Default",
+      "sortUrlsSwitch": "true",
+      "useContainerSwitch": "false"
+    },
+  ],
+  version: "5.5.5.1",
+  preferences: {
+    awsConsole: {
+      compressMode: false
+    }
+  }
+};
