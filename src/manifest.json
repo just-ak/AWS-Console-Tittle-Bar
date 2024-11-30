@@ -1,5 +1,5 @@
 {
-  "version": "7.8.5",
+  "version": "7.8.12",
   "name": "AWS Console Title Bar",
   "description": "Add Additional information to the AWS title bar.",
   "action": {

@@ -74,7 +74,7 @@ export function initializeurlForm() {
             const commitType = (event.submitter as HTMLButtonElement).dataset.commitType;
             const url = urlInput.value;
             const title = titleInput.value;
-            const groupId = newGroupInput.value || groupSelect.value;
+            const groupId = groupSelect.value;
             const recordId = urlInput.dataset.recordId;
             if (title === '') {
                 // alert('Group Title is required');
@@ -142,15 +142,18 @@ export function initializeurlForm() {
 
 export function updateGroupListInUrlsSetting() {
     getAdditionalLinks().then((accountDetails) => {
-        groupSelect.innerHTML = '';
+        while (groupSelect.options.length > 0)
+                {groupSelect.options.remove(0);
+                }
         if (accountDetails['groups'] && Array.isArray(accountDetails['groups'])) {
             for (const group of accountDetails['groups']) {
                 const option = document.createElement('option');
-                option.value = group.id;
-                option.textContent = group.title;
-                groupSelect.appendChild(option);
+                option.value = group.id;                
+                option.text = group.title;
+                groupSelect.add(option);
             }
         }
+        console.log('groupSelect', JSON.stringify(groupSelect, null, 2));
     });
 };
 

@@ -12,7 +12,6 @@ import { updatePopupUrls } from './pluginPage';
 
 import { getAdditionalLinks, saveAdditionalLinks } from '../../common/reference';
 import { updateGroupListInUrlsSetting } from './urlFom';
-// import { updateGroupListInUrlsSetting } from './url_form';
 
 export function initializeGroupForm() {
     document.addEventListener('DOMContentLoaded', function () {
