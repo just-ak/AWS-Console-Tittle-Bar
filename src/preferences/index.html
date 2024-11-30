@@ -15,12 +15,36 @@
       <div id="accountConfig">
         <B>Example</B>
         <pre><code>
-{
-  "urls":[
-      {"url":"https://example.com","title":"Example.com"},
-      {"url":"https://example.awsapps.com/start","title":"AWS Console: Example"}
-  ]
-}
+          {
+            urls: [
+              {
+                "title": "Google",
+                "url": "https://google.com",
+                "id": "0",
+                "groupId": 0
+              },
+              {
+                "title": "Microsoft",
+                "url": "https://microsoft.com",
+                "id": "1",
+                "groupId": 0
+              }
+            ],
+            groups: [
+              {
+                "id": 0,
+                "title": "Default",
+                "sortUrlsSwitch": "true",
+                "useContainerSwitch": "false"
+              },
+            ],
+            version: "5.5.5.1",
+            preferences: {
+              awsConsole: {
+                compressMode: false
+              }
+            }
+          }
 </code></pre>
       </div>
       <label for="jsoninfo">Config JSON</label><br/>

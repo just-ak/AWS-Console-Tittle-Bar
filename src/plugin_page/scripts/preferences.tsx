@@ -7,7 +7,6 @@ export function initializePreferencesForm() {
         const preferencesForm = document.getElementById('preferences-form') as HTMLFormElement;
         const awsConsoleCompress = document.getElementById('aws-console-compress') as HTMLInputElement;
 
-        // Load existing preferences
         getAdditionalLinks().then((accountDetails: IAdditionalLinks) => {
             if (accountDetails.preferences && accountDetails.preferences.awsConsole.compressMode) {
                 awsConsoleCompress.checked = accountDetails.preferences.awsConsole.compressMode;   

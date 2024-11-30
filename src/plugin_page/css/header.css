@@ -2,26 +2,18 @@
   float: right;
   font-size: 1.2em;
   position: absolute;
-  /* background-color: darkred; */
   top: 0px;
   left: 0px;
   cursor: pointer;
 }
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+
 #awsso-header:hover {
-  animation: spin 1s linear infinite;
+  background-color: rgb(212, 212, 212);
 }
 
 #awsso-header .svg-image {
   height: 0.8em;
-  margin: 2px;
+  margin: 0px;
 }
 
 h1 {

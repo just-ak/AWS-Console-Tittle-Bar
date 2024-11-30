@@ -44,6 +44,28 @@
     border: 2px solid #4CAF50;
   }
 
+  .modern-button-hidden {
+    background-color: #ffffff;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+  }
+  
+
+  .modern-button-hidden:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+  }
+
   .switch {
     position: relative;
     display: inline-block;

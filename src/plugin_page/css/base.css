@@ -3,9 +3,7 @@
     Firefox restricts developers from explicitly resizing the popup via JavaScript for security reasons.
     The popup size is limited by Firefox: minimum size is 48x48px,
      and the maximum size is 800x600px.
-    Test your popup on various screen resolutions to ensure it renders correctly.
-
-If you need further adjustments, let me know! */
+*/
 
 html {
   font-family: Arial, Helvetica, sans-serif;
@@ -30,7 +28,6 @@ body {
   margin: 10px;
   margin-top: 15px;
   margin-bottom: 25px;
-  /* border: 1px solid rgb(68, 68, 68); */
   border-radius: 1%;
 }
 

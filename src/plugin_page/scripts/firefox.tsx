@@ -1,11 +1,3 @@
-
-
-
-// export function initializeFirefox() {
-// }
-
-import { debugLog } from "../../common/reference";
-
 const getColorFromName = (name: string): string => {
   const colors = [
     'blue',
@@ -69,18 +61,8 @@ export const createContainer = (group: string): Promise<string> => {
           reject(error);
         });
     } else {
-      // Fallback for browsers that do not support contextualIdentities API
       console.error('contextualIdentities API is not supported');
       reject('contextualIdentities API is not supported');
     }
   });
 };
-
-
-// declare const InstallTrigger: any;
-// debugLog('start:');
-// const isFirefox = typeof InstallTrigger !== 'undefined';
-// if (!isFirefox) {
-//   (document.querySelector('label[for="use-container"]') as HTMLElement).style.display = 'none';
-//   document.getElementById('use-container').style.display = 'none';
-// }

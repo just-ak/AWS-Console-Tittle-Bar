@@ -8,8 +8,6 @@
     display: flex;
     flex-direction: column;
     font-size: 10px;
-    /* padding-bottom: 80px; */
-    /* background-color: blueviolet; */
 }
 
 #group-form .buttons-container {
@@ -17,7 +15,6 @@
     padding-bottom: 42px;
     bottom: 0;
     right: 15px;
-    /* width: 100%; */
 }
 
 

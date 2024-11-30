@@ -3,7 +3,7 @@ import { updatePopupUrls } from "./pluginPage";
 import { updateGroupListInUrlsSetting } from "./urlFom";
 
 export function upgradeManagement(accountDetails) {
-    let newAccountDetails: IAdditionalLinks; // = accountDetails;
+    let newAccountDetails: IAdditionalLinks;
     switch (accountDetails['version']) {
         case undefined:
             // Upgrade to version 5.5.5.1
@@ -19,7 +19,7 @@ export function upgradeManagement(accountDetails) {
 function upgradeToVersion5_5_5_1(accountDetails) {
     console.log('Upgrading JSON to version: 5.5.5.1');
     console.log('accountDetails: ', JSON.stringify(accountDetails, null, 2));
-    
+
     if (accountDetails['urls'] === undefined && accountDetails['groups'] === undefined) {
         console.log('putting default json');
         accountDetails = defaultJson;

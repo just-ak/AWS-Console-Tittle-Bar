@@ -77,7 +77,7 @@ export const updatePopupUrls = () => {
 
         urls.forEach((urlItem) => {
           const elementAccountDiv = document.createElement('div');
-          elementAccountDiv.classList.add('url-item'); // Add class for styling
+          elementAccountDiv.classList.add('url-item');
           const elementAccountName = document.createElement('span');
           elementAccountName.classList.add('url-link');
           elementAccountName.innerText = `${urlItem.title}`;

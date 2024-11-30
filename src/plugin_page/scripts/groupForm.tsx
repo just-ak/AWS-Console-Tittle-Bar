@@ -1,11 +1,10 @@
 import {
-    cogIcon,
-    urlList,
     groupForm,
-    sortUrlsSwitch,
     groupTitle,
-    useContainerSwitch,
     groupWarning,
+    sortUrlsSwitch,
+    urlList,
+    useContainerSwitch
 } from './dom';
 // 
 import { updatePopupUrls } from './pluginPage';

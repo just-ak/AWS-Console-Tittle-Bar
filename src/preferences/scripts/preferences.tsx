@@ -1,7 +1,6 @@
 import '../css/preferences.css';
 
-import { defaultJson, getAllAccounts, saveAllAccounts }
-  from '../../common/reference';
+import { defaultJson, getAllAccounts, saveAllAccounts } from '../../common/reference';
 
 const jsonElementID = 'jsoninfo';
 const jsonAccElementID = 'jsonaccounts';
@@ -56,7 +55,6 @@ function restore_options() {
   });
 }
 
-// Retrieve JSON data from chrome.storage.local
 const showAccounts = (jsonData) => {
   const container = document.getElementById('accountConfig');
   const form = document.createElement('form');

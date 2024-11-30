@@ -1,15 +1,14 @@
-
 export function initializeTabs() {
 
- const tab = document.getElementById('tab');
+  const tab = document.getElementById('tab');
 
-tab.addEventListener('click', function (e) {
-  if (!(e.target as HTMLElement).dataset.tabName) return;
-   openTab((e.target as HTMLElement), (e.target as HTMLElement).dataset.tabName);
-});
+  tab.addEventListener('click', function (e) {
+    if (!(e.target as HTMLElement).dataset.tabName) return;
+    openTab((e.target as HTMLElement), (e.target as HTMLElement).dataset.tabName);
+  });
 
-function openTab(event , tabName) {
-      var i, tabcontent, tablinks;
+  function openTab(event, tabName) {
+    var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
       (tabcontent[i] as HTMLElement).style.display = "none";
